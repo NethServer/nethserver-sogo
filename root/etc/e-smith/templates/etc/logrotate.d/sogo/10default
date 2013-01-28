@@ -1,0 +1,6 @@
+/var/log/sogo/*.log \{
+        missingok
+        rotate 5
+        notifempty
+	copytruncate
+\}

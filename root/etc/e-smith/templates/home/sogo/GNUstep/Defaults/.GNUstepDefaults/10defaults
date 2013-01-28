@@ -1,0 +1,98 @@
+\{
+    NSGlobalDomain = \{
+    \};
+    sogod = \{
+        NGUseUTF8AsURLEncoding = YES;
+        OCSFolderInfoURL = "mysql://sogo:{$sogod{'DbPassword'}}@localhost/sogo/sogo_folder_info";
+        OCSSessionsFolderURL = "mysql://sogo:{$sogod{'DbPassword'}}@localhost/sogo/sogo_sessions_folder";
+        SOGoACLsSendEMailNotifications = {uc($sogod{'ACLsSendEMailNotifications'} || "no")};
+        SOGoAppointmentSendEMailNotifications = YES;
+        SOGoAppointmentSendEMailReceipts = YES;
+        SOGoAuthenticationMethod = LDAP;
+        SOGoDraftsFolderName = {($sogod{'DraftsFolder'} || "Drafts")};
+        SOGoEnablePublicAccess = YES;
+        SOGoFoldersSendEMailNotifications = NO;
+        SOGoIMAPServer = localhost;
+        SOGoMailDomain = {$DomainName};
+        SOGoMailingMechanism = smtp;
+        SOGoProfileURL = "mysql://sogo:{$sogod{'DbPassword'}}@localhost/sogo/sogo_user_profile";
+        SOGoSMTPServer = localhost;
+        SOGoSentFolderName = {($sogod{'SentFolder'} || "Sent")};
+        SOGoSuperUsernames = (
+            {($sogod{'AdminUsers'} || 'admin')}
+        );
+        SOGoTimeZone = {$TimeZone};
+        SOGoTrashFolderName = Trash;
+        WOWorkersCount = {($sogod{'WOWorkersCount'} || "3")};
+        SOGoMailAuxiliaryUserAccountsEnabled = {uc($sogod{'MailAuxiliaryUserAccountsEnabled'} || "yes")};
+	SOGoMailCustomFromEnabled = YES;
+{	
+	# check nethservice version for disable sieve filter
+	my $ReleaseVersion = $sysconfig{'ReleaseVersion'};
+	my $SievePort= ($sogod{'SievePort'} || "4190");
+	if ($ReleaseVersion ne '8.0') {
+		$OUT.="	SOGoSieveServer = sieve://localhost:".$SievePort.";\n";
+		$OUT.="	SOGoSieveScriptsEnabled = YES;\n";
+		$OUT.="	SOGoVacationEnabled = YES;\n";
+		$OUT.="	SOGoForwardEnabled = YES;\n";
+		if (($sogod{'SharedMailbox'} || 'disabled') eq 'enabled') {
+                        $OUT.="        NGImap4ConnectionStringSeparator = \"/\";\n";
+                        }
+                else    {
+                        $OUT.="        NGImap4ConnectionStringSeparator = \".\";\n";
+                        }
+	}
+}
+        SOGoUserSources = (
+{
+    # add auth custom sources
+    use esmith::config;
+    use esmith::db;
+
+    my %db;
+    tie %db, 'esmith::config', '/home/e-smith/db/sogo_sources';
+
+    foreach (sort keys %db)
+    {
+       $OUT.="        {\n";
+       my %props =  db_get_prop(\%db,$_);
+       while ( my ($key, $value) = each(%props) ) {
+           $OUT .= "             $key = $value;\n";
+       }
+       $OUT.="        },\n";
+    }
+
+}
+            \{
+                CNFieldName = cn;
+                IDFieldName = uid;
+                UIDFieldName = uid;
+                baseDN = "ou=Users,{ esmith::util::ldapBase($DomainName); }";
+                canAuthenticate = YES;
+                displayName = "Users";
+                hostname = localhost;
+                id = users;
+                isAddressBook = YES;
+                port = {$ldap{'TCPPort'}};
+                type = ldap;
+            \},
+            \{  
+                CNFieldName = cn;
+                IDFieldName = cn;
+                UIDFieldName = cn;
+                baseDN = "ou=Groups,{ esmith::util::ldapBase($DomainName); }";
+                canAuthenticate = YES;
+                displayName = "Groups";
+                hostname = localhost;
+                id = groups;
+                isAddressBook = YES;
+                port = {$ldap{'TCPPort'}};
+                type = ldap;
+            \}
+        );
+        WOMessageUseUTF8 = YES;
+        WOParsersUseUTF8 = YES;
+        WOPort = 127.0.0.1:{$sogod{'TCPPort'}};
+        WOUseRelativeURLs = YES;
+    \};
+\}

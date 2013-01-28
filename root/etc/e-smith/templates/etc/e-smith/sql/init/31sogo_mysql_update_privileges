@@ -1,0 +1,3 @@
+#! /bin/sh
+
+exec mysql < /home/sogo/smeserver/sogo_mysql_update_privileges.sql

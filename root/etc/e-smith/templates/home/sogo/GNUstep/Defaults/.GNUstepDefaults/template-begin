@@ -1,0 +1,5 @@
+/*
+{
+    $OUT = Text::Template::_load_text("/etc/e-smith/templates-default/template-begin");
+    $OUT =~ s/^#/ * /gm
+} */

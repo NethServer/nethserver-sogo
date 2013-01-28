@@ -1,0 +1,4 @@
+mkdir /home/e-smith/sogo &> /dev/null
+su sogo  -c "/usr/sbin/sogo-tool backup /tmp/backup ALL" &> /dev/null
+tar cvzf /home/e-smith/sogo/backup.tgz -C /tmp/ backup &> /dev/null
+rm -rf /tmp/backup  &> /dev/null

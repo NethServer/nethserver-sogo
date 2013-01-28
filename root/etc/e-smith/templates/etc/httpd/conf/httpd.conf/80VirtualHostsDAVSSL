@@ -1,0 +1,22 @@
+<VirtualHost 0.0.0.0:8843>
+      ServerName { $SystemName }.{ $DomainName }
+      SSLEngine On
+      ProxyRequests Off
+      SetEnv proxy-nokeepalive 1
+      ProxyPreserveHost On
+      ProxyPassInterpolateEnv On
+      ProxyPass /principals http://127.0.0.1:20000/SOGo/dav/ interpolate
+      ProxyPass /SOGo/dav/ http://127.0.0.1:20000/SOGo/dav/ interpolate
+      ProxyPass / http://127.0.0.1:20000/SOGo/dav/ interpolate
+
+    <Proxy http://127.0.0.1:20000>
+      RequestHeader set "x-webobjects-server-port" "8843"
+      RequestHeader set "x-webobjects-server-name" "{ $SystemName }.{ $DomainName }:8843"
+      RequestHeader set "x-webobjects-server-url" "https://{ $SystemName }.{ $DomainName }:8843"
+      RequestHeader set "x-webobjects-server-protocol" "HTTP/1.0"
+      RequestHeader set "x-webobjects-remote-host" "127.0.0.1"
+      AddDefaultCharset UTF-8
+      Order allow,deny
+      Allow from all
+    </Proxy>
+</VirtualHost>

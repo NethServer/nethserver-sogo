@@ -1,0 +1,47 @@
+Summary: NethServer SOGo configuration
+Name: nethserver-sogo
+Version: @@VERSION@@
+Release: @@RELEASE@@
+License: GPL
+URL: http://dev.nethesis.it/projects/nethserver
+Source0: %{name}-%{version}.tar.gz
+BuildArch: noarch
+
+# nethserver-base requires postfix MTA:
+Requires: nethserver-mail-server
+Requires: nethserver-directory
+Requires: sogo >= 2 
+Requires: sogo-tool
+Requires: sope49-gdl1-mysql
+
+BuildRequires: perl
+BuildRequires: nethserver-devtools 
+
+%description
+NethServer SOGo configuration
+
+%prep
+%setup
+
+%build
+perl createlinks
+
+%install
+rm -rf $RPM_BUILD_ROOT
+(cd root; find . -depth -print | cpio -dump $RPM_BUILD_ROOT)
+%{genfilelist} $RPM_BUILD_ROOT > %{name}-%{version}-filelist
+echo "%doc COPYING" >> %{name}-%{version}-filelist
+
+%post
+source /etc/nethserver/rpm_hook_functions
+event_queue add %{name}-update
+
+%preun
+source /etc/nethserver/rpm_hook_functions
+signal_event %{name}-uninstall
+
+%files -f %{name}-%{version}-filelist
+%defattr(-,root,root)
+
+%changelog
+

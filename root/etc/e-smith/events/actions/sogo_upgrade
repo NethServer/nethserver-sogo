@@ -1,0 +1,99 @@
+#!/usr/bin/perl -w
+#----------------------------------------------------------------------
+# copyright (C) 2010 Nethesis srl
+# 
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+# 
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+# 
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307  USA
+#----------------------------------------------------------------------
+
+use strict;
+use DBI;
+use esmith::ConfigDB;
+use esmith::util;
+
+# Exit early if there is nothing to do
+die("sogo db must exist") unless ( -d "/var/lib/mysql/sogo/");
+die("sogo db must exist") unless ( -f "/var/lib/mysql/sogo/sogo_folder_info.frm");
+
+# This is a translation of the script 'sql-update-1.2.2_to_1.3.0-mysql.sh'
+# that is safe to run multiple times, and which can be run on a 1.2.2
+# installation without barfing.
+
+my $conf = esmith::ConfigDB->open_ro 
+    or die "Can't open configuration database: $!\n";
+
+our $username    = 'sogo';
+our $password    = $conf->get_prop("sogod", "DbPassword") || '';
+our $database    = 'sogo';
+our $dbi_options = { PrintError => 0, ChopBlanks => 1, AutoCommit => 1 };
+
+my $db_handle = DBI->connect("DBI:mysql:$database",
+                             $username, $password, $dbi_options) ||
+                                  die ("Connection error: $DBI::errstr");
+
+my $folders_sth = $db_handle->prepare(qq{
+    SELECT SUBSTRING_INDEX(c_quick_location, '/', -1)
+      FROM sogo_folder_info WHERE c_folder_type = 'Appointment';
+}) || die ("Unable to prepare query: $DBI::errstr");
+
+$folders_sth->execute() || die ("Unable to execute query: $DBI::errstr");
+
+while (my @folders_row = $folders_sth->fetchrow_array()) {
+    $db_handle->do(qq{
+        ALTER TABLE $folders_row[0] ADD COLUMN c_category VARCHAR(255);
+    });
+}
+
+# This is a translation of the script 'sql-update-1.3.3_to_1.3.4-mysql.sh'
+# that is safe to run multiple times, and which can be run on a 1.2.2 or 1.3.2
+# installation without barfing.
+
+my $contacts_sth = $db_handle->prepare(qq{
+    SELECT SUBSTRING_INDEX(c_quick_location, '/', -1) 
+      FROM sogo_folder_info where c_folder_type = 'Contact';
+}) || die ("Unable to prepare query: $DBI::errstr");
+
+$contacts_sth->execute() || die ("Unable to execute query: $DBI::errstr");
+
+while (my @contacts_row = $contacts_sth->fetchrow_array()) {
+    $db_handle->do(qq{
+        ALTER TABLE $contacts_row[0] ADD COLUMN c_categories VARCHAR(255);
+    });
+}
+
+# This is a translation of the script sql-update-1.3.11_to_1.3.12-mysql.sh
+# that is safe to run multiple times, and which can be run on a 1.2.2 or 1.3.9
+# installation without barfing. 
+$db_handle->do(qq{
+	ALTER TABLE sogo_sessions_folder ADD PRIMARY KEY (c_id);
+});
+
+# This is a translation of the script sql-update-1.3.16_to_1.3.17-mysql.sh
+# This script only works with mysql
+# updates c_cycleinfo to mediumtext
+#
+
+my $tables_sth = $db_handle->prepare(qq{
+   SELECT SUBSTRING_INDEX(c_quick_location, '/', -1) 
+    FROM sogo_folder_info where c_path3 = 'Calendar';
+}) || die ("Unable to prepare query: $DBI::errstr");
+
+$tables_sth->execute() || die ("Unable to execute query: $DBI::errstr");
+
+while (my @table_row = $tables_sth->fetchrow_array()) {
+    $db_handle->do(qq{
+        ALTER TABLE $table_row[0] MODIFY c_cycleinfo mediumtext;
+    });
+}
+

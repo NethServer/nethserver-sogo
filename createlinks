@@ -1,0 +1,33 @@
+#!/usr/bin/perl -w
+
+use esmith::Build::CreateLinks qw(:all);
+
+service_link_enhanced("memcached", "S55", "7");
+service_link_enhanced("sogod", "S85", "7");
+
+templates2events("/etc/e-smith/sql/init/30sogo_mysql_create_database", qw(post-install bootstrap-console-save));
+templates2events("/etc/e-smith/sql/init/31sogo_mysql_update_privileges", qw(post-install bootstrap-console-save));
+templates2events("/home/sogo/smeserver/sogo_mysql_update_privileges.sql", qw(post-install bootstrap-console-save));
+
+templates2events("/etc/e-smith/sql/init/31sogo_upgrade", qw(post-install post-upgrade));
+
+templates2events("/etc/httpd/conf/httpd.conf", qw(sogo-modify bootstrap-console-save));
+templates2events("/home/sogo/GNUstep/Defaults/.GNUstepDefaults", qw(sogo-modify bootstrap-console-save));
+templates2events("/etc/sysconfig/memcached", qw(sogo-modify bootstrap-console-save));
+templates2events("/etc/logrotate.d/sogo", qw(sogo-modify bootstrap-console-save));
+templates2events("/etc/sysconfig/sogo", qw(sogo-modify bootstrap-console-save));
+templates2events("/etc/rc.d/init.d/masq",qw(sogo-modify));
+templates2events("/etc/cron.d/sogo",qw(sogo-modify));
+templates2events("/etc/dovecot/master.users",qw(sogo-modify));
+
+safe_symlink("sigusr1", "root/etc/e-smith/events/sogo-modify/services2adjust/httpd-e-smith");
+safe_symlink("restart", "root/etc/e-smith/events/sogo-modify/services2adjust/sogod");
+safe_symlink("restart", "root/etc/e-smith/events/sogo-modify/services2adjust/dovecot");
+safe_symlink("restart", "root/etc/e-smith/events/sogo-modify/services2adjust/memcached");
+safe_symlink("adjust", "root/etc/e-smith/events/sogo-modify/services2adjust/masq");
+
+for my $event (qw(pre-backup))
+{
+    event_link("sogo-backup", $event, "80");
+}
+

@@ -1,0 +1,25 @@
+# SOGo Groupware
+SetEnvIf Host (.*) REQUEST_HOST=$1
+ProxyPass /SOGo http://127.0.0.1:{$sogod{'TCPPort'}}/SOGo
+ProxyPassReverse /SOGo http://127.0.0.1:{$sogod{'TCPPort'}}/SOGo
+
+<Location /SOGo>
+	order deny,allow
+	deny from all
+	allow from all
+	SSLRequireSSL on
+	RequestHeader set "x-webobjects-server-url"  "https://%\{REQUEST_HOST\}e/SOGo"
+</Location>
+
+Alias /.woa/WebServerResources/ /usr/lib/GNUstep/SOGo/WebServerResources/
+Alias /SOGo.woa/WebServerResources/ /usr/lib/GNUstep/SOGo/WebServerResources/
+Alias /SOGo/WebServerResources/ /usr/lib/GNUstep/SOGo/WebServerResources/
+AliasMatch /SOGo/so/ControlPanel/Products/(.*)/Resources/(.*) /usr/lib/GNUstep/SOGo/$1.SOGo/Resources/$2
+
+<Directory "/usr/lib/GNUstep/SOGo/">
+    AllowOverride None
+    Options +ExecCGI -Includes
+    Order allow,deny
+    Allow from all
+</Directory>
+

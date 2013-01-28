@@ -1,0 +1,20 @@
+{
+my $sslport = $modSSL{'TCPPort'} || '443';
+
+if ($port ne $sslport){
+
+    ## Redirect Web Address to Secure Address
+    $OUT .= "    RewriteEngine on\n";
+    $OUT .= "    RewriteRule ^/SOGo(/.*|\$) https://%{HTTP_HOST}/SOGo\$1 \[L,R\]\n";
+
+}
+$OUT .= "    RewriteRule ^/sogo(/.*|\$) https://%{HTTP_HOST}/SOGo\$1 \[L,R\]\n";
+
+$sogoStatus = $sogod{'status'} || "disabled";
+$webmailStatus = $imp{'status'} || "disabled";
+
+if (($webmailStatus eq 'disabled') and ($sogoStatus eq 'enabled')) {
+    $OUT .= "    RewriteRule ^/webmail(/.*|\$) https://%{HTTP_HOST}/SOGo\$1 \[L,R\]\n";
+}
+
+}
