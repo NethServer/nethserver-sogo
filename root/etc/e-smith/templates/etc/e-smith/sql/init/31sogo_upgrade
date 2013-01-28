@@ -1,3 +1,0 @@
-#! /bin/sh
-
-exec /etc/e-smith/events/actions/sogo_upgrade

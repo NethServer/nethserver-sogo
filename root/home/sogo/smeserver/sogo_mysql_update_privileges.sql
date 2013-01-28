@@ -1,1 +1,0 @@
--- sogo_mysql_privileges.sql template
