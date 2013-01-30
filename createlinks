@@ -1,33 +1,59 @@
-#!/usr/bin/perl -w
+#!/usr/bin/perl
 
+#
+# Copyright (C) 2013 Nethesis S.r.l.
+# http://www.nethesis.it - support@nethesis.it
+# 
+# This script is part of NethServer.
+# 
+# NethServer is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License,
+# or any later version.
+# 
+# NethServer is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+# 
+# You should have received a copy of the GNU General Public License
+# along with NethServer.  If not, see <http://www.gnu.org/licenses/>.
+#
+
+use strict;
 use esmith::Build::CreateLinks qw(:all);
 
-service_link_enhanced("memcached", "S55", "7");
-service_link_enhanced("sogod", "S85", "7");
+#
+# update event
+#
+event_templates('nethserver-sogo-update', qw(
+      /etc/sysconfig/sogo
+      /etc/sysconfig/memacached
+      /etc/httpd/conf.d/SOGo.conf
+      /etc/httpd/conf/httpd.conf
+));
 
-templates2events("/etc/e-smith/sql/init/30sogo_mysql_create_database", qw(post-install bootstrap-console-save));
-templates2events("/etc/e-smith/sql/init/31sogo_mysql_update_privileges", qw(post-install bootstrap-console-save));
-templates2events("/home/sogo/smeserver/sogo_mysql_update_privileges.sql", qw(post-install bootstrap-console-save));
+event_actions('nethserver-sogo-update', qw(
+      initialize-default-databases 00
+      nethserver-sogo-conf         01
+      nethserver-sogo-ldapsetup    10
+      nethserver-sogo-mysqlsetup   10
+      nethserver-sogo-gnustepsetup 20
+      runlevel-adjust              50
+      firewall-adjust              60
+));
 
-templates2events("/etc/e-smith/sql/init/31sogo_upgrade", qw(post-install post-upgrade));
+event_services('nethserver-sogo-update', qw(
+      httpd reload
+));
 
-templates2events("/etc/httpd/conf/httpd.conf", qw(sogo-modify bootstrap-console-save));
-templates2events("/home/sogo/GNUstep/Defaults/.GNUstepDefaults", qw(sogo-modify bootstrap-console-save));
-templates2events("/etc/sysconfig/memcached", qw(sogo-modify bootstrap-console-save));
-templates2events("/etc/logrotate.d/sogo", qw(sogo-modify bootstrap-console-save));
-templates2events("/etc/sysconfig/sogo", qw(sogo-modify bootstrap-console-save));
-templates2events("/etc/rc.d/init.d/masq",qw(sogo-modify));
-templates2events("/etc/cron.d/sogo",qw(sogo-modify));
-templates2events("/etc/dovecot/master.users",qw(sogo-modify));
 
-safe_symlink("sigusr1", "root/etc/e-smith/events/sogo-modify/services2adjust/httpd-e-smith");
-safe_symlink("restart", "root/etc/e-smith/events/sogo-modify/services2adjust/sogod");
-safe_symlink("restart", "root/etc/e-smith/events/sogo-modify/services2adjust/dovecot");
-safe_symlink("restart", "root/etc/e-smith/events/sogo-modify/services2adjust/memcached");
-safe_symlink("adjust", "root/etc/e-smith/events/sogo-modify/services2adjust/masq");
-
-for my $event (qw(pre-backup))
-{
-    event_link("sogo-backup", $event, "80");
-}
+#
+# uninstall event
+#
+event_actions('nethserver-sogo-uninstall', qw(
+      nethserver-sogo-uninstall 01
+      runlevel-adjust           50
+      firewall-adjust           60
+));
 

@@ -1,0 +1,63 @@
+#!/usr/bin/perl
+
+#
+# Copyright (C) 2013 Nethesis S.r.l.
+# http://www.nethesis.it - support@nethesis.it
+# 
+# This script is part of NethServer.
+# 
+# NethServer is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License,
+# or any later version.
+# 
+# NethServer is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+# 
+# You should have received a copy of the GNU General Public License
+# along with NethServer.  If not, see <http://www.gnu.org/licenses/>.
+#
+
+use strict;
+
+use User::pwent;
+use NethServer::Directory;
+use esmith::templates;
+
+umask 077;
+
+# Get sogo user passwd entry
+my $sogoUser = getpwnam('sogo') or die('Missing sogo user'); 
+my $passwordFile = $sogoUser->dir . '/mysql.pwd';
+my $sogoPassword = NethServer::Directory::getUserPassword('sogo', 0) || die('Could not generate sogo password!');
+
+# Expand sogo-config template 
+my $sogoConfiguration = esmith::templates::processTemplate({
+    TEMPLATE_PATH => 'sogo-config',
+    OUTPUT_TYPE => 'string',
+    MORE_DATA => {
+	mysqlPassword => $sogoPassword,
+	ldapPassword => $sogoPassword,
+	sogoGid => $sogoUser->gid,
+	sogoUid => $sogoUser->uid	   
+    }
+});
+
+if( ! $sogoConfiguration) {
+    die("Expanded 'sogo-config' template returns an empty value!\n");
+}
+
+my $gnuStepConf = $sogoUser->dir . '/GNUstep/Defaults/.GNUstepDefaults';
+if(-f $gnuStepConf) {
+    unlink $gnuStepConf;
+}
+
+# Inject sogo-config template output into GNUStep configuration DB,
+# through "defaults write":
+my @defaultsWriteCmd = (qw(/bin/su -s /bin/bash -c), '/usr/bin/defaults write', 'sogo');
+open(FH, '|-', @defaultsWriteCmd) || die('Could not open pipe to /usr/bin/defaults');
+print FH $sogoConfiguration;
+exit close(FH) ? 0 : 1;
+
