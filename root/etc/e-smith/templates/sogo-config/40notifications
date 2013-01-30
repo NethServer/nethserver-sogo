@@ -1,0 +1,13 @@
+{
+    #
+    # 40notifications
+    #
+
+    my @notifications = split(',', $sogod{Notifications});
+
+    $S{SOGoFoldersSendEMailNotifications} = grep($_ eq 'Folders', @notifications) ? 'YES' : 'NO';
+    $S{SOGoACLsSendEMailNotifications} = grep($_ eq 'ACLs', @notifications) ? 'YES' : 'NO';
+    $S{SOGoAppointmentSendEMailNotifications} = grep($_ eq 'Appointment', @notifications) ? 'YES' : 'NO';
+
+    '';
+}
