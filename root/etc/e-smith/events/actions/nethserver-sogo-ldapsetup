@@ -25,7 +25,7 @@ use NethServer::Directory qw(PASSWORD_READ FIELDS_READ);
 
 my $ldap = NethServer::Directory->new() || die('Could not connect LDAP server');
 
-$ldap->configServiceAccount('sogo', PASSWORD_READ | FIELDS_READ) || die('Error creating sogo LDAP service account');
+$ldap->configServiceAccount('sogo', FIELDS_READ) || die('Error creating sogo LDAP service account');
 
 
 
