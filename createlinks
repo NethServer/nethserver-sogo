@@ -57,3 +57,10 @@ event_actions('nethserver-sogo-uninstall', qw(
       firewall-adjust           60
 ));
 
+
+#
+# user-{create,modify,delete} events
+#
+event_actions($_, qw(
+      memcached reload
+)) foreach (qw(user-create user-modify user-delete));
