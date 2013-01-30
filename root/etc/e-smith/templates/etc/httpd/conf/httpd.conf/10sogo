@@ -1,0 +1,13 @@
+{
+    #
+    # 10sogo -- enable some Apache2 modules
+    #
+    push @modules, qw(
+        env
+        headers
+        rewrite
+        expire
+    );
+
+    '';
+}
