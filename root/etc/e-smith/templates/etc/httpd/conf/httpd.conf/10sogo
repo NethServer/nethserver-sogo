@@ -6,7 +6,7 @@
         env
         headers
         rewrite
-        expire
+        expires
     );
 
     '';
