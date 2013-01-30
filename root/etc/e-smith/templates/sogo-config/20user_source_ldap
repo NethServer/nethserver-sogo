@@ -9,17 +9,19 @@
 
     push @sogoUserSources, 
         qq(
+	    id = users;
 	    type = ldap;
 	    CNFieldName = cn;
 	    IDFieldName = uid;
 	    UIDFieldName = uid;
-	    baseDN = "ou=People,dc=directory,dc=nh";
-	    bindAsCurrentUser = YES;
 	    canAuthenticate = YES;
-	    
-	    displayName = "Users";
+	    bindDN = "cn=sogo,dc=directory,dc=nh";
+	    bindPassword = "$ldapPassword";
+	    baseDN = "ou=People,dc=directory,dc=nh";
+	    filter = "accountStatus=active";
+	    scope = "ONE";
 	    hostname = ldapi://;
-	    id = users;
+	    displayName = "$SystemName users";
 	    isAddressBook = YES;
     );
     
