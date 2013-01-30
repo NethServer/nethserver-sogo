@@ -1,0 +1,15 @@
+{
+    #
+    # 90expand_conf
+    #
+
+    $S{SOGoUserSources} = q{'(} . join(",\n", map { "            {" . $_ . "}" } @sogoUserSources) . q{)'};
+
+    foreach my $domain (sort keys %G) {
+        foreach my $property (sort keys %{$G{$domain}}) {
+	    $OUT .= sprintf("%s %s %s\n", $domain, $property, $G{$domain}{$property});
+        }
+    }
+
+    $OUT;
+}

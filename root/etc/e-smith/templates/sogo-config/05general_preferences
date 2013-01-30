@@ -1,0 +1,43 @@
+{
+    #
+    # 05general_preferences
+    #
+
+    $S{SOGoTimeZone} = $TimeZone || 'UTC';
+    $S{SOGoSuperUsernames} = '(' . ($sogod{'AdminUsers'} || 'admin') . ')';
+    $S{SOGoEnablePublicAccess} = 'YES';
+    $S{NGUseUTF8AsURLEncoding} = 'YES';
+
+    $S{WOWorkersCount} = $sogod{WOWorkersCount} || "3";
+    $S{WOMessageUseUTF8} = 'YES';
+    $S{WOParsersUseUTF8} = 'YES';
+    $S{WOPort} = '127.0.0.1:' . $sogod{'TCPPort'} || '20000';
+    $S{WOUseRelativeURLs} = 'YES';
+
+    $S{SOGoAppointmentSendEMailReceipts} = 'YES';
+
+    $S{SOGoDraftsFolderName} = ($sogod{'DraftsFolder'} || "Drafts");
+    $S{SOGoSentFolderName} = ($sogod{'SentFolder'} || "Sent");
+    $S{SOGoTrashFolderName} = ($sogod{'TrashFolder'} || "Trash");
+
+    # Notifications
+    $S{SOGoFoldersSendEMailNotifications} = 'NO';
+    $S{SOGoACLsSendEMailNotifications} = uc($sogod{'ACLsSendEMailNotifications'} || "NO");
+    $S{SOGoAppointmentSendEMailNotifications} = 'YES';
+
+    $S{SOGoIMAPServer} = 'localhost';
+    $S{SOGoMailDomain} = $DomainName || 'localdomain';
+    $S{SOGoMailingMechanism} = 'smtp';
+    $S{SOGoSMTPServer} = 'localhost';    
+    $S{SOGoMailAuxiliaryUserAccountsEnabled} = uc($sogod{'MailAuxiliaryUserAccountsEnabled'} || "YES");            
+    $S{SOGoMailCustomFromEnabled} = 'YES';
+    $S{SOGoSieveServer} = 'sieve://localhost:4190';
+    $S{SOGoSieveScriptsEnabled} = 'YES';
+    $S{SOGoVacationEnabled} = 'YES';
+    $S{SOGoForwardEnabled} = 'YES';
+
+    # IMAP mailbox separator (dovecot default):
+    $S{NGImap4ConnectionStringSeparator} = '/';
+
+    '';
+}

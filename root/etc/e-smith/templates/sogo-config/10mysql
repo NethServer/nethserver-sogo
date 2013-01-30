@@ -1,0 +1,12 @@
+{
+    #
+    # 10mysql
+    #
+    my $connString = 'mysql://sogo:' . ($mysqlPassword || 'sogo')  . '@localhost/sogo';
+
+    $S{SOGoProfileURL} = $connString . '/sogo_user_profile';
+    $S{OCSFolderInfoURL} = $connString . '/sogo_folder_info';
+    $S{OCSSessionsFolderURL} = $connString . '/sogo_sessions_folder';
+    
+    '';
+}

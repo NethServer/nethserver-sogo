@@ -1,0 +1,27 @@
+{
+    #
+    # 20user_source_ldap
+    #
+
+    $S{SOGoAuthenticationMethod} = 'LDAP';
+
+    # TODO add LDAP filter on accountStatus attribute:
+    #     "(&(mail=*)(accountStatus=active))"
+
+    push @sogoUserSources, 
+        qq(
+	    type = ldap;
+	    CNFieldName = cn;
+	    IDFieldName = uid;
+	    UIDFieldName = uid;
+	    baseDN = "ou=People,dc=directory,dc=nh";
+	    bindAsCurrentUser = YES;
+	    canAuthenticate = YES;
+	    displayName = "Users";
+	    hostname = ldapi://;
+	    id = users;
+	    isAddressBook = YES;
+    );
+    
+    '';
+}

@@ -1,0 +1,25 @@
+{
+    #
+    # 30user_source_custom
+    #
+
+    # add auth custom sources
+    use esmith::config;
+    use esmith::db;
+
+    my %db;
+    my $customSrc;
+
+    tie %db, 'esmith::config', '/var/lib/nethserver/db/sogo_sources';
+
+    foreach (sort keys %db) {
+	$customSrc = "";
+	my %props =  db_get_prop(\%db,$_);
+	while ( my ($key, $value) = each(%props) ) {
+	    $customSrc .= $key . ' = ' . $value . "\n";
+	}	
+	push @sogoUserSources, $customSrc;
+    }
+
+    '';
+}
