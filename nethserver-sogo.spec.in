@@ -9,7 +9,7 @@ BuildArch: noarch
 
 # nethserver-base requires postfix MTA:
 Requires: nethserver-mail-server
-Requires: nethserver-directory
+Requires: nethserver-memcached
 Requires: sogo >= 2 
 Requires: sogo-tool
 Requires: sope49-gdl1-mysql
