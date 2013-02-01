@@ -46,6 +46,9 @@ signal_event %{name}-uninstall
 %defattr(-,root,root)
 
 %changelog
+* Fri Feb  1 2013 Davide Principi <davide.principi@nethesis.it> - 1.0.1-1.ns6
+- Fix #1643
+
 * Thu Jan 31 2013 Davide Principi <davide.principi@nethesis.it> - 1.0.0-1.ns6
 - Initial release
 
