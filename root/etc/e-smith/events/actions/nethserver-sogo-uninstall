@@ -23,7 +23,7 @@
 use strict;
 use NethServer::Service;
 
-my @services = ('sogod', 'memcached');
+my @services = ('sogod', 'memcached', 'httpd');
 
 NethServer::Service::manage_remove('nethserver-sogo',
 				   @services);
