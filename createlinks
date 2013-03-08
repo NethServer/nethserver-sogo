@@ -63,9 +63,10 @@ event_actions($_, qw(
       memcached reload
 )) foreach (qw(user-create user-modify user-delete));
 
-#--------------------------------------------------
-# actions for migration-import event
-#--------------------------------------------------
 
-$event = "migration-import";
-event_actions($event, 'nethserver-sogo-migrate' => 80);
+#
+# migration-import event
+#
+event_actions('migration-import', qw(
+    nethserver-sogo-migrate 80
+));
