@@ -42,6 +42,12 @@ my $dstConfigDb = esmith::DB::db->open('configuration') || die("Could not open d
 # update e-smith db
 my $service = 'sogod';
 my $old = $srcConfigDb->get($service);
+# Exit successfully if sogod is not in source ConfigDB:
+if( ! $old) {
+    warn "[INFO] sogod key not found in source ConfigDB. Nothing to do.\n";
+    exit(0);
+}
+
 my $new = $dstConfigDb->get($service) || $dstConfigDb->new_record($service);
 $new->merge_props($old->props);
 $new->delete_prop('TCPPort');
