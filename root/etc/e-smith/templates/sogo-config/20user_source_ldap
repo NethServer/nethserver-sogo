@@ -3,10 +3,6 @@
     # 20user_source_ldap
     #
 
-    #
-    # TODO add LDAP filter on accountStatus attribute:
-    #     "(&(mail=*)(accountStatus=active))"
-
     push @sogoUserSources, 
         qq(
 	    id = users;
