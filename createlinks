@@ -61,7 +61,7 @@ event_actions('nethserver-sogo-uninstall', qw(
 #
 event_services($_, qw(
       memcached reload
-)) foreach (qw(user-create user-modify user-delete));
+)) foreach (qw(user-create user-modify user-delete domain-create domain-delete domain-modify));
 
 
 #
