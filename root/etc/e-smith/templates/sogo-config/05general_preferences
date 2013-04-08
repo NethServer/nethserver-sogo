@@ -22,7 +22,7 @@
     $S{SOGoIMAPServer} = 'localhost';
     $S{SOGoMailDomain} = $DomainName || 'localdomain';
     $S{SOGoMailingMechanism} = 'smtp';
-    $S{SOGoSMTPServer} = join('.', $SystemName, $DomainName);
+    $S{SOGoSMTPServer} = '127.0.0.1:587';
     $S{SOGoMailAuxiliaryUserAccountsEnabled} = uc($sogod{'MailAuxiliaryUserAccountsEnabled'} || "YES");            
     $S{SOGoMailCustomFromEnabled} = 'YES';
     $S{SOGoSieveServer} = 'sieve://localhost:4190';
