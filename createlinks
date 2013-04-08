@@ -71,3 +71,10 @@ event_services($_, qw(
 event_actions('migration-import', qw(
     nethserver-sogo-migrate 80
 ));
+
+#
+# pre-backup-data event
+#
+event_actions('pre-backup-data', qw(
+    nethserver-sogo-backup-user 80
+));
