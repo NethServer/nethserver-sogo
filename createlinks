@@ -43,6 +43,7 @@ event_actions('nethserver-sogo-update', qw(
 
 event_services('nethserver-sogo-update', qw(
       httpd reload
+      sogod restart
 ));
 
 
