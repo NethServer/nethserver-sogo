@@ -29,6 +29,7 @@ use esmith::Build::CreateLinks qw(:all);
 event_templates('nethserver-sogo-update', qw(
       /etc/httpd/conf.d/SOGo.conf
       /etc/httpd/conf/httpd.conf
+      /etc/cron.d/sogo
 ));
 
 event_actions('nethserver-sogo-update', qw(
