@@ -33,27 +33,14 @@ event_templates('nethserver-sogo-update', qw(
 
 event_actions('nethserver-sogo-update', qw(
       initialize-default-databases 00
-      nethserver-sogo-conf         01
       nethserver-sogo-ldapsetup    10
       nethserver-sogo-mysqlsetup   10
       nethserver-sogo-gnustepsetup 20
-      runlevel-adjust              50
-      firewall-adjust              60
 ));
 
 event_services('nethserver-sogo-update', qw(
       httpd reload
       sogod restart
-));
-
-
-#
-# uninstall event
-#
-event_actions('nethserver-sogo-uninstall', qw(
-      nethserver-sogo-uninstall 01
-      runlevel-adjust           50
-      firewall-adjust           60
 ));
 
 
