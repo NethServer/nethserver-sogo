@@ -69,7 +69,12 @@ ProxyPreserveHost On
 #   Allow from your-cas-host-addr
 # </Proxy>
 
-ProxyPass /SOGo http://127.0.0.1:20000/SOGo retry=0
+ProxyPassInterpolateEnv On
+ProxyPass /SOGo http://127.0.0.1:20000/SOGo interpolate
+ProxyPass /card/SOGo http://127.0.0.1:20000/SOGo interpolate
+ProxyPass /card/principals http://127.0.0.1:20000/SOGo/dav/ interpolate
+ProxyPass /card/ http://127.0.0.1:20000/SOGo/dav/ interpolate
+
 
 <Proxy http://127.0.0.1:20000/SOGo>
 ## adjust the following to your configuration
