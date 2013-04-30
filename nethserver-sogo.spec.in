@@ -42,6 +42,15 @@ echo "%doc COPYING" >> %{name}-%{version}-filelist
 %defattr(-,root,root)
 
 %changelog
+* Tue Apr 30 2013 Davide Principi <davide.principi@nethesis.it> - 1.1.0-1.ns6
+- Full automatic package install/upgrade/uninstall support #1870 #1872 #1874
+- Protect dovecot master user password #1825
+- Expand /etc/cron.d/sogo template #1637
+- Backup SOGo user folders #1800
+- Added group LDAP source #1842
+- Use submission port 587 to send messages #1817
+- Fixed #1843 #1823
+
 * Tue Mar 19 2013 Giacomo Sanchietti <giacomo.sanchietti@nethesis.it> - 1.0.2-1.ns6
 - createlinks: fixed wrong function name event_{actions => services}()  call. Refs #1637
 - Moved httpd.conf template fragment to new location. Refs #1637
