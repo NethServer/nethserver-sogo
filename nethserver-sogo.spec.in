@@ -42,6 +42,9 @@ echo "%doc COPYING" >> %{name}-%{version}-filelist
 %defattr(-,root,root)
 
 %changelog
+* Mon Jun 10 2013 Davide Principi <davide.principi@nethesis.it> - 1.1.1-1.ns6
+- Sogo mysql password unescaped: connection fails #2002
+
 * Tue Apr 30 2013 Davide Principi <davide.principi@nethesis.it> - 1.1.0-1.ns6
 - Full automatic package install/upgrade/uninstall support #1870 #1872 #1874
 - Protect dovecot master user password #1825
