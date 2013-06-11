@@ -27,7 +27,7 @@
 
     close(CFG);
 
-    my $adsServer = $sogod{'AdsServer'} || $ads{'LDAP server'};
+    my ($adsLdapServer, $adsLdapPort) = $sogod{'AdsLdapServer'} ? split(':', $sogod{'AdsLdapServer'} , 2) : ($ads{'LDAP server'}, $ads{'LDAP port'});
 
     push @sogoUserSources, 
         qq(
@@ -44,8 +44,8 @@
                 sAMAccountName,
                 userPrincipalName
             );
-	    hostname = $adsServer;
-            port = $ads{'LDAP port'};
+	    hostname = $adsLdapServer;
+            port = $adsLdapPort;
 	    displayName = "$ads{'Realm'} users";
 	    isAddressBook = YES;
     );
