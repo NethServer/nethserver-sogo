@@ -1,0 +1,54 @@
+{
+    #
+    # 20user_source_ldap
+    #
+
+    if( $smb{ServerRole} ne 'ADS' ) {
+        return '';
+    }
+
+    open(CFG, '-|', '/usr/bin/net ads info') || die("net ads error $!\n");
+
+    my @tokens = ();
+
+    while(<CFG>) {
+        chomp $_;
+	push @tokens, split(/:\s+/, $_, 2);
+    }
+
+    %ads = (@tokens);
+
+    close(CFG);
+
+    # Retrieve sogo credentials to access AD LDAP
+    my @sogoCredentials = split(/%/, ($sogod{AdsCredentials} || ''), 2);
+
+    if(scalar @sogoCredentials != 2) {
+        die("Missing sogod/AdsCredentials prop! Set it with config setprop sogod AdsCredentials 'USERNAME%PASSWORD'\n");
+    }
+
+    my $adsServer = $sogod{'AdsServer'} || $ads{'LDAP server'};
+
+    push @sogoUserSources, 
+        qq(
+	    id = AD;
+	    type = ldap;
+	    CNFieldName = cn;
+	    IDFieldName = cn;
+	    UIDFieldName = userPrincipalName;
+	    canAuthenticate = YES;
+	    bindDN = "CN=$sogoCredentials[0],CN=Users,$ads{'Bind Path'}";
+	    bindPassword = "$sogoCredentials[1]";
+	    baseDN = "CN=Users,$ads{'Bind Path'}";
+	    bindFields = (
+                sAMAccountName,
+                userPrincipalName
+            );
+	    hostname = $adsServer;
+            port = $ads{'LDAP port'};
+	    displayName = "$ads{'Realm'} users";
+	    isAddressBook = YES;
+    );
+    
+    '';
+}
