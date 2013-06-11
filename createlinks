@@ -50,8 +50,14 @@ event_services('nethserver-sogo-update', qw(
 #
 event_services($_, qw(
       memcached reload
-)) foreach (qw(user-create user-modify user-delete domain-create domain-delete domain-modify));
-
+)) foreach (qw(
+  user-create 
+  user-modify 
+  user-delete 
+  domain-create 
+  domain-delete 
+  domain-modify
+));
 
 #
 # migration-import event
@@ -66,3 +72,24 @@ event_actions('migration-import', qw(
 event_actions('pre-backup-data', qw(
     nethserver-sogo-backup-user 80
 ));
+
+
+#
+# nethserver-samba-* events
+#
+foreach (qw(
+   nethserver-samba-save
+   nethserver-samba-update
+   nethserver-samba-adsjoin
+)) {
+
+    event_actions($_, qw(
+        nethserver-sogo-gnustepsetup 20    
+    ));
+
+    event_services($_, qw(
+        sogod restart
+        memcached reload
+    ));
+
+}
