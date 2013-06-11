@@ -5,6 +5,14 @@
 	#
 		
 	@sogoUserSources = (); 
+
+        if( ! defined $ldapPassword ) {
+             $ldapPassword = 'XXXXXXX';
+        }
+
+        if( ! defined $mysqlPassword ) {
+             $mysqlPassword = 'XXXXXXX';
+        }
 	
 	# The sogod namespace, where SOGoUserSources will be set
 	# to a joined string of @sogoUserSources elements

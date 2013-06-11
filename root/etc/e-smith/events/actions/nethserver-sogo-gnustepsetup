@@ -30,7 +30,6 @@ umask 077;
 
 # Get sogo user passwd entry
 my $sogoUser = getpwnam('sogo') or die('Missing sogo user'); 
-my $passwordFile = $sogoUser->dir . '/mysql.pwd';
 my $sogoPassword = NethServer::Directory::getUserPassword('sogo', 0) || die('Could not generate sogo password!');
 
 # Expand sogo-config template 

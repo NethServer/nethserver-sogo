@@ -22,13 +22,7 @@
 
 use strict;
 use NethServer::Directory;
-use User::pwent;
 
-umask 077;
-
-# Get sogo user passwd entry
-my $sogoUser = getpwnam('sogo') or die('Missing sogo user'); 
-my $passwordFile = $sogoUser->dir . '/mysql.pwd';
 my $password = NethServer::Directory::getUserPassword('sogo', 0) || die('Could not get sogo password!');
 
 my $commands = join("\n", 
@@ -39,7 +33,7 @@ my $commands = join("\n",
 	      "CREATE DATABASE IF NOT EXISTS sogo DEFAULT CHARACTER SET = 'utf8';"
      ) . "\n";
 
-open(FH, '|-', '/usr/bin/mysql -B -f');
+open(FH, '|-', '/usr/bin/mysql -B -f') || die("[ERROR] Could not connect to mysql");
 print FH $commands;     
 close(FH);
 
