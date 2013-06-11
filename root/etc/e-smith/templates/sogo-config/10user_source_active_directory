@@ -7,6 +7,13 @@
         return '';
     }
 
+    # Retrieve sogo credentials to access AD LDAP
+    my @sogoCredentials = split(/%/, ($sogod{AdsCredentials} || ''), 2);
+
+    if(scalar @sogoCredentials != 2) {
+        return '';
+    }
+
     open(CFG, '-|', '/usr/bin/net ads info') || die("net ads error $!\n");
 
     my @tokens = ();
@@ -19,13 +26,6 @@
     %ads = (@tokens);
 
     close(CFG);
-
-    # Retrieve sogo credentials to access AD LDAP
-    my @sogoCredentials = split(/%/, ($sogod{AdsCredentials} || ''), 2);
-
-    if(scalar @sogoCredentials != 2) {
-        die("Missing sogod/AdsCredentials prop! Set it with config setprop sogod AdsCredentials 'USERNAME%PASSWORD'\n");
-    }
 
     my $adsServer = $sogod{'AdsServer'} || $ads{'LDAP server'};
 
