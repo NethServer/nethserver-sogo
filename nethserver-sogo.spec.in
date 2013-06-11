@@ -42,6 +42,9 @@ echo "%doc COPYING" >> %{name}-%{version}-filelist
 %defattr(-,root,root)
 
 %changelog
+* Tue Jun 11 2013 Davide Principi <davide.principi@nethesis.it> - 1.2.1-1.ns6
+- Active Directory integration (experimental) #2000
+
 * Mon Jun 10 2013 Davide Principi <davide.principi@nethesis.it> - 1.1.1-1.ns6
 - Sogo mysql password unescaped: connection fails #2002
 
