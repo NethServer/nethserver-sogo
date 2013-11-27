@@ -1,0 +1,16 @@
+{
+    #
+    # 01sogo_vhosts -- enable SOGo on specific virtual hosts
+    #
+
+    # The default SystemName.DomainName vhost, always enabled:
+    $vhosts{$defaultServerName}{'SogoStatus'} = 'enabled';
+
+    # Any other host listed in sogod/VirtualHosts prop:
+    foreach (split(',', ($sogod{'VirtualHosts'} || ''))) {
+	$vhosts{$_}{'SogoStatus'} = 'enabled';
+	$vhosts{$_}{'SslMode'} = 'optional';
+    }
+
+    '';
+}

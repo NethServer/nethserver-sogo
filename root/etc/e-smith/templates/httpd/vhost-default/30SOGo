@@ -2,19 +2,16 @@
 # 30SOGo
 #
 {
-
-    my $targetVirtualHost = join('.', $SystemName, $DomainName);
-
-    if ( $ServerName ne $targetVirtualHost ) {
-	return "# -- DISABLED (for virtual host $targetVirtualHost only)\n";
+    if (! defined $SogoStatus || $SogoStatus ne 'enabled') {
+	return "# -- DISABLED\n";
     }
 
-    if ( $Port == 80 ) {
+    if ( $Port == 80 || ! defined $SslMode ) {
 
 	$sogoConf = <<SOGOREDIRECT
 RewriteEngine On
-RewriteRule ^/sogo(/.*)?\$ https://$targetVirtualHost/SOGo\$1 [R=301,L]
-RewriteRule ^/SOGo(/.*)?\$ https://$targetVirtualHost/SOGo\$1 [R=301,L]
+RewriteRule ^/sogo(/.*)?\$ https://$ServerName/SOGo\$1 [R=301,L]
+RewriteRule ^/SOGo(/.*)?\$ https://$ServerName/SOGo\$1 [R=301,L]
 SOGOREDIRECT
 
     } else {
@@ -79,8 +76,8 @@ ProxyPass /card/ http://127.0.0.1:20000/SOGo/dav/ interpolate
 <Proxy http://127.0.0.1:20000/SOGo>
 ## adjust the following to your configuration
   RequestHeader set "x-webobjects-server-port" "443"
-  RequestHeader set "x-webobjects-server-name" "$targetVirtualHost"
-  RequestHeader set "x-webobjects-server-url" "https://$targetVirtualHost"
+  RequestHeader set "x-webobjects-server-name" "$ServerName"
+  RequestHeader set "x-webobjects-server-url" "https://$ServerName"
 
 ## When using proxy-side autentication, you need to uncomment and
 ## adjust the following line:
