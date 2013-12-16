@@ -42,6 +42,11 @@ echo "%doc COPYING" >> %{name}-%{version}-filelist
 %defattr(-,root,root)
 
 %changelog
+* Mon Dec 16 2013 Davide Principi <davide.principi@nethesis.it> - 1.2.2-1.ns6
+- Redirect to internal DNS name - Bug #2371 [NethServer]
+- Support iOS7 carddav client - Enhancement #2221 [NethServer]
+- Remove apache "already loaded" warnings - Enhancement #2074 [NethServer]
+
 * Tue Jun 11 2013 Davide Principi <davide.principi@nethesis.it> - 1.2.1-1.ns6
 - Active Directory integration (experimental) #2000
 
