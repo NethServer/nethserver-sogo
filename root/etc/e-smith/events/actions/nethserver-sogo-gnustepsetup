@@ -23,14 +23,14 @@
 use strict;
 
 use User::pwent;
-use NethServer::Directory;
+use NethServer::Password;
 use esmith::templates;
 
 umask 077;
 
 # Get sogo user passwd entry
 my $sogoUser = getpwnam('sogo') or die('Missing sogo user'); 
-my $sogoPassword = NethServer::Directory::getUserPassword('sogo', 0) || die('Could not generate sogo password!');
+my $sogoPassword = NethServer::Password::store('sogo') || die('Could not generate sogo password!');
 
 # Expand sogo-config template 
 my $sogoConfiguration = esmith::templates::processTemplate({
