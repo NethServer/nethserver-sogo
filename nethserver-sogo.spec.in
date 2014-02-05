@@ -42,6 +42,10 @@ echo "%doc COPYING" >> %{name}-%{version}-filelist
 %defattr(-,root,root)
 
 %changelog
+* Wed Feb 05 2014 Davide Principi <davide.principi@nethesis.it> - 1.3.0-1.ns6
+- Upgrade SOGo to release 2.1.1b - Enhancement #2457 [NethServer]
+- Directory: backup service accounts passwords  - Enhancement #2063 [NethServer]
+
 * Mon Dec 16 2013 Davide Principi <davide.principi@nethesis.it> - 1.2.2-1.ns6
 - Redirect to internal DNS name - Bug #2371 [NethServer]
 - Support iOS7 carddav client - Enhancement #2221 [NethServer]
