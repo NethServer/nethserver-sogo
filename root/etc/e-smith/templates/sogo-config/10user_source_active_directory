@@ -14,20 +14,19 @@
         return '';
     }
 
-    open(CFG, '-|', '/usr/bin/net ads info') || die("net ads error $!\n");
+    my $adsRealm = $smb{'AdsRealm'} || $DomainName;
+    my $adsBasePath = join(',', map { 'dc=' . uc($_) } split(/\./, $adsRealm) );
+    my $adsLdapServer = $sogod{'AdsLdapServer'} ? $sogod{'AdsLdapServer'} : lc($adsRealm);
+    my $baseDN = join(',', ($smb{'AdsLdapAccountsBranch'} ? $smb{'AdsLdapAccountsBranch'} : 'cn=Users'), $adsBasePath);
 
-    my @tokens = ();
-
-    while(<CFG>) {
-        chomp $_;
-	push @tokens, split(/:\s+/, $_, 2);
+    if($adsLdapServer =~ m{^(?:(ldaps?)://)?([^:]+)(?:\:(\d+))?(/.*)?$}) {
+        $adsLdapServer = sprintf('%s://%s:%s%s',
+				 ($1 ? $1 : 'ldap'),
+				 $2,
+				 ($3 ? $3 : '389'),
+				 $4
+	    );
     }
-
-    %ads = (@tokens);
-
-    close(CFG);
-
-    my ($adsLdapServer, $adsLdapPort) = $sogod{'AdsLdapServer'} ? split(':', $sogod{'AdsLdapServer'} , 2) : ($ads{'LDAP server'}, $ads{'LDAP port'});
 
     push @sogoUserSources, 
         qq(
@@ -37,16 +36,16 @@
 	    IDFieldName = cn;
 	    UIDFieldName = userPrincipalName;
 	    canAuthenticate = YES;
-	    bindDN = "CN=$sogoCredentials[0],CN=Users,$ads{'Bind Path'}";
+	    bindDN = "CN=$sogoCredentials[0],CN=Users,$adsBasePath";
 	    bindPassword = "$sogoCredentials[1]";
-	    baseDN = "CN=Users,$ads{'Bind Path'}";
+	    baseDN = "CN=Users,$adsBasePath";
 	    bindFields = (
                 sAMAccountName,
                 userPrincipalName
             );
 	    hostname = $adsLdapServer;
             port = $adsLdapPort;
-	    displayName = "$ads{'Realm'} users";
+	    displayName = "$adsRealm users";
 	    isAddressBook = YES;
     );
     
