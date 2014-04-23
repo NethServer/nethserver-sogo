@@ -28,9 +28,8 @@
 	    );
     }
 
-    push @sogoUserSources, 
-        qq(
-	    id = AD;
+    push @sogoUserSources, qq(
+	    id = AD_Users;
 	    type = ldap;
 	    CNFieldName = cn;
 	    IDFieldName = cn;
@@ -38,14 +37,31 @@
 	    canAuthenticate = YES;
 	    bindDN = "CN=$sogoCredentials[0],CN=Users,$adsBasePath";
 	    bindPassword = "$sogoCredentials[1]";
-	    baseDN = "CN=Users,$adsBasePath";
+	    baseDN = "$baseDN";
 	    bindFields = (
                 sAMAccountName,
                 userPrincipalName
             );
 	    hostname = $adsLdapServer;
-            port = $adsLdapPort;
+	    filter = "(objectClass=''user'')";
+	    scope = SUB;
 	    displayName = "$adsRealm users";
+	    isAddressBook = YES;
+    );
+
+    push @sogoUserSources, qq(
+	    id = AD_Groups;
+	    type = ldap;
+	    CNFieldName = name;
+	    IDFieldName = cn;
+	    canAuthenticate = YES;
+	    bindDN = "CN=$sogoCredentials[0],CN=Users,$adsBasePath";
+	    bindPassword = "$sogoCredentials[1]";
+	    baseDN = "$baseDN";
+	    hostname = $adsLdapServer;
+	    filter = "(objectClass=''group'')";
+	    scope = SUB;
+	    displayName = "$adsRealm groups";
 	    isAddressBook = YES;
     );
     
