@@ -32,8 +32,8 @@
 	    id = AD_Users;
 	    type = ldap;
 	    CNFieldName = cn;
-	    IDFieldName = cn;
-	    UIDFieldName = userPrincipalName;
+	    IDFieldName = sAMAccountName;
+	    UIDFieldName = sAMAccountName;
 	    canAuthenticate = YES;
 	    bindDN = "CN=$sogoCredentials[0],CN=Users,$adsBasePath";
 	    bindPassword = "$sogoCredentials[1]";
@@ -53,7 +53,8 @@
 	    id = AD_Groups;
 	    type = ldap;
 	    CNFieldName = name;
-	    IDFieldName = cn;
+	    IDFieldName = sAMAccountName;
+	    UIDFieldName = sAMAccountName;
 	    canAuthenticate = YES;
 	    bindDN = "CN=$sogoCredentials[0],CN=Users,$adsBasePath";
 	    bindPassword = "$sogoCredentials[1]";
