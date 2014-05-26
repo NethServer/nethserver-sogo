@@ -60,11 +60,29 @@
 	    bindPassword = "$sogoCredentials[1]";
 	    baseDN = "$baseDN";
 	    hostname = $adsLdapServer;
-	    filter = "(objectClass=''group'')";
+	    filter = "(objectClass=''group'') AND (sAMAccountType=268435456)";
 	    scope = SUB;
 	    displayName = "$adsRealm groups";
 	    isAddressBook = YES;
     );
+
+    push @sogoUserSources, qq(
+	    id = AD_DistributionLists;
+	    type = ldap;
+	    CNFieldName = name;
+	    IDFieldName = sAMAccountName;
+	    UIDFieldName = sAMAccountName;
+	    canAuthenticate = NO;
+	    bindDN = "CN=$sogoCredentials[0],CN=Users,$adsBasePath";
+	    bindPassword = "$sogoCredentials[1]";
+	    baseDN = "$baseDN";
+	    hostname = $adsLdapServer;
+	    filter = "(objectClass=''group'') AND (sAMAccountType=268435457)";
+	    scope = SUB;
+	    displayName = "$adsRealm distribution lists";
+	    isAddressBook = YES;
+    );
+
     
     '';
 }
