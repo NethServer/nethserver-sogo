@@ -49,7 +49,9 @@
 	    isAddressBook = YES;
     );
 
-    push @sogoUserSources, qq(
+    my $listFilter = "(objectClass=''group'')";
+    if($postfix{'AdsGroupsDeliveryType'} eq 'shared') {
+        push @sogoUserSources, qq(
 	    id = AD_Groups;
 	    type = ldap;
 	    CNFieldName = name;
@@ -64,7 +66,9 @@
 	    scope = SUB;
 	    displayName = "$adsRealm groups";
 	    isAddressBook = YES;
-    );
+        );
+	$listFilter = "(objectClass=''group'') AND (sAMAccountType=268435457)";
+    } 
 
     push @sogoUserSources, qq(
 	    id = AD_DistributionLists;
@@ -77,7 +81,7 @@
 	    bindPassword = "$sogoCredentials[1]";
 	    baseDN = "$baseDN";
 	    hostname = $adsLdapServer;
-	    filter = "(objectClass=''group'') AND (sAMAccountType=268435457)";
+	    filter = "$listFilter";
 	    scope = SUB;
 	    displayName = "$adsRealm distribution lists";
 	    isAddressBook = YES;
