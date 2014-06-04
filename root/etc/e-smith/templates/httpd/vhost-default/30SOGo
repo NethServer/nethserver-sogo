@@ -73,11 +73,13 @@ ProxyPass /card/principals http://127.0.0.1:20000/SOGo/dav/ interpolate
 ProxyPass /card/ http://127.0.0.1:20000/SOGo/dav/ interpolate
 ProxyPass /principals http://127.0.0.1:20000/SOGo/dav/ interpolate
 
+SetEnvIf Host (.*) REQUEST_HOST=\$1
+
 <Proxy http://127.0.0.1:20000/SOGo>
 ## adjust the following to your configuration
   RequestHeader set "x-webobjects-server-port" "443"
-  RequestHeader set "x-webobjects-server-name" "$ServerName"
-  RequestHeader set "x-webobjects-server-url" "https://$ServerName"
+  RequestHeader set "x-webobjects-server-name" "%{REQUEST_HOST}e"
+  RequestHeader set "x-webobjects-server-url" "https://%{REQUEST_HOST}e/SOGo"
 
 ## When using proxy-side autentication, you need to uncomment and
 ## adjust the following line:
