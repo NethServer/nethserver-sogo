@@ -26,9 +26,7 @@ use NethServer::Directory;
 my $password = NethServer::Directory::getUserPassword('sogo', 0) || die('Could not get sogo password!');
 
 my $commands = join("\n", 
-	      "DROP USER 'sogo'\@'localhost';",
-	      "CREATE USER 'sogo'\@'localhost' IDENTIFIED BY '$password';",
-	      "GRANT ALL PRIVILEGES ON `sogo`.* TO 'sogo'\@'localhost';",
+	      "GRANT ALL PRIVILEGES ON `sogo`.* TO 'sogo'\@'localhost' IDENTIFIED BY '$password';",
 	      "FLUSH PRIVILEGES;",
 	      "CREATE DATABASE IF NOT EXISTS sogo DEFAULT CHARACTER SET = 'utf8';"
      ) . "\n";
