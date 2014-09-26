@@ -3,7 +3,9 @@
     # 20user_source_ldap
     #
 
-    push @sogoUserSources, 
+    # WARNING: the order of the elements in @sogoUserSources is
+    # fundamental for sharing calendars and addressbooks. Refs #2808
+    unshift @sogoUserSources,
         qq(
 	    id = users;
 	    type = ldap;
