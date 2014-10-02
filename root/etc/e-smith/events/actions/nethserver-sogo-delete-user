@@ -32,13 +32,11 @@ my $event = $ARGV [0];
 my $account = $ARGV [1];
 
 $a = $adb->get($account) || undef;
-unless ( defined $a && $a->prop('type') eq "user-deleted" )
+unless ( defined $a && $a->prop('type') eq 'user-deleted' )
 {
     warn "$account is not a user account\n";
     exit (0);
 }
 
-my @args = ('/usr/bin/sudo','-u','sogo','/usr/sbin/sogo-tool','remove',$account);
-system(@args);
+exec('/sbin/runuser', '-s', '/bin/bash','-', 'sogo', '-c', "/usr/sbin/sogo-tool remove $account" );
 
-exit (0);
