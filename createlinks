@@ -59,6 +59,10 @@ event_services($_, qw(
   domain-modify
 ));
 
+event_actions('user-delete', qw(
+    nethserver-sogo-delete-user 80
+));
+
 #
 # migration-import event
 #
