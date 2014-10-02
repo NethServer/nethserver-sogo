@@ -38,6 +38,7 @@ unless ( defined $a && $a->prop('type') eq "user-deleted" )
     exit (0);
 }
 
-`/usr/bin/sudo -u sogo /usr/sbin/sogo-tool remove $account`;
+my @args = ('/usr/bin/sudo','-u','sogo','/usr/sbin/sogo-tool','remove',$account);
+system(@args);
 
 exit (0);
