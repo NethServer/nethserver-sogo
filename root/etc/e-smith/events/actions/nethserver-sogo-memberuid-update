@@ -1,0 +1,49 @@
+#!/usr/bin/perl
+
+#
+# nethserver-sogo-memberuid-update
+#
+# add memberUid attribute to user primary groups #2808
+#
+
+#
+# Copyright (C) 2012 Nethesis S.r.l.
+# http://www.nethesis.it - support@nethesis.it
+#
+# This script is part of NethServer.
+#
+# NethServer is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License,
+# or any later version.
+#
+# NethServer is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with NethServer.  If not, see <http://www.gnu.org/licenses/>.
+#
+
+use esmith::AccountsDB;
+use NethServer::Directory;
+use strict;
+
+my $accountsDb = esmith::AccountsDB->open() || die('Could not open AccountsDB');
+my $nsDirectory = NethServer::Directory->new() || die('Could not access LDAP Directory');
+
+foreach my $user (map { $_->key } $accountsDb->users()){
+    my @entries = $nsDirectory->search(
+    base => 'ou=Groups,dc=directory,dc=nh',
+    filter => sprintf('(&(cn=%s)(!(memberUid=%s))(objectClass=posixGroup))', $user, $user),
+    scope => 'one',
+    )->entries;
+    foreach  my $entry ( @entries ) {
+        $entry->add ( memberUid => $entry->get_value('cn'));
+	$entry->update($nsDirectory);
+    }
+}
+
+exit 0;
+
