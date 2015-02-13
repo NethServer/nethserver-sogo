@@ -1,7 +1,7 @@
 Summary: NethServer SOGo configuration
 Name: nethserver-sogo
-Version: @@VERSION@@
-Release: @@RELEASE@@
+Version: 1.4.0
+Release: 1
 License: GPL
 URL: %{url_prefix}/%{name} 
 Source0: %{name}-%{version}.tar.gz
