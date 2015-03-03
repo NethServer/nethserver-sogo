@@ -33,5 +33,10 @@
     # IMAP mailbox separator (dovecot default):
     $S{NGImap4ConnectionStringSeparator} = '/';
 
+    #Active Sync options
+    $S{SOGoMaximumPingInterval} = ($sogod{'SOGoMaximumPingInterval'} || '10');
+    $S{SOGoMaximumSyncInterval} = ($sogod{'SOGoMaximumSyncInterval'} || '30');
+    $S{SOGoInternalSyncInterval} = ($sogod{'SOGoInternalSyncInterval'} || '10');
+
     '';
 }
