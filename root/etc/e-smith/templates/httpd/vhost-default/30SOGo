@@ -72,6 +72,7 @@ ProxyPass /card/SOGo http://127.0.0.1:20000/SOGo interpolate
 ProxyPass /card/principals http://127.0.0.1:20000/SOGo/dav/ interpolate
 ProxyPass /card/ http://127.0.0.1:20000/SOGo/dav/ interpolate
 ProxyPass /principals http://127.0.0.1:20000/SOGo/dav/ interpolate
+ProxyPass /Microsoft-Server-ActiveSync http://127.0.0.1:20000/SOGo/Microsoft-Server-ActiveSync retry=60 connectiontimeout=5 timeout=360
 
 SetEnvIf Host (.*) REQUEST_HOST=\$1
 
