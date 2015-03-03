@@ -15,6 +15,8 @@ Requires: nethserver-httpd >= 1.0.1-2
 Requires: sogo >= 2.2.8
 Requires: sogo-tool
 Requires: sope49-gdl1-mysql
+Requires: sogo-activesync
+Requires: libwbxml
 
 BuildRequires: perl
 BuildRequires: nethserver-devtools 
