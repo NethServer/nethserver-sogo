@@ -30,6 +30,7 @@ event_templates('nethserver-sogo-update', qw(
       /etc/httpd/conf.d/SOGo.conf
       /etc/httpd/conf/httpd.conf
       /etc/cron.d/sogo
+      /etc/sysconfig/sogo
 ));
 
 event_actions('nethserver-sogo-update', qw(
