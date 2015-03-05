@@ -19,7 +19,7 @@
         hostname = ldapi://;
         scope = ONE;
         displayName = "$SystemName groups";
-        isAddressBook = YES;
+        isAddressBook = NO;
     );
 
     '';
