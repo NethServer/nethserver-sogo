@@ -1,7 +1,7 @@
 Summary: NethServer SOGo configuration
 Name: nethserver-sogo
-Version: 1.4.1
-Release: 1%{dist}
+Version: 1.5.0
+Release: 1%{?dist}
 License: GPL
 URL: %{url_prefix}/%{name} 
 Source0: %{name}-%{version}.tar.gz
@@ -44,6 +44,14 @@ echo "%doc COPYING" >> %{name}-%{version}-filelist
 %defattr(-,root,root)
 
 %changelog
+* Tue Mar 10 2015 Giacomo Sanchietti <giacomo.sanchietti@nethesis.it> - 1.5.0-1
+- SOGo active sync support - Feature #3063 [NethServer]
+- SOGo user's assets not deleted - Bug #2880 [NethServer]
+- SOGo: ACLs deployed using groups does not work - Bug #2808 [NethServer]
+- SOGo: hide Groups addressbook - Enhancement #2801 [NethServer]
+- SOGo: suppress DROP USER error message - Enhancement #2779 [NethServer]
+- SOGo data disappeared after packages update - Bug #2778 [NethServer]
+
 * Thu Jun 12 2014 Giacomo Sanchietti <giacomo.sanchietti@nethesis.it> - 1.4.0-1.ns6
 - Preserve request host name in SOGo - Enhancement #2759
 - AD group mail delivery type switch - Feature #2751
