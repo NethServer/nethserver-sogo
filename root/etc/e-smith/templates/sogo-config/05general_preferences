@@ -37,6 +37,8 @@
     $S{SOGoMaximumPingInterval} = ($sogod{'SOGoMaximumPingInterval'} || '10');
     $S{SOGoMaximumSyncInterval} = ($sogod{'SOGoMaximumSyncInterval'} || '30');
     $S{SOGoInternalSyncInterval} = ($sogod{'SOGoInternalSyncInterval'} || '10');
+    $S{SOGoMaximumSyncResponseSize} = ($sogod{'SOGoMaximumSyncResponseSize'} || '2048');
+    $S{WOWatchDogRequestTimeout} = '($sogod{'WOWatchDogRequestTimeout'} || '10');
 
     '';
 }
