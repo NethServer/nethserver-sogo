@@ -1,6 +1,6 @@
 Summary: NethServer SOGo configuration
 Name: nethserver-sogo
-Version: 1.5.0
+Version: 1.5.1
 Release: 1%{?dist}
 License: GPL
 URL: %{url_prefix}/%{name} 
@@ -44,6 +44,11 @@ echo "%doc COPYING" >> %{name}-%{version}-filelist
 %defattr(-,root,root)
 
 %changelog
+* Thu Apr 23 2015 Davide Principi <davide.principi@nethesis.it> - 1.5.1-1
+- SOGo ActiveSync doesn't work properly with much data - Bug #3123 [NethServer]
+- SOGo doesn't show multiple addresses on sender field - Bug #3122 [NethServer]
+- SOGo: sharing resources (contacts or calendar) doesn't works - Bug #3116 [NethServer]
+
 * Tue Mar 10 2015 Giacomo Sanchietti <giacomo.sanchietti@nethesis.it> - 1.5.0-1
 - SOGo active sync support - Feature #3063 [NethServer]
 - SOGo user's assets not deleted - Bug #2880 [NethServer]
