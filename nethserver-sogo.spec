@@ -1,6 +1,6 @@
 Summary: NethServer SOGo configuration
 Name: nethserver-sogo
-Version: 1.5.1
+Version: 1.5.2
 Release: 1%{?dist}
 License: GPL
 URL: %{url_prefix}/%{name} 
@@ -44,6 +44,9 @@ echo "%doc COPYING" >> %{name}-%{version}-filelist
 %defattr(-,root,root)
 
 %changelog
+* Mon May 11 2015 Giacomo Sanchietti <giacomo.sanchietti@nethesis.it> - 1.5.2-1
+- SOGo: proxy-nokeepalive option breaks compatibility with other HTTP servers - Bug #3157 [NethServer]
+
 * Thu Apr 23 2015 Davide Principi <davide.principi@nethesis.it> - 1.5.1-1
 - SOGo ActiveSync doesn't work properly with much data - Bug #3123 [NethServer]
 - SOGo doesn't show multiple addresses on sender field - Bug #3122 [NethServer]
