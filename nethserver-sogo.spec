@@ -1,6 +1,6 @@
 Summary: NethServer SOGo configuration
 Name: nethserver-sogo
-Version: 1.5.2
+Version: 1.5.3
 Release: 1%{?dist}
 License: GPL
 URL: %{url_prefix}/%{name} 
@@ -44,6 +44,9 @@ echo "%doc COPYING" >> %{name}-%{version}-filelist
 %defattr(-,root,root)
 
 %changelog
+* Mon Jun 08 2015 Stefano Fancello <stefano.fancello@nethesis.it> - 1.5.3-1.ns6
+- Upgrade SOGO to 2.3.0 - Feature #3186 [NethServer]
+
 * Mon May 11 2015 Giacomo Sanchietti <giacomo.sanchietti@nethesis.it> - 1.5.2-1
 - SOGo: proxy-nokeepalive option breaks compatibility with other HTTP servers - Bug #3157 [NethServer]
 
