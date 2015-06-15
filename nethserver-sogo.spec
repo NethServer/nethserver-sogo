@@ -1,6 +1,6 @@
 Summary: NethServer SOGo configuration
 Name: nethserver-sogo
-Version: 1.5.3
+Version: 1.5.4
 Release: 1%{?dist}
 License: GPL
 URL: %{url_prefix}/%{name} 
@@ -44,6 +44,9 @@ echo "%doc COPYING" >> %{name}-%{version}-filelist
 %defattr(-,root,root)
 
 %changelog
+* Mon Jun 15 2015 Giacomo Sanchietti <giacomo.sanchietti@nethesis.it> - 1.5.4-1
+- nethserver-sogo-2.1.17-to-2.3.0-update action returns 1 if executed when not needed - Bug #3196 [NethServer]
+
 * Mon Jun 08 2015 Stefano Fancello <stefano.fancello@nethesis.it> - 1.5.3-1.ns6
 - Upgrade SOGO to 2.3.0 - Feature #3186 [NethServer]
 
