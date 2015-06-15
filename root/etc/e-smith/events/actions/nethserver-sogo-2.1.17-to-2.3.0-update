@@ -36,3 +36,5 @@ do
     /usr/bin/mysql -usogo -p${MYSQLSOGOPASS} sogo -e "ALTER TABLE $table MODIFY c_partstates mediumtext" 2>/dev/null
     /usr/bin/mysql -usogo -p${MYSQLSOGOPASS} sogo -e "ALTER TABLE $table ADD COLUMN c_description mediumtext" 2>/dev/null
 done
+
+exit 0
