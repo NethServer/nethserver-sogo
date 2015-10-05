@@ -15,6 +15,11 @@ RewriteRule ^/SOGo(/.*)?\$ https://$ServerName/SOGo\$1 [R=301,L]
 SOGOREDIRECT
 
     } else {
+        my $active_sync = '';
+        my $ac = $sogod{'ActiveSync'} || 'disabled';
+        if ($ac eq 'enabled') {
+            $active_sync = "ProxyPass /Microsoft-Server-ActiveSync http://127.0.0.1:20000/SOGo/Microsoft-Server-ActiveSync retry=60 connectiontimeout=5 timeout=360\n";
+        }
 
 	$sogoConf = <<SOGOFE;
 
@@ -69,7 +74,7 @@ ProxyPass /card/SOGo http://127.0.0.1:20000/SOGo interpolate
 ProxyPass /card/principals http://127.0.0.1:20000/SOGo/dav/ interpolate
 ProxyPass /card/ http://127.0.0.1:20000/SOGo/dav/ interpolate
 ProxyPass /principals http://127.0.0.1:20000/SOGo/dav/ interpolate
-ProxyPass /Microsoft-Server-ActiveSync http://127.0.0.1:20000/SOGo/Microsoft-Server-ActiveSync retry=60 connectiontimeout=5 timeout=360
+$active_sync
 
 SetEnvIf Host (.*) REQUEST_HOST=\$1
 
