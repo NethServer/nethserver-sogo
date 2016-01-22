@@ -53,7 +53,7 @@ event_services('nethserver-sogo-update', qw(
 # user-{create,modify,delete} events
 #
 event_services($_, qw(
-      memcached reload
+      memcached restart
 )) foreach (qw(
   user-create 
   user-modify 
@@ -97,7 +97,7 @@ foreach (qw(
 
     event_services($_, qw(
         sogod restart
-        memcached reload
+        memcached restart
     ));
 
 }
