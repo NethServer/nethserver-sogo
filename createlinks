@@ -28,7 +28,7 @@ use esmith::Build::CreateLinks qw(:all);
 #
 event_templates('nethserver-sogo-update', qw(
       /etc/httpd/conf.d/SOGo.conf
-      /etc/httpd/conf/httpd.conf
+      /etc/httpd/conf.d/nethserver.conf
       /etc/cron.d/sogo
       /etc/sysconfig/sogo
 ));
@@ -53,7 +53,7 @@ event_services('nethserver-sogo-update', qw(
 # user-{create,modify,delete} events
 #
 event_services($_, qw(
-      memcached reload
+      memcached restart
 )) foreach (qw(
   user-create 
   user-modify 
@@ -97,7 +97,7 @@ foreach (qw(
 
     event_services($_, qw(
         sogod restart
-        memcached reload
+        memcached restart
     ));
 
 }

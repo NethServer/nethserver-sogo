@@ -32,8 +32,7 @@ AliasMatch /SOGo/so/ControlPanel/Products/(.*)/Resources/(.*) \\
 
 <Directory /usr/lib64/GNUstep/SOGo/>
     AllowOverride None
-    Order deny,allow
-    Allow from all
+    Require all granted
 
     # Explicitly allow caching of static content to avoid browser specific behavior.
     # A resource's URL MUST change in order to have the client load the new version.
@@ -53,7 +52,7 @@ AliasMatch /SOGo/so/ControlPanel/Products/(.*)/Resources/(.*) \\
 ## below.
 <Location /SOGo>
   SetEnv proxy-nokeepalive 1
-  Allow from all
+  Require all granted
 </Location>
 
 ProxyRequests Off
@@ -93,8 +92,7 @@ SetEnvIf Host (.*) REQUEST_HOST=\$1
 
   AddDefaultCharset UTF-8
 
-  Order allow,deny
-  Allow from all
+  Require all granted
 </Proxy>
 
 ## We use mod_rewrite to pass remote address to the SOGo proxy.
