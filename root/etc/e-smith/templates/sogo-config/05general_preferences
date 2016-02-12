@@ -40,5 +40,7 @@
     $S{SOGoMaximumSyncResponseSize} = ($sogod{'SOGoMaximumSyncResponseSize'} || '2048');
     $S{WOWatchDogRequestTimeout} = ($sogod{'WOWatchDogRequestTimeout'} || '10');
 
+    $S{SxVMemLimit} = ($sogod{'SxVMemLimit'} || '384');
+
     '';
 }
