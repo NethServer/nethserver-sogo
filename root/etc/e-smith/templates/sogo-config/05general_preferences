@@ -18,6 +18,7 @@
     $S{SOGoDraftsFolderName} = ($sogod{'DraftsFolder'} || "Drafts");
     $S{SOGoSentFolderName} = ($sogod{'SentFolder'} || "Sent");
     $S{SOGoTrashFolderName} = ($sogod{'TrashFolder'} || "Trash");
+    $S{SOGoJunkFolderName} = ($dovecot{SpamFolder} || "Junk");
 
     $S{SOGoIMAPServer} = 'localhost';
     $S{SOGoMailDomain} = $DomainName || 'localdomain';
