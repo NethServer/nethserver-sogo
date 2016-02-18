@@ -1,6 +1,6 @@
 Summary: NethServer SOGo configuration
 Name: nethserver-sogo
-Version: 1.5.5
+Version: 1.5.6
 Release: 1%{?dist}
 License: GPL
 URL: %{url_prefix}/%{name} 
@@ -45,6 +45,10 @@ echo "%doc COPYING" >> %{name}-%{version}-filelist
 %dir %{_nseventsdir}/%{name}-update
 
 %changelog
+* Thu Feb 18 2016 Giacomo Sanchietti <giacomo.sanchietti@nethesis.it> - 1.5.6-1
+- Upgrade to upstream release 2.3.8 - Enhancement #3343
+- Support junkmail folder, thanks to markVnl
+
 * Mon Oct 05 2015 Giacomo Sanchietti <giacomo.sanchietti@nethesis.it> - 1.5.5-1
 - SOGo: add option to enable/disable ActiveSync - Enhancement #3279 [NethServer]
 
