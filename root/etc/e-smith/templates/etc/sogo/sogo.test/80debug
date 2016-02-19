@@ -1,0 +1,13 @@
+
+
+  /* 80 Debug */
+  //SOGoDebugRequests = YES;
+  //SoDebugBaseURL = YES;
+  //ImapDebugEnabled = YES;
+  //LDAPDebugEnabled = YES;
+  //PGDebugEnabled = YES;
+  //MySQL4DebugEnabled = YES;
+  //SOGoUIxDebugEnabled = YES;
+  //WODontZipResponse = YES;
+  //SOGoEASDebugEnabled = YES;
+  //WOLogFile = "/var/log/sogo/sogo.log";

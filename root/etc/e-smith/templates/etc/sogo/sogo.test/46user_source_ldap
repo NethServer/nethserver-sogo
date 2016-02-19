@@ -1,0 +1,30 @@
+{
+#
+#  /* 46 LDAP authentication */
+#  /* user_source_ldap
+#
+}
+    SOGoUserSources =(
+     \{   
+        type = ldap;
+        CNFieldName = cn;
+        UIDFieldName = uid;
+        IDFieldName = uid;
+        baseDN = "ou=People,dc=directory,dc=nh";
+	bindDN = "cn=sogo,dc=directory,dc=nh";
+        bindPassword = {
+                       ### is going to move to action/inint script
+                       use NethServer::Password;
+                       my $ldapPassword = NethServer::Password::store('sogo');
+                       ###
+                       $OUT .= "$ldapPassword;"  
+                       }
+        scope = ONE;
+        filter = "accountStatus=active";
+        canAuthenticate = YES;
+	displayName = "{$SystemName} users";
+        hostname = "ldapi://";
+	id = users;
+	isAddressBook = YES;
+     \}
+    );
