@@ -1,5 +1,4 @@
 
-
   /* 60 General */
     SOGoTimeZone = {$TimeZone || "UTC"};
     SOGoSuperUsernames = ({$sogod{'AdminUsers'} || 'admin'}); // This is an array - keep the parens!
@@ -12,3 +11,6 @@
     SOGoEnablePublicAccess = YES;
     NGUseUTF8AsURLEncoding = YES;
     SOGoAppointmentSendEMailReceipts = YES;
+{
+' '
+}

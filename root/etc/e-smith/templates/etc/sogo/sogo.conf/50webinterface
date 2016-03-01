@@ -1,5 +1,4 @@
 
-
   /* 50 Web Interface */
     SOGoVacationEnabled = YES;
     SOGoForwardEnabled = YES;
@@ -9,3 +8,6 @@
   //SOGoFirstDayOfWeek = 1;
   //SOGoMailReplyPlacement = "above";
   //SOGoMailSignaturePlacement = "above";
+{
+' '
+}

@@ -1,5 +1,4 @@
 
-
   /* 44 LDAP authentication */
     SOGoUserSources =(
      \{   

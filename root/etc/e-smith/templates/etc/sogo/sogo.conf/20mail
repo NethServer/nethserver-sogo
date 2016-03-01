@@ -1,5 +1,4 @@
 
-
   /* 20 Mail */
     SOGoDraftsFolderName = "{$sogod{DraftsFolder} || "Drafts"}";
     SOGoSentFolderName = "{$sogod{SentFolder} || "Sent"}";
@@ -11,3 +10,6 @@
     SOGoMailDomain = "{$DomainName || 'localdomain'}";
     SOGoMailingMechanism = "smtp";
     NGImap4ConnectionStringSeparator = "/";
+{
+' '
+}
