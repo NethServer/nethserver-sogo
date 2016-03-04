@@ -11,7 +11,7 @@
 
 #   Conditional expnasion of LDAP UserSsoucres.
 #   Supplemental to GNUStep setup, Please review  	
-	if( $smb{ServerRole} eq 'ADS' ) {
+    if( ($smb{ServerRole} || "") eq 'ADS' ) {
         return '';
     }
 

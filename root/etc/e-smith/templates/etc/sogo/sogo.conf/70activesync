@@ -7,6 +7,3 @@
 
     WOWatchDogRequestTimeout = {$sogod{'WOWatchDogRequestTimeout'} || '10'};
     WOWorkersCount = {$sogod{WOWorkersCount} || "3"};
-{
-' '
-}

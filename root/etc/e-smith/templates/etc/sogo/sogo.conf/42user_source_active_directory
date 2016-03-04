@@ -1,14 +1,10 @@
 {
  
- ##### THIS TEMPLATE SNIPPET IS NOT TESTED #####
- #####             PLEACE TEST             #####
-
- 
     #
     # 42 user_source_active_directory
     #
 
-    if( $smb{ServerRole} ne 'ADS' ) {
+    if( ($smb{ServerRole} || '') ne 'ADS' ) {
         return '';
     }
 

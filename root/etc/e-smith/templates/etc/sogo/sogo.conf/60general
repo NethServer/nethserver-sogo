@@ -11,6 +11,3 @@
     SOGoEnablePublicAccess = YES;
     NGUseUTF8AsURLEncoding = YES;
     SOGoAppointmentSendEMailReceipts = YES;
-{
-' '
-}

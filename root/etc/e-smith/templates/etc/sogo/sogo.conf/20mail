@@ -10,6 +10,3 @@
     SOGoMailDomain = "{$DomainName || 'localdomain'}";
     SOGoMailingMechanism = "smtp";
     NGImap4ConnectionStringSeparator = "/";
-{
-' '
-}
