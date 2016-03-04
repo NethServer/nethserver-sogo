@@ -31,6 +31,7 @@ event_templates('nethserver-sogo-update', qw(
       /etc/httpd/conf.d/nethserver.conf
       /etc/cron.d/sogo
       /etc/sysconfig/sogo
+      /etc/sogo/sogo.conf
 ));
 
 event_actions('nethserver-sogo-update', qw(
@@ -91,13 +92,13 @@ foreach (qw(
    nethserver-samba-adsjoin
 )) {
 
-    event_actions($_, qw(
-        nethserver-sogo-gnustepsetup 20    
-    ));
-
     event_services($_, qw(
         sogod restart
         memcached restart
     ));
+
+    event_templates($_, qw(
+      /etc/sogo/sogo.conf
+));
 
 }
