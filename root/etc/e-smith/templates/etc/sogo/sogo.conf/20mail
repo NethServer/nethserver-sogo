@@ -1,0 +1,15 @@
+
+  /* 20 Mail */
+    SOGoDraftsFolderName = "{$sogod{DraftsFolder} || "Drafts"}";
+    SOGoSentFolderName = "{$sogod{SentFolder} || "Sent"}";
+    SOGoTrashFolderName = "{$sogod{TrashFolder} || "Trash"}";
+    SOGoJunkFolderName = "{$dovecot{SpamFolder} || "Junk"}";
+    SOGoIMAPServer = "localhost";
+    SOGoSieveServer = "sieve://127.0.0.1:4190";
+    SOGoSMTPServer = "127.0.0.1:587";
+    SOGoMailDomain = "{$DomainName || 'localdomain'}";
+    SOGoMailingMechanism = "smtp";
+    NGImap4ConnectionStringSeparator = "/";
+{
+' '
+}

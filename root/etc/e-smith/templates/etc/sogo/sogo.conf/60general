@@ -1,0 +1,16 @@
+
+  /* 60 General */
+    SOGoTimeZone = {$TimeZone || "UTC"};
+    SOGoSuperUsernames = ({$sogod{'AdminUsers'} || 'admin'}); // This is an array - keep the parens!
+    SOGoMemcachedHost = "127.0.0.1";
+    SxVMemLimit = {$sogod{'SxVMemLimit'} || '384'};
+   /* Form Nethesis GNUStep configuration */
+    WOMessageUseUTF8 = YES;
+    WOParsersUseUTF8 = YES;
+    WOUseRelativeURLs = YES;
+    SOGoEnablePublicAccess = YES;
+    NGUseUTF8AsURLEncoding = YES;
+    SOGoAppointmentSendEMailReceipts = YES;
+{
+' '
+}

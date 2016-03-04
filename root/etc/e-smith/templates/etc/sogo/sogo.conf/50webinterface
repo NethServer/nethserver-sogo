@@ -1,0 +1,13 @@
+
+  /* 50 Web Interface */
+    SOGoVacationEnabled = YES;
+    SOGoForwardEnabled = YES;
+    SOGoSieveScriptsEnabled = YES;
+    SOGoMailAuxiliaryUserAccountsEnabled = {$sogod{'MailAuxiliaryUserAccountsEnabled'} || "YES"};
+    SOGoMailCustomFromEnabled = YES;
+  //SOGoFirstDayOfWeek = 1;
+  //SOGoMailReplyPlacement = "above";
+  //SOGoMailSignaturePlacement = "above";
+{
+' '
+}

@@ -1,0 +1,18 @@
+
+  /* 30 Notifications */
+{
+    # Read sogod db entry foor notifications and 
+    # Convert to 'YES/'NO' if 'Folder'/'ACLs'/'Appointment' is given    
+    
+    my @notifications = split(',', $sogod{Notifications});
+    my @folder_notifications = grep($_ eq 'Folders', @notifications) ? 'YES' : 'NO';
+    my @acl_notifications = grep($_ eq 'ACLs', @notifications) ? 'YES' : 'NO';
+    my @appointment_notifications = grep($_ eq 'Appointment', @notifications) ? 'YES' : 'NO';
+
+
+    $OUT .= <<EOF
+    SOGoFoldersSendEMailNotifications = @folder_notifications;
+    SOGoACLsSendEMailNotifications = @acl_notifications;
+    SOGoAppointmentSendEMailNotifications = @appointment_notifications; 
+EOF
+}

@@ -1,0 +1,12 @@
+
+  /* 70 Active Sync options and tuning */
+    SOGoMaximumPingInterval = {$sogod{'SOGoMaximumPingInterval'} || '10'};
+    SOGoMaximumSyncInterval = {$sogod{'SOGoMaximumSyncInterval'} || '30'};
+    SOGoInternalSyncInterval = {$sogod{'SOGoInternalSyncInterval'} || '10'};
+    SOGoMaximumSyncResponseSize = {$sogod{'SOGoMaximumSyncResponseSize'} || '2048'};
+
+    WOWatchDogRequestTimeout = {$sogod{'WOWatchDogRequestTimeout'} || '10'};
+    WOWorkersCount = {$sogod{WOWorkersCount} || "3"};
+{
+' '
+}
