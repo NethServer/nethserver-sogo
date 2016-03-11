@@ -51,9 +51,7 @@
         scope = SUB;
         displayName = "$adsRealm users";
         isAddressBook = YES;
-     \}
-    );
-    SOGoUserSources =(
+     \},
      \{
         id = AD_Groups;
         type = ldap;
@@ -69,9 +67,7 @@
         scope = SUB;
         displayName = "$adsRealm groups";
         isAddressBook = YES;
-     \}
-    );
-    SOGoUserSources =(
+     \},
      \{
         id = AD_DistributionLists;
         type = ldap;
