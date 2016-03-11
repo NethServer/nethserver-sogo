@@ -33,9 +33,7 @@
         displayName = "{$SystemName} groups";
         hostname = "ldapi://";
         isAddressBook = NO;
-     \}
-    );
-    SOGoUserSources =(
+     \},
      \{   
         id = users;
         type = ldap;
