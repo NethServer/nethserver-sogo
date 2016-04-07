@@ -7,6 +7,5 @@
     SOGoEnablePublicAccess = YES;
 
   /* From Nethesis GNUStep configuration
-     Undocumented in sogo instalation manual, could be deprecated */
-    // NGUseUTF8AsURLEncoding = YES;
-    // SOGoAppointmentSendEMailReceipts = YES;
+     Undocumented in sogo instalation manual */
+     SOGoAppointmentSendEMailReceipts = YES;

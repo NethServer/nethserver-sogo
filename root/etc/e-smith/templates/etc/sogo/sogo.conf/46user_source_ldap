@@ -4,13 +4,9 @@
 #  /* user_source_ldap
 #
 
-    ### is going to move to action/init script
     use NethServer::Password;
     my $ldapPassword = NethServer::Password::store('sogo');
-    ###
 
-#   Conditional expnasion of LDAP UserSsoucres.
-#   Supplemental to GNUStep setup, Please review  	
     if( ($smb{ServerRole} || "") eq 'ADS' ) {
         return '';
     }
@@ -30,7 +26,7 @@
         bindPassword = $ldapPassword;
         scope = ONE;
         canAuthenticate = YES;
-        displayName = "{$SystemName} groups";
+        displayName = "$SystemName groups";
         hostname = "ldapi://";
         isAddressBook = NO;
      \},
@@ -46,7 +42,7 @@
         scope = ONE;
         filter = "accountStatus=active";
         canAuthenticate = YES;
-        displayName = "{$SystemName} users";
+        displayName = "$SystemName users";
         hostname = "ldapi://";
         isAddressBook = YES;
      \}

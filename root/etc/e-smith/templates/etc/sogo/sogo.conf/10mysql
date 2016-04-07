@@ -2,11 +2,11 @@
 
   /* 10 Database configuration (mysql) */
 {
-    ### is going to move to action/init script
+
     use NethServer::Password;
     my $mysqlPassword = NethServer::Password::store('sogo');
-    ###
-   
+
+
     use URI::Escape;
     my $connString = 'mysql://sogo:' . ( uri_escape($mysqlPassword) || 'sogo')  . '@localhost/sogo';
 
