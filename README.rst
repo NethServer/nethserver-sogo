@@ -55,8 +55,6 @@ Configuration DB
 
     sogod=service
         ...
-        AdsLdapServer=
-        AdsCredentials=
         AdminUsers=admin
         DraftsFolder=Drafts
         Notifications=Appointment,ACLs
@@ -71,10 +69,6 @@ Configuration DB
 	  configuration guide
 	  <http://www.sogo.nu/english/support/documentation.html>`__
 
--  ``AdsLdapServer`` Customized Active Directory LDAP server URI (see
-   description below)
--  ``AdsCredentials`` Active Directory LDAP credentials required to
-   browse the directory (see description below)
 -  ``AdminUsers`` comma separated list of accounts allowed to bypass
    SOGo ACLs. See *SOGoSuperUsernames* key
 -  ``Notifications`` comma separated list of values (no spaces between

@@ -12,6 +12,7 @@ Requires: nethserver-mail-server >= 1.1.0-2
 Requires: nethserver-mysql >= 1.0.0
 Requires: nethserver-memcached >= 1.0.0
 Requires: nethserver-httpd >= 1.0.1-2
+Requires: nethserver-sssd
 Requires: sogo >= 2.3.0
 Requires: sogo-tool
 Requires: sope49-gdl1-mysql
