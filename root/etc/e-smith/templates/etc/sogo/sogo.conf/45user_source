@@ -1,0 +1,113 @@
+{
+    use NethServer::SSSD; 
+    my $sssd = new NethServer::SSSD();
+
+    my $baseDN = $sssd->baseDN();
+    my $bindDN = $sssd->bindDN();
+    my $bindPassword = $sssd->bindPassword();
+    my $host = $sssd->host();
+    my $ldapURI = $sssd->ldapURI();
+    
+    if ($sssd->isLdap){
+        # user source: ldap
+        $OUT .= <<EOF
+
+  /* 45 ldap authentication */
+    SOGoUserSources =(
+     \{   
+        id = groups;
+        type = ldap;
+        CNFieldName = cn;
+        UIDFieldName = cn;
+        IDFieldName = cn;
+        baseDN = "ou=Groups,$baseDN";     
+        bindDN = "$bindDN";
+        bindPassword = "$bindPassword";
+        scope = ONE;
+        canAuthenticate = YES;
+        displayName = "$SystemName groups";
+        hostname = "ldapi://";
+        isAddressBook = NO;
+     \},
+     \{   
+        id = users;
+        type = ldap;
+        CNFieldName = cn;
+        UIDFieldName = uid;
+        IDFieldName = uid;
+        baseDN = "ou=People,$baseDN";
+        bindDN = "$bindDN";
+        bindPassword = "$bindPassword";
+        scope = ONE;
+        canAuthenticate = YES;
+        displayName = "$SystemName users";
+        hostname = "ldapi://";
+        isAddressBook = YES;
+     \}
+    );
+EOF
+
+    } elsif($sssd->isAD){
+        # user source: AD
+        $OUT .= <<EOF
+
+  /* 45 AD authentication */
+    SOGoUserSources =(
+     \{ 
+        id = AD_Users;
+        type = ldap;
+        CNFieldName = cn;
+        IDFieldName = sAMAccountName;
+        UIDFieldName = sAMAccountName;
+        canAuthenticate = YES;
+        bindDN = "$bindDN";
+        bindPassword = "$bindPassword";
+        baseDN = "cn=Users,$baseDN";
+        bindFields = (
+                sAMAccountName,
+                userPrincipalName
+            );
+        hostname = $ldapURI;
+        filter = "(objectClass=''user'')";
+        scope = SUB;
+        displayName = "$DomainName users";
+        isAddressBook = YES;
+     \},
+     \{
+        id = AD_Groups;
+        type = ldap;
+        CNFieldName = name;
+        IDFieldName = sAMAccountName;
+        UIDFieldName = sAMAccountName;
+        canAuthenticate = YES;
+        bindDN = "$bindDN";
+        bindPassword = "$bindPassword";
+        baseDN = "cn=Users,$baseDN";
+        hostname = $ldapURI;
+        filter = "(objectClass=''group'') AND (sAMAccountType=268435456)";
+        scope = SUB;
+        displayName = "$DomainName groups";
+        isAddressBook = YES;
+     \},
+     \{
+        id = AD_DistributionLists;
+        type = ldap;
+        CNFieldName = name;
+        IDFieldName = sAMAccountName;
+        UIDFieldName = sAMAccountName;
+        canAuthenticate = NO;
+        bindDN = "$bindDN";
+        bindPassword = "$bindPassword";
+        baseDN = "cn=Users,$baseDN";
+        hostname = $ldapURI;
+        filter = "(objectClass=''group'') AND (sAMAccountType=268435457)";
+        scope = SUB;
+        displayName = "$DomainName distribution lists";
+        isAddressBook = YES;
+     \}
+    );
+EOF
+
+    }
+} 
+
