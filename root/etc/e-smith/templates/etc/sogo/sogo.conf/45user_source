@@ -88,22 +88,6 @@ EOF
         scope = SUB;
         displayName = "$DomainName groups";
         isAddressBook = YES;
-     \},
-     \{
-        id = AD_DistributionLists;
-        type = ldap;
-        CNFieldName = name;
-        IDFieldName = sAMAccountName;
-        UIDFieldName = sAMAccountName;
-        canAuthenticate = NO;
-        bindDN = "$bindDN";
-        bindPassword = "$bindPassword";
-        baseDN = "cn=Users,$baseDN";
-        hostname = $ldapURI;
-        filter = "(objectClass=''group'') AND (sAMAccountType=268435457)";
-        scope = SUB;
-        displayName = "$DomainName distribution lists";
-        isAddressBook = YES;
      \}
     );
 EOF
