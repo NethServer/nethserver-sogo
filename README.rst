@@ -200,3 +200,26 @@ However, ``gnustep-make`` and ``gnustep-base`` packages should be rarely
 installed on a server system.
 
 .. |image0| image:: {width: 500px}/attachments/download/171/sogo.svg
+
+
+Download and publish new rpms
+-----------------------------
+
+* Configure SOGo repo `/etc/yum.repos.d/sogo.repo`: ::
+
+  [sogo3-rhel7]
+  name=Inverse SOGo Repository
+  baseurl=http://inverse.ca/rhel-v3/7/$basearch
+  gpgcheck=0
+
+* Download latest release: ::
+
+  yum --enablerepo=nethserver-testing --downloadonly --downloaddir=sogo install sogo --disablerepo=epel,nethserver*
+
+* Remove all packages downloaded from non-sogo repos. This should be enough: ::
+
+  rm -f libevent* libmemcached* libobjc* memcached* zip*
+
+* Upload the rpms to NethForge: ::
+
+  upload-rpms packages.nethserver.org:nscom/7.2.1511/nethforge *rpm

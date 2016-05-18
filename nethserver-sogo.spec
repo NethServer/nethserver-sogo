@@ -36,6 +36,7 @@ rm -rf %{buildroot}
 (cd root; find . -depth -print | cpio -dump %{buildroot})
 %{genfilelist} %{buildroot} > %{name}-%{version}-filelist
 echo "%doc COPYING" >> %{name}-%{version}-filelist
+echo "%doc README.rst" >> %{name}-%{version}-filelist
 
 %post
 
