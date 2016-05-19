@@ -50,6 +50,7 @@ EOF
 
     } elsif($sssd->isAD){
         # user source: AD
+        $bindPassword =~ s/"/\"/;
         $OUT .= <<EOF
 
   /* 45 AD authentication */
@@ -60,6 +61,7 @@ EOF
         CNFieldName = cn;
         IDFieldName = sAMAccountName;
         UIDFieldName = sAMAccountName;
+        IMAPLoginFieldName = userPrincipalName;
         canAuthenticate = YES;
         bindDN = "$bindDN";
         bindPassword = "$bindPassword";
@@ -69,7 +71,7 @@ EOF
                 userPrincipalName
             );
         hostname = $ldapURI;
-        filter = "(objectClass=''user'')";
+        filter = "(objectClass='user')";
         scope = SUB;
         displayName = "$DomainName users";
         isAddressBook = YES;
@@ -85,7 +87,7 @@ EOF
         bindPassword = "$bindPassword";
         baseDN = "cn=Users,$baseDN";
         hostname = $ldapURI;
-        filter = "(objectClass=''group'') AND (sAMAccountType=268435456)";
+        filter = "(objectClass='group') AND (sAMAccountType=268435456)";
         scope = SUB;
         displayName = "$DomainName groups";
         isAddressBook = YES;
