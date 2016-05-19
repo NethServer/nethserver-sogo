@@ -35,6 +35,7 @@
         CNFieldName = cn;
         UIDFieldName = uid;
         IDFieldName = uid;
+        IMAPLoginFieldName = mail;
         baseDN = "ou=People,$baseDN";
         bindDN = "$bindDN";
         bindPassword = "$bindPassword";
