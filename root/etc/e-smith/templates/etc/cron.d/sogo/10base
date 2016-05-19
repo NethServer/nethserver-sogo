@@ -3,8 +3,8 @@
 # Vacation messages expiration
 # Make sure to set authname and authpassword with the credentials of a sieve admin
 {
-  use NethServer::Directory;
-  my $pwd = NethServer::Directory::getUserPassword('vmail');
+  use NethServer::Password;
+  my $pwd = NethServer::Password::store('vmail');
   $OUT.="0 0 * * *      sogo    /usr/sbin/sogo-tool expire-autoreply vmail:$pwd";
 }
 

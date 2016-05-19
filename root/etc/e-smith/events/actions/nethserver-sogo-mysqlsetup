@@ -21,9 +21,9 @@
 #
 
 use strict;
-use NethServer::Directory;
+use NethServer::Password;
 
-my $password = NethServer::Directory::getUserPassword('sogo', 0) || die('Could not get sogo password!');
+my $password = NethServer::Password::store('sogo') || die('Could not get sogo password!');
 
 my $commands = join("\n", 
 	      "GRANT ALL PRIVILEGES ON `sogo`.* TO 'sogo'\@'localhost' IDENTIFIED BY '$password';",
