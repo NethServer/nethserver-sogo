@@ -27,8 +27,7 @@ use esmith::Build::CreateLinks qw(:all);
 # update event
 #
 event_templates('nethserver-sogo-update', qw(
-      /etc/httpd/conf.d/SOGo.conf
-      /etc/httpd/conf.d/nethserver.conf
+      /etc/httpd/conf.d/default-virtualhost.inc
       /etc/cron.d/sogo
       /etc/sysconfig/sogo
       /etc/sogo/sogo.conf
