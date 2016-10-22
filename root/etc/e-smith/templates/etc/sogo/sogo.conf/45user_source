@@ -34,7 +34,8 @@
         type = ldap;
         CNFieldName = cn;
         UIDFieldName = uid;
-        IDFieldName = uid;
+        IDFieldName = mail;
+        bindFields = (mail);
         IMAPLoginFieldName = mail;
         baseDN = "ou=People,$baseDN";
         bindDN = "$bindDN";
