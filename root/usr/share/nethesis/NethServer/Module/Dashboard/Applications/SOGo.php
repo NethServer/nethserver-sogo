@@ -37,7 +37,7 @@ class SOGo extends \Nethgui\Module\AbstractModule implements \NethServer\Module\
     {
          $host = explode(':',$_SERVER['HTTP_HOST']);
          return array(
-            'url' => "http://".$host[0]."/SOGo/"
+            'url' => "https://".$host[0]."/SOGo/"
          );
     }
 }
