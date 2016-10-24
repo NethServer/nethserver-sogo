@@ -1,3 +1,6 @@
+#
+# 30SOGo
+#
 RewriteEngine On
-RewriteRule ^/sogo(/.*)?\$ https://%\{SERVER_NAME\}/SOGo$1 [R=301,L]
-RewriteRule ^/SOGo(/.*)?\$ https://%\{SERVER_NAME\}/SOGo$1 [R=301,L]
+RewriteCond %\{HTTPS\} !=on
+RewriteRule ^/SOGo(/.*)?$ https://%\{HTTP_HOST\}/SOGo$1 [R=301,L]
