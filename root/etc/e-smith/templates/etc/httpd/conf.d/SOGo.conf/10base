@@ -3,6 +3,16 @@
     ProxyPassReverse http://127.0.0.1:20000/SOGo
     SetEnv proxy-nokeepalive 1
 </Location>
+{
+
+    if ((($sogod{'Dav'} || '') eq 'enabled') && (($webtop{'Dav'} || 'disabled') eq 'disabled')){
+       $OUT.= "ProxyPass /dav http://127.0.0.1:20000/SOGo/dav\n";
+       $OUT.= "ProxyPass /cal http://127.0.0.1:20000/SOGo/dav\n";
+       $OUT.= "ProxyPass /card http://127.0.0.1:20000/SOGo/dav\n";
+       $OUT.= "ProxyPass /.well-known/caldav http://127.0.0.1:20000/SOGo/dav\n";
+       $OUT.= "ProxyPass /.well-known/carddav http://127.0.0.1:20000/SOGo/dav\n";
+    }
+}
 
 ProxyRequests Off
 ProxyPreserveHost On
@@ -35,8 +45,7 @@ Alias /SOGo/WebServerResources/ /usr/lib64/GNUstep/SOGo/WebServerResources/
 <Location /Microsoft-Server-ActiveSync>
     ProxyPass http://127.0.0.1:20000/SOGo/Microsoft-Server-ActiveSync retry=60 connectiontimeout=5 timeout=360
 </Location>
+
 EOF
-    } else {
-        $OUT = '';
     }
 }
