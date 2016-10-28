@@ -79,7 +79,7 @@ event_actions('migration-import', qw(
 # pre-backup-data event
 #
 event_actions('pre-backup-data', qw(
-    nethserver-sogo-backup-user 80
+    nethserver-sogo-backup-users 80
 ));
 
 

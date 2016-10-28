@@ -50,20 +50,10 @@ if( ! $old) {
 
 my $new = $dstConfigDb->get($service) || $dstConfigDb->new_record($service);
 $new->merge_props($old->props);
-$new->delete_prop('TCPPort');
-$new->delete_prop('SievePort');
-$new->delete_prop('DbPassword');
-$new->delete_prop('ACLsSendEMailNotifications');
-$new->delete_prop('updates');
-$new->delete_prop('SharedMailbox');
+my $Dav_prop = $old->prop('Dav') || 'enabled';
+$new->set_prop('Dav', $dav_prop);
 my $pass = $old->prop('DbPassword') || 'sogo';
 $new->set_prop('mysqlPassword',$pass);
-my @notifications = ('Appointment','EMail');
-my $acl = $old->prop('ACLsSendEMailNotifications') || 'NO'; 
-if ( uc($acl) eq 'YES' ) {
-   push @notifications, 'ACLs'; 
-}
-$new->set_prop('Notifications', join(',',@notifications));
 
 # copy sogo_sources db
 copy("$sourceDir/home/e-smith/db/sogo_sources",'/var/lib/nethserver/db/sogo_sources');

@@ -19,24 +19,19 @@
 # You should have received a copy of the GNU General Public License
 # along with NethServer.  If not, see <http://www.gnu.org/licenses/>.
 #
-package esmith;
 
 use strict;
-use Errno;
-use File::Path;
 
-use esmith::AccountsDB;
-my $adb = esmith::AccountsDB->open_ro();
+my $event = shift;
+my $account = shift;;
 
-my $event = $ARGV [0];
-my $account = $ARGV [1];
 
-$a = $adb->get($account) || undef;
-unless ( defined $a && $a->prop('type') eq 'user-deleted' )
-{
-    warn "$account is not a user account\n";
-    exit (0);
+# In the SOGo configuration UIDFieldName is set to the short_username (Ldap:uid, AD:sAMAccountName)
+# strip domain from account
+if ($account =~ /@/) {
+    $account = (split(/@/, $account))[0];
 }
 
-exec('/sbin/runuser', '-s', '/bin/bash','-', 'sogo', '-c', "/usr/sbin/sogo-tool remove $account" );
-
+# A user is unknown by SOGo if a SOGo service is never been used. 
+# Exit's 0 annyway, no need to handle this. 
+exec('/usr/sbin/sogo-tool', 'remove' , $account);

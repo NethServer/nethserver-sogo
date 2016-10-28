@@ -1,9 +1,9 @@
 #!/bin/bash
 
 tmp=`/bin/mktemp -d --suffix sogo`
-/bin/chown sogo:sogo $tmp
-/bin/su -s /bin/bash sogo sogo  -c "/usr/sbin/sogo-tool backup $tmp ALL" &> /dev/null
+/bin/chown root:sogo $tmp
+/usr/sbin/sogo-tool backup $tmp ALL &> /dev/null
 /bin/tar cvzf /var/lib/nethserver/backup/sogo-backup.tgz -C $tmp . &> /dev/null
 /bin/rm -rf $tmp &> /dev/null
-/bin/chown root:admin /var/lib/nethserver/backup/sogo-backup.tgz
+/bin/chown root:root /var/lib/nethserver/backup/sogo-backup.tgz
 /bin/chmod 640 /var/lib/nethserver/backup/sogo-backup.tgz
