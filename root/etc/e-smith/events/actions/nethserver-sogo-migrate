@@ -50,6 +50,7 @@ if( ! $old) {
 
 my $new = $dstConfigDb->get($service) || $dstConfigDb->new_record($service);
 $new->merge_props($old->props);
+$new->delete_prop('VirtualHosts');
 my $Dav_prop = $old->prop('Dav') || 'enabled';
 $new->set_prop('Dav', $dav_prop);
 my $pass = $old->prop('DbPassword') || 'sogo';

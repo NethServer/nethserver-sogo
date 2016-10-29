@@ -1,23 +1,77 @@
+{
+    my $sogo_host = ($sogod{'VirtualHost'} || 'Default');
+    my $sogo_cert = ($sogod{'Certificate'} || '');
+    my $end_config = ' ';
+    if (! (($sogod{'status'} || '') eq 'enabled')) {
+	$OUT .= "SOGo is disabaled\n";
+    }
+    else{
+        if ($sogo_host ne 'Default'){
+            $end_config = '</VirtualHost>';
+            if ($sogo_cert =~ /\./) {
+                $sogo_cert = (split(/\./, $sogo_cert))[0];
+             }
+            if (! -e "/etc/pki/tls/certs/$sogo_cert.crt") {
+                if ( -e '/etc/pki/tls/certs/Sogo.crt') {
+                   $sogo_cert = 'Sogo';
+                } else {
+                    $sogo_cert = 'localhost';
+                }
+             }
+             $OUT .= <<EOF 
+
+<VirtualHost *:80>
+ ServerName $sogo_host
+ RewriteEngine On
+ RewriteCond %\{HTTPS\} !=on
+ RewriteRule (.*) https://%\{SERVER_NAME\}\$1 [R,L]
+</VirtualHost>
+
+
+<VirtualHost *:443>
+ ServerName $sogo_host
+ 
+ SSLEngine on
+ SSLCertificateFile "/etc/pki/tls/certs/$sogo_cert.crt"
+ SSLCertificateKeyFile "/etc/pki/tls/private/$sogo_cert.key"
+
+EOF
+        }   
+
+        if ((($sogod{'Dav'} || '') eq 'enabled') && (($webtop{'Dav'} || 'disabled') eq 'disabled')){
+           $OUT .= <<EOF
+
+ProxyPass /dav http://127.0.0.1:20000/SOGo/dav
+ProxyPass /cal http://127.0.0.1:20000/SOGo/dav
+ProxyPass /card http://127.0.0.1:20000/SOGo/dav
+ProxyPass /.well-known/caldav http://127.0.0.1:20000/SOGo/dav
+ProxyPass /.well-known/carddav http://127.0.0.1:20000/SOGo/dav
+
+EOF
+           }
+   
+        if ((($sogod{'ActiveSync'} || '') eq 'enabled') && (($webtop{'ActiveSync'} || 'disabled') eq 'disabled')){
+           $OUT .= <<EOF
+
+<Location /Microsoft-Server-ActiveSync>
+    ProxyPass http://127.0.0.1:20000/SOGo/Microsoft-Server-ActiveSync retry=60 connectiontimeout=5 timeout=360
+</Location>
+
+EOF
+         }
+
+    $OUT .= <<EO_SOGO_CONF
+
 <Location /SOGo>
     ProxyPass http://127.0.0.1:20000/SOGo retry=0
     ProxyPassReverse http://127.0.0.1:20000/SOGo
     SetEnv proxy-nokeepalive 1
-</Location>
-{
-
-    if ((($sogod{'Dav'} || '') eq 'enabled') && (($webtop{'Dav'} || 'disabled') eq 'disabled')){
-       $OUT.= "ProxyPass /dav http://127.0.0.1:20000/SOGo/dav\n";
-       $OUT.= "ProxyPass /cal http://127.0.0.1:20000/SOGo/dav\n";
-       $OUT.= "ProxyPass /card http://127.0.0.1:20000/SOGo/dav\n";
-       $OUT.= "ProxyPass /.well-known/caldav http://127.0.0.1:20000/SOGo/dav\n";
-       $OUT.= "ProxyPass /.well-known/carddav http://127.0.0.1:20000/SOGo/dav\n";
-    }
-}
-
+</Location>    
+  
 ProxyRequests Off
 ProxyPreserveHost On
 
-SetEnvIf Host (.*) REQUEST_HOST=$1
+SetEnvIf Host (.*) REQUEST_HOST=\$1
 <Proxy http://127.0.0.1:20000/SOGo>
    RequestHeader set "x-webobjects-server-port" "443"
    RequestHeader set "x-webobjects-server-name" "%\{REQUEST_HOST\}e"
@@ -39,13 +93,9 @@ Alias /SOGo/WebServerResources/ /usr/lib64/GNUstep/SOGo/WebServerResources/
     </IfModule>
 </Directory>
 
-{
-    if ((($sogod{'ActiveSync'} || '') eq 'enabled') && (($webtop{'ActiveSync'} || 'disabled') eq 'disabled')){
-        $OUT .= <<EOF
-<Location /Microsoft-Server-ActiveSync>
-    ProxyPass http://127.0.0.1:20000/SOGo/Microsoft-Server-ActiveSync retry=60 connectiontimeout=5 timeout=360
-</Location>
-
-EOF
+$end_config
+EO_SOGO_CONF
+   
     }
+
 }

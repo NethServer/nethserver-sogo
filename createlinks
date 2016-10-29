@@ -39,9 +39,6 @@ event_actions('nethserver-sogo-update', qw(
       nethserver-sogo-ldapsetup    10
       nethserver-sogo-mysqlsetup   10
       nethserver-sogo-gnustepsetup 20
-      nethserver-sogo-fix-2778     30
-      nethserver-sogo-memberuid-update 30
-      nethserver-sogo-2.1.17-to-2.3.0-update 30
 ));
 
 event_services('nethserver-sogo-update', qw(

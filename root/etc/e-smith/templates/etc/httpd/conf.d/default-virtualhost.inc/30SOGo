@@ -1,15 +1,25 @@
 #
 # 30SOGo
 #
-RewriteEngine On
-RewriteCond %\{HTTPS\} !=on
-RewriteRule ^/SOGo(/.*)?$ https://%\{HTTP_HOST\}/SOGo$1 [R=301,L]
 {
-    if ((($sogod{'Dav'} || '') eq 'enabled') && (($webtop{'Dav'} || 'disabled') eq 'disabled')){
-       $OUT.= "RewriteRule ^/dav(/.*)?\$                 https://%{HTTP_HOST}/dav\$1 [R=301,L] \n";
-       $OUT.= "RewriteRule ^/cal(/.*)?\$                 https://%{HTTP_HOST}/cal\$1 [R=301,L] \n";
-       $OUT.= "RewriteRule ^/card(/.*)?\$                https://%{HTTP_HOST}/card\$1 [R=301,L] \n";
-       $OUT.= "RewriteRule ^/.well-known/caldav(/.*)?\$  https://%{HTTP_HOST}/.well-known/caldav\$1 [R=301,L] \n";
-       $OUT.= "RewriteRule ^/.well-known/carddav(.*)/?\$ https://%{HTTP_HOST}/.well-known/carddav\$1 [R=301,L] \n";
+    my $sogo_host = ($sogod{'VirtualHost'} || 'Default');
+    if (! (($sogod{'status'} || '') eq 'enabled')) {
+       $OUT.= "# SOGo webacces is disabled\n\n\n";
+    } 
+    elsif ($sogo_host ne 'Default'){
+       $OUT.= "# SOGo webacces exclusive on $sogo_host\n\n\n";
+    } 
+    else { 
+       $OUT.= "RewriteEngine On\n";
+       $OUT.= "RewriteCond %{HTTPS} !=on\n";
+       $OUT.= "RewriteRule ^/SOGo(/.*)?\$ https://%{HTTP_HOST}/SOGo\$1 [R=301,L]\n";
+
+       if ((($sogod{'Dav'} || '') eq 'enabled') && (($webtop{'Dav'} || 'disabled') eq 'disabled')){
+          $OUT.= "RewriteRule ^/dav(/.*)?\$                 https://%{HTTP_HOST}/dav\$1 [R=301,L] \n";
+          $OUT.= "RewriteRule ^/cal(/.*)?\$                 https://%{HTTP_HOST}/cal\$1 [R=301,L] \n";
+          $OUT.= "RewriteRule ^/card(/.*)?\$                https://%{HTTP_HOST}/card\$1 [R=301,L] \n";
+          $OUT.= "RewriteRule ^/.well-known/caldav(/.*)?\$  https://%{HTTP_HOST}/.well-known/caldav\$1 [R=301,L] \n";
+          $OUT.= "RewriteRule ^/.well-known/carddav(.*)/?\$ https://%{HTTP_HOST}/.well-known/carddav\$1 [R=301,L] \n\n\n";
+       }
     }
 }
