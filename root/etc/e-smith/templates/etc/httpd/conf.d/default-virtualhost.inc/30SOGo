@@ -15,11 +15,9 @@
        $OUT.= "RewriteRule ^/SOGo(/.*)?\$ https://%{HTTP_HOST}/SOGo\$1 [R=301,L]\n";
 
        if ((($sogod{'Dav'} || '') eq 'enabled') && (($webtop{'Dav'} || 'disabled') eq 'disabled')){
-          $OUT.= "RewriteRule ^/dav(/.*)?\$                 https://%{HTTP_HOST}/dav\$1 [R=301,L] \n";
-          $OUT.= "RewriteRule ^/cal(/.*)?\$                 https://%{HTTP_HOST}/cal\$1 [R=301,L] \n";
-          $OUT.= "RewriteRule ^/card(/.*)?\$                https://%{HTTP_HOST}/card\$1 [R=301,L] \n";
-          $OUT.= "RewriteRule ^/.well-known/caldav(/.*)?\$  https://%{HTTP_HOST}/.well-known/caldav\$1 [R=301,L] \n";
-          $OUT.= "RewriteRule ^/.well-known/carddav(.*)/?\$ https://%{HTTP_HOST}/.well-known/carddav\$1 [R=301,L] \n\n\n";
+          $OUT.= "RewriteRule ^/^(cal|card|dav)\$               https://%{HTTP_HOST}/SOGo/dav [R=301,L] \n";
+          $OUT.= "RewriteRule ^/.well-known/^(caldav|carddav)\$ https://%{HTTP_HOST}/SOGo/dav [R=301,L] \n\n\n";
+    
        }
     }
 }

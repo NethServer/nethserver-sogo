@@ -18,7 +18,7 @@
                     $sogo_cert = 'localhost';
                 }
              }
-             $OUT .= <<EOF 
+         $OUT .= <<EOF 
 
 <VirtualHost *:80>
  ServerName $sogo_host
@@ -37,28 +37,6 @@
 
 EOF
         }   
-
-        if ((($sogod{'Dav'} || '') eq 'enabled') && (($webtop{'Dav'} || 'disabled') eq 'disabled')){
-           $OUT .= <<EOF
-
-ProxyPass /dav http://127.0.0.1:20000/SOGo/dav
-ProxyPass /cal http://127.0.0.1:20000/SOGo/dav
-ProxyPass /card http://127.0.0.1:20000/SOGo/dav
-ProxyPass /.well-known/caldav http://127.0.0.1:20000/SOGo/dav
-ProxyPass /.well-known/carddav http://127.0.0.1:20000/SOGo/dav
-
-EOF
-           }
-   
-        if ((($sogod{'ActiveSync'} || '') eq 'enabled') && (($webtop{'ActiveSync'} || 'disabled') eq 'disabled')){
-           $OUT .= <<EOF
-
-<Location /Microsoft-Server-ActiveSync>
-    ProxyPass http://127.0.0.1:20000/SOGo/Microsoft-Server-ActiveSync retry=60 connectiontimeout=5 timeout=360
-</Location>
-
-EOF
-         }
 
     $OUT .= <<EO_SOGO_CONF
 
@@ -93,9 +71,33 @@ Alias /SOGo/WebServerResources/ /usr/lib64/GNUstep/SOGo/WebServerResources/
     </IfModule>
 </Directory>
 
-$end_config
 EO_SOGO_CONF
    
-    }
+     }
+
+     if ((($sogod{'Dav'} || '') eq 'enabled') && (($webtop{'Dav'} || 'disabled') eq 'disabled')){
+        $OUT .= <<EOF
+
+# SOGo dav auto-discovery support is enabled
+
+RedirectMatch ^/(dav|cal|card)\$ /SOGo/dav/
+RedirectMatch ^/.well-known/(caldav|carddav)\$ /SOGo/dav/
+
+EOF
+      }
+   
+      if ((($sogod{'ActiveSync'} || '') eq 'enabled') && (($webtop{'ActiveSync'} || 'disabled') eq 'disabled')){
+         $OUT .= <<EOF
+
+# Sogo ActiveSync is enabled
+
+<Location /Microsoft-Server-ActiveSync>
+    ProxyPass http://127.0.0.1:20000/SOGo/Microsoft-Server-ActiveSync retry=60 connectiontimeout=5 timeout=360
+</Location>
+
+EOF
+      }
+
+$OUT.= "$end_config"
 
 }
