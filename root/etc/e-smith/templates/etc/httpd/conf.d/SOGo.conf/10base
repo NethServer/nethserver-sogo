@@ -40,44 +40,8 @@
  SSLCertificateKeyFile "/etc/pki/tls/private/$sogo_cert.key"
 
 EOF
-        }   
-
-    $OUT .= <<EO_SOGO_CONF
-
-<Location /SOGo>
-    ProxyPass http://127.0.0.1:20000/SOGo retry=0
-    ProxyPassReverse http://127.0.0.1:20000/SOGo
-    SetEnv proxy-nokeepalive 1
-</Location>    
-  
-ProxyRequests Off
-ProxyPreserveHost On
-
-SetEnvIf Host (.*) REQUEST_HOST=\$1
-<Proxy http://127.0.0.1:20000/SOGo>
-   RequestHeader set "x-webobjects-server-port" "443"
-   RequestHeader set "x-webobjects-server-name" "%\{REQUEST_HOST\}e"
-   RequestHeader set "x-webobjects-server-url" "https://%\{REQUEST_HOST\}e/SOGo"
-   RequestHeader set "x-webobjects-server-protocol" "HTTP/1.0"
-   AddDefaultCharset UTF-8
-   Require all granted
-</Proxy>
-
-Alias /SOGo.woa/WebServerResources/ /usr/$lib/GNUstep/SOGo/WebServerResources/
-Alias /SOGo/WebServerResources/ /usr/$lib/GNUstep/SOGo/WebServerResources/
-
-<Directory /usr/$lib/GNUstep/SOGo/>
-    AllowOverride None
-    Require all granted
-    <IfModule expires_module>
-      ExpiresActive On
-      ExpiresDefault "access plus 1 year"
-    </IfModule>
-</Directory>
-
-EO_SOGO_CONF
+        }
    
-     }
 
      if ((($sogod{'Dav'} || '') eq 'enabled') && (($webtop{'Dav'} || 'disabled') eq 'disabled')){
         $OUT .= <<EOF
@@ -101,6 +65,45 @@ EOF
 
 EOF
       }
+
+
+    $OUT .= <<EO_SOGO_CONF
+
+<Location /SOGo>
+    ProxyPass http://127.0.0.1:20000/SOGo retry=0
+    ProxyPassReverse http://127.0.0.1:20000/SOGo
+    SetEnv proxy-nokeepalive 1
+</Location>    
+  
+ProxyRequests Off
+ProxyPreserveHost On
+
+SetEnvIf Host (.*) REQUEST_HOST=\$1
+<Proxy http://127.0.0.1:20000/SOGo>
+   RequestHeader set "x-webobjects-server-port" "443"
+   RequestHeader set "x-webobjects-server-name" "%\{REQUEST_HOST\}e"
+   RequestHeader set "x-webobjects-server-url" "https://%\{REQUEST_HOST\}e/SOGo"
+   RequestHeader set "x-webobjects-server-protocol" "HTTP/1.0"
+   RequestHeader set "x-webobjects-remote-host" %\{REQUEST_HOST\}e
+   AddDefaultCharset UTF-8
+   Require all granted
+</Proxy>
+
+Alias /SOGo.woa/WebServerResources/ /usr/$lib/GNUstep/SOGo/WebServerResources/
+Alias /SOGo/WebServerResources/ /usr/$lib/GNUstep/SOGo/WebServerResources/
+
+<Directory /usr/$lib/GNUstep/SOGo/>
+    AllowOverride None
+    Require all granted
+    <IfModule expires_module>
+      ExpiresActive On
+      ExpiresDefault "access plus 1 year"
+    </IfModule>
+</Directory>
+
+EO_SOGO_CONF
+   
+     }
 
 $OUT.= "$end_config"
 
