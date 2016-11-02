@@ -11,18 +11,25 @@
     }
     else{
         if ($sogo_host ne 'Default'){
+            my $chain_file = ' ';
             $end_config = '</VirtualHost>';
             if ($sogo_cert =~ /\./) {
                 $sogo_cert = (split(/\./, $sogo_cert))[0];
              }
-            if (! -e "/etc/pki/tls/certs/$sogo_cert.crt") {
-                if ( -e '/etc/pki/tls/certs/Sogo.crt') {
-                   $sogo_cert = 'Sogo';
-                } else {
-                    $sogo_cert = 'localhost';
+            if ( -e "/etc/pki/tls/certs/$sogo_cert.crt") {
+                if ( -e "/etc/pki/tls/certs/$sogo_cert-chain.crt"){
+                   $chain_file = "SSLCertificateChainFile \"/etc/pki/tls/certs/$sogo_cert-chain.crt\"\n";
+                }   
+             }elsif ( -e '/etc/pki/tls/certs/Sogo.crt') {
+                $sogo_cert = 'Sogo';
+                if ( -e '/etc/pki/tls/certs/Sogo-chain.crt'){
+                   $chain_file = "SSLCertificateChainFile \"/etc/pki/tls/certs/Sogo-chain.crt\"\n";
                 }
-             }
-         $OUT .= <<EOF 
+            } else {
+                $sogo_cert = 'localhost';
+            }
+            
+        $OUT .= <<EOF 
 
 <VirtualHost *:80>
  ServerName $sogo_host
@@ -38,7 +45,7 @@
  SSLEngine on
  SSLCertificateFile "/etc/pki/tls/certs/$sogo_cert.crt"
  SSLCertificateKeyFile "/etc/pki/tls/private/$sogo_cert.key"
-
+ $chain_file 
 EOF
         }
    
