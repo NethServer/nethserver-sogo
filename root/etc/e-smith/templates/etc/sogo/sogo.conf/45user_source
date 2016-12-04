@@ -26,7 +26,7 @@
         scope = ONE;
         canAuthenticate = YES;
         displayName = "$SystemName groups";
-        hostname = "ldapi://";
+        hostname = $ldapURI;
         isAddressBook = NO;
      \},
      \{   
@@ -43,7 +43,7 @@
         scope = ONE;
         canAuthenticate = YES;
         displayName = "$SystemName users";
-        hostname = "ldapi://";
+        hostname = $ldapURI;
         isAddressBook = YES;
      \}
     );
