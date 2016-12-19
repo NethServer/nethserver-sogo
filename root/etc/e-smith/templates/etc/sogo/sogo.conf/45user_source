@@ -4,6 +4,9 @@
 
     my $baseDN = $sssd->baseDN();
     my $bindDN = $sssd->bindDN();
+    $bindDN =~ s/\\/\\\\/g;
+    my $userDN = $sssd->userDN();
+    my $groupDN = $sssd->groupDN();
     my $bindPassword = $sssd->bindPassword();
     my $host = $sssd->host();
     my $ldapURI = $sssd->ldapURI();
@@ -20,11 +23,12 @@
         CNFieldName = cn;
         UIDFieldName = cn;
         IDFieldName = cn;
-        baseDN = "ou=Groups,$baseDN";     
+        baseDN = "$groupDN";
         bindDN = "$bindDN";
         bindPassword = "$bindPassword";
         scope = ONE;
         canAuthenticate = YES;
+        MailFieldNames = ("mail");
         displayName = "$SystemName groups";
         hostname = $ldapURI;
         isAddressBook = NO;
@@ -35,12 +39,16 @@
         CNFieldName = cn;
         UIDFieldName = uid;
         IDFieldName = mail;
-        bindFields = (mail);
+        bindFields = (
+                mail,
+                uid
+            );
         IMAPLoginFieldName = mail;
-        baseDN = "ou=People,$baseDN";
+        baseDN = "$userDN";
         bindDN = "$bindDN";
         bindPassword = "$bindPassword";
         scope = ONE;
+        MailFieldNames = ("mail");
         canAuthenticate = YES;
         displayName = "$SystemName users";
         hostname = $ldapURI;
@@ -66,13 +74,14 @@ EOF
         canAuthenticate = YES;
         bindDN = "$bindDN";
         bindPassword = "$bindPassword";
-        baseDN = "cn=Users,$baseDN";
+        baseDN = "$userDN";
         bindFields = (
                 sAMAccountName,
                 userPrincipalName
             );
         hostname = $ldapURI;
         filter = "(objectClass='user')";
+        MailFieldNames = ("userPrincipalName","mail");
         scope = SUB;
         displayName = "$DomainName users";
         isAddressBook = YES;
@@ -86,9 +95,10 @@ EOF
         canAuthenticate = YES;
         bindDN = "$bindDN";
         bindPassword = "$bindPassword";
-        baseDN = "cn=Users,$baseDN";
+        baseDN = "$groupDN";
         hostname = $ldapURI;
         filter = "(objectClass='group') AND (sAMAccountType=268435456)";
+        MailFieldNames = ("userPrincipalName","mail");
         scope = SUB;
         displayName = "$DomainName groups";
         isAddressBook = YES;
