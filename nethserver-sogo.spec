@@ -1,6 +1,6 @@
 Summary: NethServer SOGo configuration
 Name: nethserver-sogo
-Version: 1.6.1
+Version: 1.6.2
 Release: 1%{?dist}
 License: GPL
 URL: %{url_prefix}/%{name} 
@@ -47,6 +47,9 @@ echo "%doc README.rst" >> %{name}-%{version}-filelist
 %dir %{_nseventsdir}/%{name}-update
 
 %changelog
+* Mon Jan 30 2017 Giacomo Sanchietti <giacomo.sanchietti@nethesis.it> - 1.6.2-1
+- First release for NS 7.3
+
 * Mon Oct 03 2016 Giacomo Sanchietti <giacomo.sanchietti@nethesis.it> - 1.6.1-1
 - Apache vhost-default template expansion - NethServer/dev#5088
 
