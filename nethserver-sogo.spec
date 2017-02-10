@@ -1,6 +1,6 @@
 Summary: NethServer SOGo configuration
 Name: nethserver-sogo
-Version: 1.6.2
+Version: 1.6.3
 Release: 1%{?dist}
 License: GPL
 URL: %{url_prefix}/%{name} 
