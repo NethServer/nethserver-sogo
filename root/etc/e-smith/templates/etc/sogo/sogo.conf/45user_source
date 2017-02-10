@@ -81,7 +81,7 @@ EOF
             );
         hostname = $ldapURI;
         filter = "(objectClass='user')";
-        MailFieldNames = ("userPrincipalName","mail");
+        MailFieldNames = ("userPrincipalName");
         scope = SUB;
         displayName = "$DomainName users";
         isAddressBook = YES;
@@ -98,7 +98,7 @@ EOF
         baseDN = "$groupDN";
         hostname = $ldapURI;
         filter = "(objectClass='group') AND (sAMAccountType=268435456)";
-        MailFieldNames = ("userPrincipalName","mail");
+        MailFieldNames = ("userPrincipalName");
         scope = SUB;
         displayName = "$DomainName groups";
         isAddressBook = YES;
