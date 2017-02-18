@@ -4,6 +4,7 @@
     SOGoMaximumSyncInterval = {$sogod{'SOGoMaximumSyncInterval'} || '30'};
     SOGoInternalSyncInterval = {$sogod{'SOGoInternalSyncInterval'} || '10'};
     SOGoMaximumSyncResponseSize = {$sogod{'SOGoMaximumSyncResponseSize'} || '2048'};
+    SOGoMaximumSyncWindowSize = {$sogod{'SOGoMaximumSyncWindowSize'} || '100'};
 
     WOWatchDogRequestTimeout = {$sogod{'WOWatchDogRequestTimeout'} || '10'};
     WOWorkersCount = {$sogod{WOWorkersCount} || "3"};
