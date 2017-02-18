@@ -49,6 +49,7 @@ echo "%doc README.rst" >> %{name}-%{version}-filelist
 %changelog
 * Sat Feb 18 2017 Stephane de Labrusse <stephdl@de-labrusse.fr> - 1.6.4-1
 - Increase the workers to 10
+- Added SOGoMaximumSyncWindowSize to the default value 100
 
 * Fri Feb 10 2017 Stephane de Labrusse <stephdl@de-labrusse.fr> - 1.6.3-1
 - removed the mail definition of MailFieldNames for the AD settings
