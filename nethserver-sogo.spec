@@ -1,6 +1,6 @@
 Summary: NethServer SOGo configuration
 Name: nethserver-sogo
-Version: 1.6.4
+Version: 1.6.5
 Release: 1%{?dist}
 License: GPL
 URL: %{url_prefix}/%{name} 
@@ -47,6 +47,9 @@ echo "%doc README.rst" >> %{name}-%{version}-filelist
 %dir %{_nseventsdir}/%{name}-update
 
 %changelog
+* Sat Feb 25 2017 Stephane de Labrusse <stephdl@de-labrusse.fr> - 1.6.5-1
+- Corrected the right Incoming IP in log
+
 * Sat Feb 18 2017 Stephane de Labrusse <stephdl@de-labrusse.fr> - 1.6.4-1
 - Increase the workers to 10
 - Added SOGoMaximumSyncWindowSize to the default value 100
