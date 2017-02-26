@@ -91,7 +91,10 @@ SetEnvIf Host (.*) REQUEST_HOST=\$1
    RequestHeader set "x-webobjects-server-name" "%\{REQUEST_HOST\}e"
    RequestHeader set "x-webobjects-server-url" "https://%\{REQUEST_HOST\}e/SOGo"
    RequestHeader set "x-webobjects-server-protocol" "HTTP/1.0"
-   RequestHeader set "x-webobjects-remote-host" %\{REQUEST_HOST\}e
+   RequestHeader set "x-webobjects-remote-host" %{REMOTE_HOST}e env=REMOTE_HOST
+   ## When using proxy-side autentication, you need to uncomment and
+   ## adjust the following line:
+   #  RequestHeader set "x-webobjects-remote-user" "%{REMOTE_USER}e"
    AddDefaultCharset UTF-8
    Require all granted
 </Proxy>
