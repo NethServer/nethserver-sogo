@@ -1,0 +1,18 @@
+{
+# We want to increase the number to avoid the battery drain when using exchange
+
+use esmith::ConfigDB;
+my $db = esmith::ConfigDB->open;
+
+my $sync= $db->get_prop('sogod','SOGoInternalSyncInterval') || '10';
+$db->set_prop('sogod','SOGoInternalSyncInterval','30') if ($sync eq '10');
+
+my $ping = $db->get_prop('sogod','SOGoMaximumPingInterval') || '10';
+$db->set_prop('sogod','SOGoMaximumPingInterval','3540') if ($ping eq '10');
+
+my $msync = $db->get_prop('sogod','SOGoMaximumSyncInterval') || '30';
+$db->set_prop('sogod','SOGoMaximumSyncInterval','3540') if ($msync eq '30');
+
+my $Timeout = $db->get_prop('sogod','WOWatchDogRequestTimeout') || '10';
+$db->set_prop('sogod','WOWatchDogRequestTimeout','60') if ($Timeout eq '10');
+}
