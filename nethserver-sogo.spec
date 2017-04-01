@@ -1,6 +1,6 @@
 Summary: NethServer SOGo configuration
 Name: nethserver-sogo
-Version: 1.6.5
+Version: 1.6.7
 Release: 1%{?dist}
 License: GPL
 URL: %{url_prefix}/%{name} 
@@ -47,6 +47,10 @@ echo "%doc README.rst" >> %{name}-%{version}-filelist
 %dir %{_nseventsdir}/%{name}-update
 
 %changelog
+* Wed Mar 29 2017 Stephane de Labrusse <stephdl@de-labrusse.fr> - 1.6.7-1
+- Increase values to avoid battery drain when using active sync
+- https://sogo.nu/files/docs/SOGoInstallationGuide.html#_microsoft_enterprise_activesync_tuning
+
 * Sat Feb 25 2017 Stephane de Labrusse <stephdl@de-labrusse.fr> - 1.6.5-1
 - Corrected the right Incoming IP in log
 

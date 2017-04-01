@@ -67,7 +67,7 @@ EOF
 # Sogo ActiveSync is enabled
 
 <Location /Microsoft-Server-ActiveSync>
-    ProxyPass http://127.0.0.1:20000/SOGo/Microsoft-Server-ActiveSync retry=60 connectiontimeout=5 timeout=360
+    ProxyPass http://127.0.0.1:20000/SOGo/Microsoft-Server-ActiveSync retry=60 connectiontimeout=5 timeout=3600
 </Location>
 
 EOF
