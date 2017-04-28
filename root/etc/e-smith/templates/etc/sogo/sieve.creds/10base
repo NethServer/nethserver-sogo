@@ -1,0 +1,5 @@
+{
+  use NethServer::Password;
+  my $pwd = NethServer::Password::store('vmail');
+  $OUT.="vmail:$pwd";
+}

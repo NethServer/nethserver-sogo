@@ -32,6 +32,7 @@ event_templates('nethserver-sogo-update', qw(
       /etc/sysconfig/sogo
       /etc/sogo/sogo.conf
       /etc/httpd/conf.d/SOGo.conf
+      /etc/sogo/sieve.creds
 ));
 
 event_actions('nethserver-sogo-update', qw(
