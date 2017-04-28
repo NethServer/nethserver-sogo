@@ -1,0 +1,7 @@
+#
+# Increase maximum IMAP command line length
+#
+# Maximum IMAP command line length in bytes. Some clients generate very long
+# command lines with huge mailboxes, so you may need to raise this if you get
+# "Too long argument" or "IMAP command line too large" errors often.
+imap_max_line_length = {${'dovecot'}{'ImapMaxLineLenght'} || '2048'}k

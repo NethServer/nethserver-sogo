@@ -1,0 +1,6 @@
+#!/bin/bash
+
+TIME=$(/sbin/e-smith/db configuration getprop sogod SessionDuration || echo 1440)
+
+# Remove old SOGo sessions entries
+su -l -s /bin/bash sogo -c "/usr/sbin/sogo-tool expire-sessions $TIME"

@@ -32,6 +32,8 @@ event_templates('nethserver-sogo-update', qw(
       /etc/sysconfig/sogo
       /etc/sogo/sogo.conf
       /etc/httpd/conf.d/SOGo.conf
+      /etc/sogo/sieve.creds
+      /etc/dovecot/dovecot.conf
 ));
 
 event_actions('nethserver-sogo-update', qw(
@@ -44,6 +46,7 @@ event_actions('nethserver-sogo-update', qw(
 event_services('nethserver-sogo-update', qw(
       httpd reload
       sogod restart
+      dovecot restart
 ));
 
 
