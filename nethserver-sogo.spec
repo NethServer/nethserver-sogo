@@ -1,6 +1,6 @@
 Summary: NethServer SOGo configuration
 Name: nethserver-sogo
-Version: 1.6.7
+Version: 1.6.8
 Release: 1%{?dist}
 License: GPL
 URL: %{url_prefix}/%{name} 
@@ -47,6 +47,11 @@ echo "%doc README.rst" >> %{name}-%{version}-filelist
 %dir %{_nseventsdir}/%{name}-update
 
 %changelog
+* Wed Apr 28 2017 Stephane de Labrusse <stephdl@de-labrusse.fr> - 1.6.8-1
+- Increase maximum IMAP command line length
+- Sogo session are dropped after 24h
+- Adjusted sogo cron.d, sieve credentials are in /etc/sogo/sieve.creds
+
 * Wed Mar 29 2017 Stephane de Labrusse <stephdl@de-labrusse.fr> - 1.6.7-1
 - Increase values to avoid battery drain when using active sync
 - https://sogo.nu/files/docs/SOGoInstallationGuide.html#_microsoft_enterprise_activesync_tuning
