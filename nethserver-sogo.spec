@@ -1,6 +1,6 @@
 Summary: NethServer SOGo configuration
 Name: nethserver-sogo
-Version: 1.6.8
+Version: 1.6.9
 Release: 1%{?dist}
 License: GPL
 URL: %{url_prefix}/%{name} 
@@ -47,7 +47,7 @@ echo "%doc README.rst" >> %{name}-%{version}-filelist
 %dir %{_nseventsdir}/%{name}-update
 
 %changelog
-* Wed Apr 28 2017 Stephane de Labrusse <stephdl@de-labrusse.fr> - 1.6.8-1
+* Fri Apr 28 2017 Stephane de Labrusse <stephdl@de-labrusse.fr> - 1.6.9-1
 - Increase maximum IMAP command line length
 - Sogo session are dropped after 24h
 - Adjusted sogo cron.d, sieve credentials are in /etc/sogo/sieve.creds
