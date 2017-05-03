@@ -1,6 +1,6 @@
 Summary: NethServer SOGo configuration
 Name: nethserver-sogo
-Version: 1.6.9
+Version: 1.6.10
 Release: 1%{?dist}
 License: GPL
 URL: %{url_prefix}/%{name} 
@@ -47,6 +47,10 @@ echo "%doc README.rst" >> %{name}-%{version}-filelist
 %dir %{_nseventsdir}/%{name}-update
 
 %changelog
+* Wed May 03 2017 Stephane de Labrusse <stephdl@de-labrusse.fr> - 1.6.10-1
+- sogo-ealarms-notify is removed of the cron job
+- needed to enable SOGoEnableEMailAlarms and set OCSEMailAlarmsFolderURL 
+
 * Fri Apr 28 2017 Stephane de Labrusse <stephdl@de-labrusse.fr> - 1.6.9-1
 - Increase maximum IMAP command line length
 - Sogo session are dropped after 24h
