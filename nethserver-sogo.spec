@@ -1,6 +1,6 @@
 Summary: NethServer SOGo configuration
 Name: nethserver-sogo
-Version: 1.6.10
+Version: 1.6.11
 Release: 1%{?dist}
 License: GPL
 URL: %{url_prefix}/%{name} 
@@ -18,6 +18,7 @@ Requires: sogo-tool
 Requires: sope49-gdl1-mysql
 Requires: sogo-activesync
 Requires: libwbxml
+Requires: sogo-ealarms-notify
 
 BuildRequires: perl
 BuildRequires: nethserver-devtools 
@@ -47,6 +48,9 @@ echo "%doc README.rst" >> %{name}-%{version}-filelist
 %dir %{_nseventsdir}/%{name}-update
 
 %changelog
+* Sat Sep 09 2017 Stephane de Labrusse <stephdl@de-labrusse.fr> - 1.6.11-1
+- email alarm is now enabled
+
 * Wed May 03 2017 Stephane de Labrusse <stephdl@de-labrusse.fr> - 1.6.10-1
 - sogo-ealarms-notify is removed of the cron job
 - needed to enable SOGoEnableEMailAlarms and set OCSEMailAlarmsFolderURL 
