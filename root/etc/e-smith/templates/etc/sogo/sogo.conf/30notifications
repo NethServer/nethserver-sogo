@@ -8,11 +8,12 @@
     my @folder_notifications = grep($_ eq 'Folders', @notifications) ? 'YES' : 'NO';
     my @acl_notifications = grep($_ eq 'ACLs', @notifications) ? 'YES' : 'NO';
     my @appointment_notifications = grep($_ eq 'Appointment', @notifications) ? 'YES' : 'NO';
-
+    my @email_notifications = grep($_ eq 'EMail', @notifications) ? 'YES' : 'NO';
 
     $OUT .= <<EOF
     SOGoFoldersSendEMailNotifications = @folder_notifications;
     SOGoACLsSendEMailNotifications = @acl_notifications;
-    SOGoAppointmentSendEMailNotifications = @appointment_notifications; 
+    SOGoAppointmentSendEMailNotifications = @appointment_notifications;
+    SOGoEnableEMailAlarms = @email_notifications;
 EOF
 }
