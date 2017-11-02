@@ -1,6 +1,6 @@
 Summary: NethServer SOGo configuration
 Name: nethserver-sogo
-Version: 1.6.11
+Version: 1.6.12
 Release: 1%{?dist}
 License: GPL
 URL: %{url_prefix}/%{name} 
@@ -48,6 +48,9 @@ echo "%doc README.rst" >> %{name}-%{version}-filelist
 %dir %{_nseventsdir}/%{name}-update
 
 %changelog
+* Sun Oct 15 2017 Stephane de Labrusse <stephdl@de-labrusse.fr> - 1.6.12-1
+- Added customization of IMAPLoginFieldName when sogo bind to a MICROSOFT AD 
+
 * Sat Sep 09 2017 Stephane de Labrusse <stephdl@de-labrusse.fr> - 1.6.11-1
 - email alarm is now enabled
 
@@ -156,5 +159,3 @@ echo "%doc README.rst" >> %{name}-%{version}-filelist
 
 * Thu Jan 31 2013 Davide Principi <davide.principi@nethesis.it> - 1.0.0-1.ns6
 - Initial release
-
-
