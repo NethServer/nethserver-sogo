@@ -4,11 +4,9 @@
     use esmith::ConfigDB;
     my $db = esmith::ConfigDB->open;
 
-    my $sogod = $db->get('sogod');
-    my $CustomEmailField = $sogod->prop('IMAPLoginFieldName');
+    my $CustomEmailField = $db->get_prop_and_delete('sogod','IMAPLoginFieldName');
 
     if ($CustomEmailField) {
         $db->set_prop('sogod','CustomEmailField',$CustomEmailField);
-        $sogod->delete_prop('IMAPLoginFieldName');
     }
 }
