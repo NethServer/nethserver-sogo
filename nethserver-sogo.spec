@@ -1,6 +1,6 @@
 Summary: NethServer SOGo configuration
 Name: nethserver-sogo
-Version: 1.6.12
+Version: 1.6.13
 Release: 1%{?dist}
 License: GPL
 URL: %{url_prefix}/%{name} 
@@ -48,6 +48,11 @@ echo "%doc README.rst" >> %{name}-%{version}-filelist
 %dir %{_nseventsdir}/%{name}-update
 
 %changelog
+* Thu Nov 23 2017 Stephane de Labrusse <stephdl@de-labrusse.fr> - 1.6.13-1
+- migrate IMAPLoginFieldName property to CustomEmailField
+- display the full name in sogo
+- set the good name@domain.com name in imap acl
+ 
 * Sun Oct 15 2017 Stephane de Labrusse <stephdl@de-labrusse.fr> - 1.6.12-1
 - Added customization of IMAPLoginFieldName when sogo bind to a MICROSOFT AD 
 
