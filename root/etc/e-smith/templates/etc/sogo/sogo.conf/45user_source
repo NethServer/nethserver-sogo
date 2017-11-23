@@ -71,7 +71,7 @@ EOF
      \{ 
         id = AD_Users;
         type = ldap;
-        CNFieldName = cn;
+        CNFieldName = displayName;
         IDFieldName = sAMAccountName;
         UIDFieldName = sAMAccountName;
         IMAPLoginFieldName = $IMAPLoginFieldName;
