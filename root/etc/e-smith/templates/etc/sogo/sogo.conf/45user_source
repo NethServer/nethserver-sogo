@@ -12,7 +12,7 @@
     my $ldapURI = $sssd->ldapURI();
 
     # select the email field in case of Microsotf AD bind
-    my $IMAPLoginFieldName = $sogod{'IMAPLoginFieldName'} || 'userPrincipalName';
+    my $CustomEmailField = $sogod{'CustomEmailField'} || 'userPrincipalName';
 
     if ($sssd->isLdap){
         # user source: ldap
@@ -73,19 +73,19 @@ EOF
         type = ldap;
         CNFieldName = displayName;
         IDFieldName = sAMAccountName;
-        UIDFieldName = $IMAPLoginFieldName;
-        IMAPLoginFieldName = $IMAPLoginFieldName;
+        UIDFieldName = $CustomEmailField;
+        IMAPLoginFieldName = $CustomEmailField;
         canAuthenticate = YES;
         bindDN = "$bindDN";
         bindPassword = "$bindPassword";
         baseDN = "$userDN";
         bindFields = (
                 sAMAccountName,
-                $IMAPLoginFieldName
+                $CustomEmailField
             );
         hostname = $ldapURI;
         filter = "(objectClass='user')";
-        MailFieldNames = ("$IMAPLoginFieldName");
+        MailFieldNames = ("$CustomEmailField");
         scope = SUB;
         displayName = "$DomainName users";
         isAddressBook = YES;
@@ -102,7 +102,7 @@ EOF
         baseDN = "$groupDN";
         hostname = $ldapURI;
         filter = "(objectClass='group') AND (sAMAccountType=268435456)";
-        MailFieldNames = ("$IMAPLoginFieldName");
+        MailFieldNames = ("$CustomEmailField");
         scope = SUB;
         displayName = "$DomainName groups";
         isAddressBook = YES;
