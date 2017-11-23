@@ -73,7 +73,7 @@ EOF
         type = ldap;
         CNFieldName = displayName;
         IDFieldName = sAMAccountName;
-        UIDFieldName = sAMAccountName;
+        UIDFieldName = $IMAPLoginFieldName;
         IMAPLoginFieldName = $IMAPLoginFieldName;
         canAuthenticate = YES;
         bindDN = "$bindDN";
