@@ -1,6 +1,6 @@
 Summary: NethServer SOGo configuration
 Name: nethserver-sogo
-Version: 1.6.14
+Version: 1.6.15
 Release: 1%{?dist}
 License: GPL
 URL: %{url_prefix}/%{name} 
@@ -48,6 +48,11 @@ echo "%doc README.rst" >> %{name}-%{version}-filelist
 %dir %{_nseventsdir}/%{name}-update
 
 %changelog
+* Tue Dec 05 2017 Stephane de Labrusse <stephdl@de-labrusse.fr> - 1.6.15-1
+- for isLdap, back to 'CNFieldName = cn' instead 'CNFieldName = displayName'
+- when the field is modified all sieve filters are no more visible, but not lost
+- The file sogo.sieve still exists
+
 * Mon Nov 27 2017 Stephane de Labrusse <stephdl@de-labrusse.fr> - 1.6.14-1
 - set the good name@domain.com name in imap acl for openldap
 
