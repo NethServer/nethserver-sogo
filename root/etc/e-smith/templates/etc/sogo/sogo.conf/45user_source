@@ -40,7 +40,7 @@
         id = users;
         type = ldap;
         CNFieldName = cn;
-        UIDFieldName = mail;
+        UIDFieldName = uid;
         IDFieldName = mail;
         bindFields = (
                 mail,
@@ -73,7 +73,7 @@ EOF
         type = ldap;
         CNFieldName = cn;
         IDFieldName = sAMAccountName;
-        UIDFieldName = $CustomEmailField;
+        UIDFieldName = sAMAccountName;
         IMAPLoginFieldName = $CustomEmailField;
         canAuthenticate = YES;
         bindDN = "$bindDN";
