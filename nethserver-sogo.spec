@@ -1,6 +1,6 @@
 Summary: NethServer SOGo configuration
 Name: nethserver-sogo
-Version: 1.6.16
+Version: 1.6.17
 Release: 1%{?dist}
 License: GPL
 URL: %{url_prefix}/%{name} 
@@ -48,6 +48,12 @@ echo "%doc README.rst" >> %{name}-%{version}-filelist
 %dir %{_nseventsdir}/%{name}-update
 
 %changelog
+* Fri Dec 08 2017 Stephane de Labrusse <stephdl@de-labrusse.fr> - 1.6.17-1
+- Enable the sogo backup
+- Save the folder /var/lib/sogo/backups if nethserver-backup-data is installed
+- the backup time can be adjusted by BackupTime '* *', two arguments
+- '# * *' to disable
+
 * Tue Dec 05 2017 Stephane de Labrusse <stephdl@de-labrusse.fr> - 1.6.16-1
 - revert the change in  ldap setting ( UIDFieldName )
  
