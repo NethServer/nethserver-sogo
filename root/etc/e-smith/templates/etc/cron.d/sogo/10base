@@ -19,4 +19,4 @@
 #   - will keep 31 days worth of backups by default
 #   - runs once a day by default, but can run more frequently
 #   - make sure to set the path to sogo-backup.sh correctly
-#30 0 * * * sogo /usr/share/doc/sogo/sogo-backup.sh
+{$sogod{'BackupTime'} || '30 0'} * * * sogo /usr/share/doc/sogo-*/sogo-backup.sh
