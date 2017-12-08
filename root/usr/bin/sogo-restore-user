@@ -1,0 +1,36 @@
+#!/usr/bin/bash
+#
+# script to restore the sogo backup
+# stephane de labrusse <stephdl@de-labrusse.fr>
+#
+
+MYBACKUPDIR=$1
+USERS=$2
+if [ -z "${USERS}" ]; then
+    exec >&2
+    echo "Restore all calendars, addressbooks and configuration in sogo"
+    echo ""
+    echo "Usage: " 
+    echo "    " $(basename $0) "/var/lib/sogo/backups/sogo-DateOfBackup Username|-A for all"
+    echo ""
+    exit 1
+fi
+
+cd $MYBACKUPDIR
+if [ $USERS = '-A' ];then
+    for i in `ls`
+    do
+        echo "#"
+        echo "#restoration of $i"
+        echo "#"
+        sogo-tool restore -p $MYBACKUPDIR $i
+        sogo-tool restore -f ALL $MYBACKUPDIR $i
+    done
+
+else
+    echo "#"
+    echo "#restoration of $USERS"
+    echo "#"
+    sogo-tool restore -p $MYBACKUPDIR $USERS
+    sogo-tool restore -f ALL $MYBACKUPDIR $USERS
+fi

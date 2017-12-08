@@ -1,6 +1,6 @@
 Summary: NethServer SOGo configuration
 Name: nethserver-sogo
-Version: 1.6.17
+Version: 1.6.18
 Release: 1%{?dist}
 License: GPL
 URL: %{url_prefix}/%{name} 
@@ -35,7 +35,9 @@ perl createlinks
 %install
 rm -rf %{buildroot}
 (cd root; find . -depth -print | cpio -dump %{buildroot})
-%{genfilelist} %{buildroot} > %{name}-%{version}-filelist
+%{genfilelist} %{buildroot} \
+  --file /usr/bin/sogo-restore-user 'attr(0750,root,root)'\
+> %{name}-%{version}-filelist
 echo "%doc COPYING" >> %{name}-%{version}-filelist
 echo "%doc README.rst" >> %{name}-%{version}-filelist
 
@@ -48,6 +50,9 @@ echo "%doc README.rst" >> %{name}-%{version}-filelist
 %dir %{_nseventsdir}/%{name}-update
 
 %changelog
+* Fri Dec 08 2017 Stephane de Labrusse <stephdl@de-labrusse.fr> - 1.6.18-1
+- sogo-restore-tool script for restoration
+
 * Fri Dec 08 2017 Stephane de Labrusse <stephdl@de-labrusse.fr> - 1.6.17-1
 - Enable the sogo backup
 - Save the folder /var/lib/sogo/backups if nethserver-backup-data is installed
