@@ -1,0 +1,117 @@
+#!/usr/bin/bash
+#
+# Stephane de labrusse <stephdl@de-labrusse.fr> 14/02/18
+# This script is made to do the migration for UIDFieldName and CNFieldName
+# We can remove it later once all installations will be supposed to be clean
+# https://community.nethserver.org/t/sogo-does-not-get-the-good-ldap-settings/8754
+
+set -o pipefail
+
+PROGNAME="$(basename $0)"
+BACKUP_DIR=~sogo/Migration_Ldap
+SOGO_TOOL=/usr/sbin/sogo-tool
+DATE=$(date +%F_%H%M)
+LOG="logger -t $PROGNAME -p daemon.info"
+DOMAIN=$(/usr/sbin/e-smith/config get DomainName)
+
+function initChecks {
+    if [ ! -d '/var/lib/mysql/sogo' ]; then
+        #It is a new installation do nothing
+        exit 0
+    fi
+
+    if [ -d "$BACKUP_DIR" ]; then
+        #migration already done
+        exit 0
+    fi
+}
+
+function dbDump {
+    if [ ! -d "/var/lib/sogo/dump" ]; then
+    mkdir -m700  -p "/var/lib/sogo/dump"
+        if [ $? -ne 0 ]; then
+            echo "/var/lib/sogo/dump doesn't exist and couldn't create it, aborting (/var/lib/sogo/dump)" | $LOG
+            exit 1
+        fi
+    fi
+
+    if [ ! -w "/var/lib/sogo/dump" ]; then
+        echo "/var/lib/sogo/dump not writable. Aborting" | $LOG
+        exit 1
+    fi
+
+    #dump of sogo DB
+    /usr/bin/mysqldump sogo > "/var/lib/sogo/dump/sogo-MARIADB-$DATE.dump" 2>&1 | $LOG
+    if [ $? -ne 0 ]; then
+        echo "Mysql database dump not done" | $LOG
+        exit 1
+    fi
+}
+
+function confDump {
+    if [ ! -d "$BACKUP_DIR" ]; then
+    mkdir -m700  -p "$BACKUP_DIR"
+        if [ $? -ne 0 ]; then
+            echo "BACKUP_DIR doesn't exist and couldn't create it, aborting ($BACKUP_DIR)" | $LOG
+            exit 1
+        fi
+    fi
+
+    if [ ! -w "$BACKUP_DIR" ]; then
+        echo "$BACKUP_DIR not writable. Aborting" | $LOG
+        exit 1
+    fi
+
+    $SOGO_TOOL backup "$BACKUP_DIR/" ALL 2>&1 | $LOG
+    RC=$?
+    if [ $RC -ne 0 ]; then
+        echo -e "FAILED, error while dumping sogo data" | $LOG
+        exit $RC
+    else
+        echo -e "OK: dumped sogo data" | $LOG
+    fi
+}
+
+function doMigration {
+    if [ "$DOMAIN" == '' ]; then
+        echo "The domain name cannot be retrieved" | $LOG
+        exit 1
+    fi
+
+    cd $BACKUP_DIR
+    for i in `ls`
+    do
+        #we do not want to migrate if
+        #the file type is user@domain
+        if [[ $i =~ $DOMAIN ]]; then
+        echo "$i@$DOMAIN is already migrated. We stop the migration" | $LOG
+        exit 0
+        fi
+
+        /usr/bin/cp -f $i $i@$DOMAIN
+        if [ $? -ne 0 ]; then
+        echo "the cp action failed" | $LOG
+        exit 1
+        fi
+
+        /usr/bin/sed -i "s|/Users/$i|/Users/$i@$DOMAIN|g" $i@$DOMAIN
+        /usr/bin/sed -i "s|$i:|$i@$DOMAIN:|g" $i@$DOMAIN
+        if [ $? -ne 0 ]; then
+            echo "the sed action failed" | $LOG
+            exit 1
+        fi
+
+        $SOGO_TOOL restore -p $BACKUP_DIR $i@$DOMAIN
+        $SOGO_TOOL restore -f ALL $BACKUP_DIR $i@$DOMAIN
+        RC=$?
+        if [ $RC -ne 0 ]; then
+            echo -e "FAILED, error while restoring sogo data of $i@$DOMAIN" | $LOG
+            exit $RC
+        fi
+    done
+}
+
+initChecks
+dbDump
+confDump
+doMigration

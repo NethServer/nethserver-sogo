@@ -38,6 +38,7 @@ event_templates('nethserver-sogo-update', qw(
 
 event_actions('nethserver-sogo-update', qw(
       initialize-default-databases 00
+      nethserver-sogo-fix-ldap     01
       nethserver-sogo-ldapsetup    10
       nethserver-sogo-mysqlsetup   10
       nethserver-sogo-gnustepsetup 20
