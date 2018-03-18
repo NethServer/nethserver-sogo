@@ -41,7 +41,8 @@ event_actions('nethserver-sogo-update', qw(
       nethserver-sogo-ldapsetup    10
       nethserver-sogo-mysqlsetup   10
       nethserver-sogo-gnustepsetup 20
-));
+      nethserver-sogo-MigrationV3.2.10ToV4.0.0 30
+  ));
 
 event_services('nethserver-sogo-update', qw(
       httpd reload

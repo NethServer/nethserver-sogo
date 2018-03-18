@@ -1,6 +1,6 @@
 Summary: NethServer SOGo configuration
 Name: nethserver-sogo
-Version: 1.6.18
+Version: 1.7.0
 Release: 1%{?dist}
 License: GPL
 URL: %{url_prefix}/%{name} 
@@ -13,7 +13,7 @@ Requires: nethserver-mysql >= 1.0.0
 Requires: nethserver-memcached >= 1.0.0
 Requires: nethserver-httpd >= 1.0.1-2
 Requires: nethserver-sssd
-Requires: sogo >= 2.3.0
+Requires: sogo >= 4.0.0
 Requires: sogo-tool
 Requires: sope49-gdl1-mysql
 Requires: sogo-activesync
@@ -50,6 +50,9 @@ echo "%doc README.rst" >> %{name}-%{version}-filelist
 %dir %{_nseventsdir}/%{name}-update
 
 %changelog
+* Sun Mar 18 2018 Stephane de Labrusse <stephdl@de-labrusse.fr> - 1.7.0-1
+- Mysql migration for sogo v4.0.0
+
 * Fri Dec 08 2017 Stephane de Labrusse <stephdl@de-labrusse.fr> - 1.6.18-1
 - sogo-restore-tool script for restoration
 
