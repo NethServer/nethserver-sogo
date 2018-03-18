@@ -38,7 +38,6 @@ event_templates('nethserver-sogo-update', qw(
 
 event_actions('nethserver-sogo-update', qw(
       initialize-default-databases 00
-      nethserver-sogo-ldapsetup    10
       nethserver-sogo-mysqlsetup   10
       nethserver-sogo-gnustepsetup 20
       nethserver-sogo-MigrationV3.2.10ToV4.0.0 30
