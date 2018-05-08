@@ -90,6 +90,7 @@ foreach (qw(
    nethserver-samba-save
    nethserver-samba-update
    nethserver-samba-adsjoin
+   nethserver-sssd-save
 )) {
 
     event_services($_, qw(
