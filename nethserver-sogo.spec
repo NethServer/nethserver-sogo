@@ -1,6 +1,6 @@
 Summary: NethServer SOGo configuration
 Name: nethserver-sogo
-Version: 1.7.0
+Version: 1.7.1
 Release: 1%{?dist}
 License: GPL
 URL: %{url_prefix}/%{name} 
@@ -50,6 +50,9 @@ echo "%doc README.rst" >> %{name}-%{version}-filelist
 %dir %{_nseventsdir}/%{name}-update
 
 %changelog
+* Wed May 09 2018 Stephane de Labrusse <stephdl@de-labrusse.fr> - 1.7.1-1
+- Nethserver-sogo must subscribe nethserver-sssd-save - NethServer/dev#5486 !! INCOMPLETE
+
 * Sun Mar 18 2018 Stephane de Labrusse <stephdl@de-labrusse.fr> - 1.7.0-1
 - Mysql migration for sogo v4.0.0
 
