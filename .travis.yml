@@ -7,7 +7,7 @@ branches:
         - master
 env:
    global:
-    - DEST_ID=core
+    - DEST_ID=forge
     - NSVER=7
     - DOCKER_IMAGE=nethserver/makerpms:${NSVER}
     - >
