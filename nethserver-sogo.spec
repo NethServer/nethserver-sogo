@@ -51,6 +51,9 @@ echo "%doc README.rst" >> %{name}-%{version}-filelist
 
 %changelog
 * Wed May 09 2018 Stephane de Labrusse <stephdl@de-labrusse.fr> - 1.7.1-1
+- Nethserver-sogo must subscribe nethserver-sssd-save - NethServer/dev#5486 
+
+* Wed May 09 2018 Stephane de Labrusse <stephdl@de-labrusse.fr> - 1.7.1-1
 - Nethserver-sogo must subscribe nethserver-sssd-save - NethServer/dev#5486 !! INCOMPLETE
 
 * Sun Mar 18 2018 Stephane de Labrusse <stephdl@de-labrusse.fr> - 1.7.0-1
