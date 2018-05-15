@@ -12,6 +12,11 @@ set -e
 # 2- increase the c_mail column to text to contact quick table
 # 3- add the c_hascertificate column to contact quick table
 
+if [[ ! -f /var/lib/mysql/sogo/sogo_folder_info.frm ]]; then
+    # First start, the database exists but blank
+    exit 0
+fi
+
 username=sogo
 hostname=127.0.0.1
 database=sogo
