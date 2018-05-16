@@ -1,6 +1,6 @@
 Summary: NethServer SOGo configuration
 Name: nethserver-sogo
-Version: 1.7.1
+Version: 1.7.2
 Release: 1%{?dist}
 License: GPL
 URL: %{url_prefix}/%{name} 
@@ -50,6 +50,9 @@ echo "%doc README.rst" >> %{name}-%{version}-filelist
 %dir %{_nseventsdir}/%{name}-update
 
 %changelog
+* Wed May 16 2018 Stephane de Labrusse <stephdl@de-labrusse.fr> - 1.7.2-1
+- SOGO: Table 'sogo.sogo_folder_info' doesn't exist - NethServer/dev#5497
+
 * Wed May 09 2018 Stephane de Labrusse <stephdl@de-labrusse.fr> - 1.7.1-1
 - Nethserver-sogo must subscribe nethserver-sssd-save - NethServer/dev#5486 
 
