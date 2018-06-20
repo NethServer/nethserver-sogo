@@ -11,6 +11,12 @@
     my $host = $sssd->host();
     my $ldapURI = $sssd->ldapURI();
 
+    # We must check if starttls is used 
+    $tls = $sssd->startTls();
+    if ($tls){
+        $ldapURI = $ldapURI . '/????!StartTLS';
+    }
+
     # select the email field in case of Microsotf AD bind
     my $CustomEmailField = $sogod{'CustomEmailField'} || 'userPrincipalName';
 
