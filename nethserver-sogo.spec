@@ -1,6 +1,6 @@
 Summary: NethServer SOGo configuration
 Name: nethserver-sogo
-Version: 1.7.2
+Version: 1.7.3
 Release: 1%{?dist}
 License: GPL
 URL: %{url_prefix}/%{name} 
@@ -50,6 +50,9 @@ echo "%doc README.rst" >> %{name}-%{version}-filelist
 %dir %{_nseventsdir}/%{name}-update
 
 %changelog
+* Mon Jun 25 2018 Stephane de Labrusse <stephdl@de-labrusse.fr> - 1.7.3-1
+- SOGO: Enabled  startTLS if needed - Bug NethServer/dev#5533
+
 * Wed May 16 2018 Stephane de Labrusse <stephdl@de-labrusse.fr> - 1.7.2-1
 - SOGO: Table 'sogo.sogo_folder_info' doesn't exist - NethServer/dev#5497
 
