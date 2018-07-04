@@ -1,0 +1,120 @@
+{
+    my $sogo_host = ($sogod{'VirtualHost'} || 'Default');
+    my $sogo_cert = ($sogod{'Certificate'} || '');
+    my $lib = 'lib64';
+	if (! -e '/usr/lib64/GNUstep/SOGo/') {
+	    $lib = 'lib';
+	}
+	my $end_config = ' ';
+    if (! (($sogod{'status'} || '') eq 'enabled')) {
+	$OUT .= "SOGo is disabaled\n";
+    }
+    else{
+        if ($sogo_host ne 'Default'){
+            my $chain_file = ' ';
+            $end_config = '</VirtualHost>';
+            if ($sogo_cert =~ /\./) {
+                $sogo_cert = (split(/\./, $sogo_cert))[0];
+             }
+            if ( -e "/etc/pki/tls/certs/$sogo_cert.crt") {
+                if ( -e "/etc/pki/tls/certs/$sogo_cert-chain.crt"){
+                   $chain_file = "SSLCertificateChainFile \"/etc/pki/tls/certs/$sogo_cert-chain.crt\"\n";
+                }   
+             }elsif ( -e '/etc/pki/tls/certs/Sogo.crt') {
+                $sogo_cert = 'Sogo';
+                if ( -e '/etc/pki/tls/certs/Sogo-chain.crt'){
+                   $chain_file = "SSLCertificateChainFile \"/etc/pki/tls/certs/Sogo-chain.crt\"\n";
+                }
+            } else {
+                $sogo_cert = 'localhost';
+            }
+            
+        $OUT .= <<EOF 
+
+<VirtualHost *:80>
+ ServerName $sogo_host
+ RewriteEngine On
+ RewriteCond %\{HTTPS\} !=on
+ RewriteRule (.*) https://%\{SERVER_NAME\}\$1 [R,L]
+</VirtualHost>
+
+
+<VirtualHost *:443>
+ ServerName $sogo_host
+ RedirectMatch ^/\$ /SOGo
+ SSLEngine on
+ SSLCertificateFile "/etc/pki/tls/certs/$sogo_cert.crt"
+ SSLCertificateKeyFile "/etc/pki/tls/private/$sogo_cert.key"
+ $chain_file 
+EOF
+        }
+   
+
+     if ((($sogod{'Dav'} || '') eq 'enabled') && (($webtop{'Dav'} || 'disabled') eq 'disabled')){
+        $OUT .= <<EOF
+
+# SOGo dav auto-discovery support is enabled
+
+RedirectMatch ^/(dav|cal|card)\$ /SOGo/dav/
+RedirectMatch ^/.well-known/(caldav|carddav)\$ /SOGo/dav/
+
+EOF
+      }
+   
+      if ((($sogod{'ActiveSync'} || '') eq 'enabled') && (($webtop{'ActiveSync'} || 'disabled') eq 'disabled')){
+         $OUT .= <<EOF
+
+# Sogo ActiveSync is enabled
+
+<Location /Microsoft-Server-ActiveSync>
+    ProxyPass http://127.0.0.1:20000/SOGo/Microsoft-Server-ActiveSync retry=60 connectiontimeout=5 timeout=3600
+</Location>
+
+EOF
+      }
+
+
+    $OUT .= <<EO_SOGO_CONF
+
+<Location /SOGo>
+    ProxyPass http://127.0.0.1:20000/SOGo retry=0
+    ProxyPassReverse http://127.0.0.1:20000/SOGo
+    SetEnv proxy-nokeepalive 1
+</Location>    
+  
+ProxyRequests Off
+ProxyPreserveHost On
+
+SetEnvIf Host (.*) REQUEST_HOST=\$1
+<Proxy http://127.0.0.1:20000/SOGo>
+   RequestHeader set "x-webobjects-server-port" "443"
+   RequestHeader set "x-webobjects-server-name" "%\{REQUEST_HOST\}e"
+   RequestHeader set "x-webobjects-server-url" "https://%\{REQUEST_HOST\}e/SOGo"
+   RequestHeader set "x-webobjects-server-protocol" "HTTP/1.0"
+   RequestHeader set "x-webobjects-remote-host" %{REMOTE_HOST}e env=REMOTE_HOST
+   ## When using proxy-side autentication, you need to uncomment and
+   ## adjust the following line:
+   #  RequestHeader set "x-webobjects-remote-user" "%{REMOTE_USER}e"
+   AddDefaultCharset UTF-8
+   Require all granted
+</Proxy>
+
+Alias /SOGo.woa/WebServerResources/ /usr/$lib/GNUstep/SOGo/WebServerResources/
+Alias /SOGo/WebServerResources/ /usr/$lib/GNUstep/SOGo/WebServerResources/
+
+<Directory /usr/$lib/GNUstep/SOGo/>
+    AllowOverride None
+    Require all granted
+    <IfModule expires_module>
+      ExpiresActive On
+      ExpiresDefault "access plus 1 year"
+    </IfModule>
+</Directory>
+
+EO_SOGO_CONF
+   
+     }
+
+$OUT.= "$end_config"
+
+}
