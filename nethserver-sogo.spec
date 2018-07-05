@@ -1,6 +1,6 @@
 Summary: NethServer SOGo configuration
 Name: nethserver-sogo
-Version: 1.7.3
+Version: 1.7.4
 Release: 1%{?dist}
 License: GPL
 URL: %{url_prefix}/%{name} 
@@ -50,6 +50,9 @@ echo "%doc README.rst" >> %{name}-%{version}-filelist
 %dir %{_nseventsdir}/%{name}-update
 
 %changelog
+* Thu Jul 05 2018 Stephane de Labrusse <stephdl@de-labrusse.fr> - 1.7.4-1
+- With SOGo virtualhost , redirect / to /SOGo - NethServer/dev#5541
+
 * Mon Jun 25 2018 Stephane de Labrusse <stephdl@de-labrusse.fr> - 1.7.3-1
 - SOGO: Enabled  startTLS if needed - Bug NethServer/dev#5533
 
