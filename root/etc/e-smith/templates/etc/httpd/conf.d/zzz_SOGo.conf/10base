@@ -33,6 +33,7 @@
 
 <VirtualHost *:80>
  ServerName $sogo_host
+ RedirectMatch 301 ^(?!/.well-known/acme-challenge/).* https://$sogo_host
  RewriteEngine On
  RewriteCond %\{HTTPS\} !=on
  RewriteRule (.*) https://%\{SERVER_NAME\}\$1 [R,L]
