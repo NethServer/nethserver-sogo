@@ -23,19 +23,23 @@
 use strict;
 use esmith::Build::CreateLinks qw(:all);
 
+
+my @templates = qw(
+    /etc/httpd/conf.d/default-virtualhost.inc
+    /etc/cron.d/sogo
+    /etc/sysconfig/sogo
+    /etc/sogo/sogo.conf
+    /etc/httpd/conf.d/SOGo.conf
+    /etc/httpd/conf.d/zzz_SOGo.conf
+    /etc/sogo/sieve.creds
+    /etc/dovecot/dovecot.conf
+);
+
+
 #
 # update event
 #
-event_templates('nethserver-sogo-update', qw(
-      /etc/httpd/conf.d/default-virtualhost.inc
-      /etc/cron.d/sogo
-      /etc/sysconfig/sogo
-      /etc/sogo/sogo.conf
-      /etc/httpd/conf.d/SOGo.conf
-      /etc/httpd/conf.d/zzz_SOGo.conf
-      /etc/sogo/sieve.creds
-      /etc/dovecot/dovecot.conf
-));
+event_templates('nethserver-sogo-update', @templates);
 
 event_actions('nethserver-sogo-update', qw(
       initialize-default-databases 00
@@ -50,6 +54,16 @@ event_services('nethserver-sogo-update', qw(
       dovecot restart
 ));
 
+#
+# save event
+#
+event_templates('nethserver-sogo-save', @templates);
+
+event_services('nethserver-sogo-save', qw(
+      httpd reload
+      sogod restart
+      dovecot restart
+));
 
 #
 # user-{create,modify,delete} events
