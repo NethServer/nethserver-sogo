@@ -1,0 +1,16 @@
+#!/usr/bin/perl
+
+#
+# Disable webtop activesync if sogo activesync is enabled
+#
+
+use esmith::ConfigDB;
+my $cdb = esmith::ConfigDB->open('configuration') || die("Could not open configuration db\n");
+
+my $sogod = $cdb->get_prop('sogod','ActiveSync') || '';
+
+if (($sogod eq 'enabled')
+    and (-f '/etc/e-smith/db/configuration/defaults/webtop/type')) {
+        $cdb->set_prop('webtop','ActiveSync', 'disabled', type => 'configuration');
+        system ('/usr/sbin/e-smith/signal-event nethserver-webtop5-update');
+}

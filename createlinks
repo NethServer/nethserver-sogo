@@ -47,6 +47,7 @@ event_actions('nethserver-sogo-update', qw(
       nethserver-sogo-gnustepsetup 20
       nethserver-sogo-MigrationV3.2.10ToV4.0.0 30
       nethserver-sogo-create-selfHost 40
+      nethserver-sogo-disable-webtop-activesync 50
   ));
 
 event_services('nethserver-sogo-update', qw(
@@ -62,6 +63,7 @@ event_templates('nethserver-sogo-save', @templates);
 
 event_actions('nethserver-sogo-save', qw(
       nethserver-sogo-create-selfHost 10
+      nethserver-sogo-disable-webtop-activesync 20
     ));
 
 event_services('nethserver-sogo-save', qw(
