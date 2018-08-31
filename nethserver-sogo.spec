@@ -30,6 +30,7 @@ NethServer SOGo configuration
 %setup
 
 %build
+%{makedocs}
 perl createlinks
 
 %install
