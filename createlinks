@@ -46,6 +46,7 @@ event_actions('nethserver-sogo-update', qw(
       nethserver-sogo-mysqlsetup   10
       nethserver-sogo-gnustepsetup 20
       nethserver-sogo-MigrationV3.2.10ToV4.0.0 30
+      nethserver-sogo-create-selfHost 40
   ));
 
 event_services('nethserver-sogo-update', qw(
@@ -58,6 +59,10 @@ event_services('nethserver-sogo-update', qw(
 # save event
 #
 event_templates('nethserver-sogo-save', @templates);
+
+event_actions('nethserver-sogo-save', qw(
+      nethserver-sogo-create-selfHost 10
+    ));
 
 event_services('nethserver-sogo-save', qw(
       httpd reload
