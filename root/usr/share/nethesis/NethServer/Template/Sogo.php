@@ -9,10 +9,10 @@ echo $view->panel()->insert($view->fieldsetSwitch('status', 'enabled',$view::FIE
         ->insert($view->checkBox('Dav', 'enabled')->setAttribute('uncheckedValue', 'disabled'))
         ->insert($view->checkBox('ActiveSync', 'enabled')->setAttribute('uncheckedValue', 'disabled'))
         ->insert($view->checkBox('MailAuxiliaryUserAccountsEnabled', 'YES')->setAttribute('uncheckedValue', 'NO'))
-        ->insert($view->textArea('AdminUsers', $view::LABEL_ABOVE)->setAttribute('dimensions', '5x30')->setAttribute('placeholder', $view['AdminUsers_default']))
+        ->insert($view->textArea('AdminUsers', $view::LABEL_ABOVE)->setAttribute('dimensions', '5x30'))
 
     ->insert($view->fieldset(NULL, $view::FIELDSET_EXPANDABLE)->setAttribute('template', $T('Advanced_label'))
-        ->insert($view->textInput('VirtualHost'))
+        ->insert($view->textArea('VirtualHost', $view::LABEL_ABOVE)->setAttribute('dimensions', '5x30'))
         ->insert($view->selector('Notifications', $view::SELECTOR_MULTIPLE))
         ->insert($view->textInput('WOWorkersCount'))
     )
