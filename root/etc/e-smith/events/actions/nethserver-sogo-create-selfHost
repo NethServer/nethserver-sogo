@@ -21,7 +21,9 @@ foreach my $host ($hdb->get_all_by_prop('type' => 'self')) {
 }
 
 if ($virtualhost ne '') {
-    $hdb->set_prop($virtualhost,"Description", "SOGo Virtualhost",type => 'self');
+    foreach my $hostname (split (',', $virtualhost)) {
+        $hdb->set_prop($hostname,"Description", "SOGo Virtualhost",type => 'self');
+    }
 }
 
 system ('/usr/sbin/e-smith/signal-event host-create');
