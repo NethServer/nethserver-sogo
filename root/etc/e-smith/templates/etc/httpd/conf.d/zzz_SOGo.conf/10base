@@ -1,44 +1,41 @@
 {
-    my @sogo_hosts = split (',', ($sogod{'VirtualHost'} || 'Default'));
-    my $sogo_cert = ($sogod{'Certificate'} || '');
+my $status = $sogod{'status'} || 'disabled';
+return "#SOGo is disabled\n" unless ($status  eq 'enabled');
 
-    my $lib = 'lib64';
-	if (! -e '/usr/lib64/GNUstep/SOGo/') {
-	    $lib = 'lib';
-	}
+my @sogo_hosts = split (',', ($sogod{'VirtualHost'} || 'Default'));
+my $sogo_cert = ($sogod{'Certificate'} || '');
+my $end_config = ' ';
+my $activesync = $sogod{'ActiveSync'} || 'enabled';
+my $dav = $sogod{'Dav'} || 'enabled';
 
-    my $end_config = ' ';
+foreach my $host (@sogo_hosts) {
 
-    if (! (($sogod{'status'} || '') eq 'enabled')) {
-	    $OUT .= "#SOGo is disabled\n";
-    }
+    if ($host ne 'Default') {
+        my $chain_file = ' ';
+        $end_config = '</VirtualHost>';
 
-    else {
+        if ($sogo_cert =~ /\./) {
+            $sogo_cert = (split(/\./, $sogo_cert))[0];
+        }
 
-        foreach my $host (@sogo_hosts) {
+        if ( -e "/etc/pki/tls/certs/$sogo_cert.crt") {
+            if ( -e "/etc/pki/tls/certs/$sogo_cert-chain.crt"){
+                $chain_file = "SSLCertificateChainFile \"/etc/pki/tls/certs/$sogo_cert-chain.crt\"\n";
+            }
+        }
 
-            if ($host ne 'Default') {
-                my $chain_file = ' ';
-                $end_config = '</VirtualHost>';
-                if ($sogo_cert =~ /\./) {
-                    $sogo_cert = (split(/\./, $sogo_cert))[0];
-                }
-                if ( -e "/etc/pki/tls/certs/$sogo_cert.crt") {
-                    if ( -e "/etc/pki/tls/certs/$sogo_cert-chain.crt"){
-                        $chain_file = "SSLCertificateChainFile \"/etc/pki/tls/certs/$sogo_cert-chain.crt\"\n";
-                    }
-                }
-                elsif ( -e '/etc/pki/tls/certs/Sogo.crt') {
-                    $sogo_cert = 'Sogo';
-                    if ( -e '/etc/pki/tls/certs/Sogo-chain.crt'){
-                        $chain_file = "SSLCertificateChainFile \"/etc/pki/tls/certs/Sogo-chain.crt\"\n";
-                    }
-                }
-                else {
-                    $sogo_cert = 'localhost';
-                }
+        elsif ( -e '/etc/pki/tls/certs/Sogo.crt') {
+            $sogo_cert = 'Sogo';
+            if ( -e '/etc/pki/tls/certs/Sogo-chain.crt'){
+                $chain_file = "SSLCertificateChainFile \"/etc/pki/tls/certs/Sogo-chain.crt\"\n";
+            }
+        }
 
-                $OUT .= qq(
+        else {
+            $sogo_cert = 'localhost';
+        }
+
+        $OUT .= qq(
 
 <VirtualHost *:80>
  ServerName $host
@@ -57,10 +54,10 @@
  SSLCertificateKeyFile "/etc/pki/tls/private/$sogo_cert.key"
  $chain_file
 );
-            }
+    }
 
-            if ((($sogod{'Dav'} || '') eq 'enabled') && (($webtop{'Dav'} || 'disabled') eq 'disabled')){
-                $OUT .= qq(
+    if ($dav eq 'enabled') {
+        $OUT .= qq(
 
 # SOGo dav auto-discovery support is enabled
 
@@ -68,10 +65,10 @@ RedirectMatch ^/(dav|cal|card)\$ /SOGo/dav/
 RedirectMatch ^/.well-known/(caldav|carddav)\$ /SOGo/dav/
 
 );
-            }
+    }
 
-            if ((($sogod{'ActiveSync'} || '') eq 'enabled') && (($webtop{'ActiveSync'} || 'disabled') eq 'disabled')){
-                $OUT .= qq (
+    if ($activesync eq 'enabled') {
+        $OUT .= qq (
 
 # Sogo ActiveSync is enabled
 
@@ -80,10 +77,9 @@ RedirectMatch ^/.well-known/(caldav|carddav)\$ /SOGo/dav/
 </Location>
 
 );
-            }
+    }
 
-
-            $OUT .= qq(
+    $OUT .= qq(
 
 <Location /SOGo>
     ProxyPass http://127.0.0.1:20000/SOGo retry=0
@@ -108,10 +104,10 @@ SetEnvIf Host (.*) REQUEST_HOST=\$1
    Require all granted
 </Proxy>
 
-Alias /SOGo.woa/WebServerResources/ /usr/$lib/GNUstep/SOGo/WebServerResources/
-Alias /SOGo/WebServerResources/ /usr/$lib/GNUstep/SOGo/WebServerResources/
+Alias /SOGo.woa/WebServerResources/ /usr/lib64/GNUstep/SOGo/WebServerResources/
+Alias /SOGo/WebServerResources/ /usr/lib64/GNUstep/SOGo/WebServerResources/
 
-<Directory /usr/$lib/GNUstep/SOGo/>
+<Directory /usr/lib64/GNUstep/SOGo/>
     AllowOverride None
     Require all granted
     <IfModule expires_module>
@@ -121,7 +117,6 @@ Alias /SOGo/WebServerResources/ /usr/$lib/GNUstep/SOGo/WebServerResources/
 </Directory>
 
 );
-            $OUT.= "$end_config";
-        }
-    }
+    $OUT.= "$end_config";
+}
 }
