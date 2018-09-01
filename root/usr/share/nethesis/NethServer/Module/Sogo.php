@@ -28,14 +28,13 @@ class Sogo extends \Nethgui\Controller\AbstractController
         );
         $this->notificationsClasses = $notificationsClasses;
 
-        $vhostValidator = $this->createValidator()->orValidator($this->createValidator(Validate::HOSTNAME_FQDN), $this->createValidator(Validate::EMPTYSTRING));
 
         parent::initialize();
         $this->declareParameter('status', Validate::SERVICESTATUS, array('configuration', 'sogod', 'status'));
         $this->declareParameter('ActiveSync', Validate::SERVICESTATUS, array('configuration', 'sogod', 'ActiveSync'));
         $this->declareParameter('Dav', Validate::SERVICESTATUS, array('configuration', 'sogod', 'Dav'));
         $this->declareParameter('AdminUsers', Validate::ANYTHING, array('configuration', 'sogod', 'AdminUsers'));
-        $this->declareParameter('VirtualHost', $vhostValidator, array('configuration', 'sogod', 'VirtualHost'));
+        $this->declareParameter('VirtualHost', Validate::ANYTHING, array('configuration', 'sogod', 'VirtualHost'));
         $this->declareParameter('WOWorkersCount', Validate::POSITIVE_INTEGER, array('configuration', 'sogod', 'WOWorkersCount'));
         $this->declareParameter('Notifications',  Validate::ANYTHING_COLLECTION, array('configuration', 'sogod', 'Notifications', ','));
         $this->declareParameter('MailAuxiliaryUserAccountsEnabled', $this->createValidator()->memberOf('YES','NO'), array('configuration', 'sogod', 'MailAuxiliaryUserAccountsEnabled'));
@@ -45,11 +44,21 @@ class Sogo extends \Nethgui\Controller\AbstractController
     {
         return array_filter(preg_split("/[,;\s]+/", $text));
     }
+
     public function readAdminUsers($dbList)
     {
         return implode("\r\n", explode(',' ,$dbList));
     }
     public function writeAdminUsers($viewText)
+    {
+        return array(implode(',', self::splitLines($viewText)));
+    }
+
+    public function readVirtualHost($dbList)
+    {
+        return implode("\r\n", explode(',' ,$dbList));
+    }
+    public function writeVirtualHost($viewText)
     {
         return array(implode(',', self::splitLines($viewText)));
     }
@@ -64,6 +73,13 @@ class Sogo extends \Nethgui\Controller\AbstractController
                 break;
             }
         }
+        $hostValidator = $this->getPlatform()->createValidator(\Nethgui\System\PlatformInterface::HOSTNAME_FQDN);
+        foreach (self::splitLines($this->parameters['VirtualHost']) as $v) {
+            if ( ! $hostValidator->evaluate($v)) {
+                $report->addValidationErrorMessage($this, 'VirtualHost', 'Must be a valid FQDN', array($v));
+                break;
+            }
+        }
     }
 
     public function prepareView(\Nethgui\View\ViewInterface $view)
@@ -71,7 +87,7 @@ class Sogo extends \Nethgui\Controller\AbstractController
         parent::prepareView($view);
         $view['NotificationsDatasource'] = array_map(function($ac) use ($view) {
             return array($ac, $view->translate($ac . '_label'));
-        }, $this->notificationsClasses);  
+        }, $this->notificationsClasses);
     }
 
     protected function onParametersSaved($changedParameters)
