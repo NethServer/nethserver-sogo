@@ -11,12 +11,15 @@ echo $view->panel()->insert($view->fieldsetSwitch('status', 'enabled',$view::FIE
         ->insert($view->checkBox('MailAuxiliaryUserAccountsEnabled', 'YES')->setAttribute('uncheckedValue', 'NO'))
         ->insert($view->textArea('AdminUsers', $view::LABEL_ABOVE)->setAttribute('dimensions', '5x30'))
 
-    ->insert($view->fieldset(NULL, $view::FIELDSET_EXPANDABLE)->setAttribute('template', $T('Advanced_label'))
-        ->insert($view->textArea('VirtualHost', $view::LABEL_ABOVE)->setAttribute('dimensions', '5x30'))
-        ->insert($view->selector('Notifications', $view::SELECTOR_MULTIPLE))
-        ->insert($view->textInput('WOWorkersCount'))
-    )
+        ->insert($view->fieldset(NULL, $view::FIELDSET_EXPANDABLE)->setAttribute('template', $T('Notifications_label'))
+            ->insert($view->selector('Notifications', $view::SELECTOR_MULTIPLE| $view::LABEL_NONE))
+        )
+
+        ->insert($view->fieldset(NULL, $view::FIELDSET_EXPANDABLE)->setAttribute('template', $T('Advanced_label'))
+            ->insert($view->textArea('VirtualHost', $view::LABEL_ABOVE)->setAttribute('dimensions', '5x30'))
+            ->insert($view->textInput('WOWorkersCount'))
+            ->insert($view->textInput('SOGoInternalSyncInterval'))
+        )
 );
 
 echo $view->buttonList($view::BUTTON_SUBMIT | $view::BUTTON_HELP);
-

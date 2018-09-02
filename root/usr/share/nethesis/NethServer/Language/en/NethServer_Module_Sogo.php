@@ -15,5 +15,6 @@ $L['Folders_label'] = 'Sent by emails on the creation of a calendar/address book
 $L['Appointment_label'] = 'Sent by emails to meeting participants';
 $L['EMail_label'] = "Sent by emails to user's events and tasks";
 $L['WOWorkersCount_label'] = 'Number of workers (one per activesync client connected)';
+$L['SOGoInternalSyncInterval_label'] = 'Maximum time in second before to checks after changes';
 $L['Must be a user name'] = '"${0}" must be a valid user name';
 $L['Must be a valid FQDN'] = '"${0}" must be a valid fully qualified domain name';

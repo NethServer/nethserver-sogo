@@ -35,7 +35,8 @@ class Sogo extends \Nethgui\Controller\AbstractController
         $this->declareParameter('Dav', Validate::SERVICESTATUS, array('configuration', 'sogod', 'Dav'));
         $this->declareParameter('AdminUsers', Validate::ANYTHING, array('configuration', 'sogod', 'AdminUsers'));
         $this->declareParameter('VirtualHost', Validate::ANYTHING, array('configuration', 'sogod', 'VirtualHost'));
-        $this->declareParameter('WOWorkersCount', Validate::POSITIVE_INTEGER, array('configuration', 'sogod', 'WOWorkersCount'));
+        $this->declareParameter('WOWorkersCount', $this->createValidator(Validate::POSITIVE_INTEGER)->lessThan(201), array('configuration', 'sogod', 'WOWorkersCount'));
+        $this->declareParameter('SOGoInternalSyncInterval',$this->createValidator(Validate::POSITIVE_INTEGER)->lessThan(61), array('configuration', 'sogod', 'SOGoInternalSyncInterval'));
         $this->declareParameter('Notifications',  Validate::ANYTHING_COLLECTION, array('configuration', 'sogod', 'Notifications', ','));
         $this->declareParameter('MailAuxiliaryUserAccountsEnabled', $this->createValidator()->memberOf('YES','NO'), array('configuration', 'sogod', 'MailAuxiliaryUserAccountsEnabled'));
     }
