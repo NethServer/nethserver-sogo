@@ -16,7 +16,7 @@ echo $view->panel()->insert($view->fieldsetSwitch('status', 'enabled',$view::FIE
         )
 
         ->insert($view->fieldset(NULL, $view::FIELDSET_EXPANDABLE)->setAttribute('template', $T('Advanced_label'))
-            ->insert($view->textArea('VirtualHost', $view::LABEL_ABOVE)->setAttribute('dimensions', '5x30'))
+            ->insert($view->textInput('VirtualHost'))
             ->insert($view->textInput('WOWorkersCount'))
             ->insert($view->textInput('SOGoInternalSyncInterval'))
         )
