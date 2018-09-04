@@ -35,10 +35,10 @@ class SOGo extends \Nethgui\Module\AbstractModule implements \NethServer\Module\
 
     public function getInfo()
     {
-        $vhost = preg_split("/,/", $this->getPlatform()->getDatabase('configuration')->getProp('sogod','VirtualHost'));
-        if ($vhost[0]) {
+        $vhost = $this->getPlatform()->getDatabase('configuration')->getProp('sogod','VirtualHost');
+        if ($vhost) {
              return array(
-             'url' => "https://".$vhost[0]."/SOGo/"
+             'url' => "https://".$vhost."/SOGo/"
              );
         } else {
              $host = explode(':',$_SERVER['HTTP_HOST']);
