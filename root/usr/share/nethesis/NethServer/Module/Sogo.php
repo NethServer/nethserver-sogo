@@ -47,13 +47,14 @@ class Sogo extends \Nethgui\Controller\AbstractController
         );
         $this->notificationsClasses = $notificationsClasses;
 
+        $vhostValidator = $this->createValidator()->orValidator($this->createValidator(Validate::HOSTNAME_FQDN), $this->createValidator(Validate::EMPTYSTRING));
 
         parent::initialize();
         $this->declareParameter('status', Validate::SERVICESTATUS, array('configuration', 'sogod', 'status'));
         $this->declareParameter('ActiveSync', Validate::SERVICESTATUS, array('configuration', 'sogod', 'ActiveSync'));
         $this->declareParameter('Dav', Validate::SERVICESTATUS, array('configuration', 'sogod', 'Dav'));
         $this->declareParameter('AdminUsers', Validate::ANYTHING, array('configuration', 'sogod', 'AdminUsers'));
-        $this->declareParameter('VirtualHost', Validate::ANYTHING, array('configuration', 'sogod', 'VirtualHost'));
+        $this->declareParameter('VirtualHost', $vhostValidator, array('configuration', 'sogod', 'VirtualHost'));
         $this->declareParameter('WOWorkersCount', $this->createValidator(Validate::POSITIVE_INTEGER)->lessThan(201), array('configuration', 'sogod', 'WOWorkersCount'));
         $this->declareParameter('SOGoInternalSyncInterval',$this->createValidator(Validate::POSITIVE_INTEGER)->lessThan(61), array('configuration', 'sogod', 'SOGoInternalSyncInterval'));
         $this->declareParameter('Notifications',  Validate::ANYTHING_COLLECTION, array('configuration', 'sogod', 'Notifications', ','));
@@ -74,15 +75,6 @@ class Sogo extends \Nethgui\Controller\AbstractController
         return array(implode(',', self::splitLines($viewText)));
     }
 
-    public function readVirtualHost($dbList)
-    {
-        return implode("\r\n", explode(',' ,$dbList));
-    }
-    public function writeVirtualHost($viewText)
-    {
-        return array(implode(',', self::splitLines($viewText)));
-    }
-
     public function validate(\Nethgui\Controller\ValidationReportInterface $report)
     {
         parent::validate($report);
@@ -90,13 +82,6 @@ class Sogo extends \Nethgui\Controller\AbstractController
         foreach (self::splitLines($this->parameters['AdminUsers']) as $v) {
             if ( ! $itemValidator->evaluate($v)) {
                 $report->addValidationErrorMessage($this, 'AdminUsers', 'Must be a user name', array($v));
-                break;
-            }
-        }
-        $hostValidator = $this->getPlatform()->createValidator(\Nethgui\System\PlatformInterface::HOSTNAME_FQDN);
-        foreach (self::splitLines($this->parameters['VirtualHost']) as $v) {
-            if ( ! $hostValidator->evaluate($v)) {
-                $report->addValidationErrorMessage($this, 'VirtualHost', 'Must be a valid FQDN', array($v));
                 break;
             }
         }
