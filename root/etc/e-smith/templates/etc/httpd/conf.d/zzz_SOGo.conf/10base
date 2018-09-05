@@ -51,7 +51,7 @@ EOF
         }
    
 
-     if ((($sogod{'Dav'} || '') eq 'enabled') && (($webtop{'Dav'} || 'disabled') eq 'disabled')){
+     if (($sogod{'Dav'} || 'disabled') eq 'enabled'){
         $OUT .= <<EOF
 
 # SOGo dav auto-discovery support is enabled
@@ -62,7 +62,7 @@ RedirectMatch ^/.well-known/(caldav|carddav)\$ /SOGo/dav/
 EOF
       }
    
-      if ((($sogod{'ActiveSync'} || '') eq 'enabled') && (($webtop{'ActiveSync'} || 'disabled') eq 'disabled')){
+      if ((($sogod{'ActiveSync'} || 'disabled') eq 'enabled') && (($webtop{'ActiveSync'} || 'disabled') eq 'disabled')){
          $OUT .= <<EOF
 
 # Sogo ActiveSync is enabled

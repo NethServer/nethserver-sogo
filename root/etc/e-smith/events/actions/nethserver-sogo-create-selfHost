@@ -1,0 +1,48 @@
+#!/usr/bin/perl
+
+#
+# Copyright (C) 2018 Nethesis S.r.l.
+# http://www.nethesis.it - support@nethesis.it
+# 
+# This script is part of NethServer.
+# 
+# NethServer is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License,
+# or any later version.
+# 
+# NethServer is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+# 
+# You should have received a copy of the GNU General Public License
+# along with NethServer.  If not, see <http://www.gnu.org/licenses/>.
+#
+#
+# delete and create if needed the SOGo self hostname
+#
+
+use esmith::ConfigDB;
+my $hdb = esmith::ConfigDB->open('hosts') || die("Could not open hosts db\n");
+my $cdb = esmith::ConfigDB->open('configuration') || die("Could not open configuration db\n");
+
+my $virtualhost = $cdb->get_prop('sogod','VirtualHost') || '';
+
+
+foreach my $host ($hdb->get_all_by_prop('type' => 'self')) {
+    my $key = $host->key;
+    my $desc = $host->prop('Description') || '';
+    if ($desc eq 'SOGo Virtualhost') {
+        my $hostname = $hdb->get($key);
+        $hostname->delete;
+    }
+}
+
+if ($virtualhost ne '') {
+    foreach my $hostname (split (',', $virtualhost)) {
+        $hdb->set_prop($hostname,"Description", "SOGo Virtualhost",type => 'self');
+    }
+}
+
+system ('/usr/sbin/e-smith/signal-event host-create');

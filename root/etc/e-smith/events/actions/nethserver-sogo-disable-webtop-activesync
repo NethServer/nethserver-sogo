@@ -1,0 +1,35 @@
+#!/usr/bin/perl
+
+#
+# Copyright (C) 2018 Nethesis S.r.l.
+# http://www.nethesis.it - support@nethesis.it
+# 
+# This script is part of NethServer.
+# 
+# NethServer is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License,
+# or any later version.
+# 
+# NethServer is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+# 
+# You should have received a copy of the GNU General Public License
+# along with NethServer.  If not, see <http://www.gnu.org/licenses/>.
+#
+#
+# Disable webtop activesync if sogo activesync is enabled
+#
+
+use esmith::ConfigDB;
+my $cdb = esmith::ConfigDB->open('configuration') || die("Could not open configuration db\n");
+
+my $sogod = $cdb->get_prop('sogod','ActiveSync') || '';
+
+if (($sogod eq 'enabled')
+    and (-f '/etc/e-smith/db/configuration/defaults/webtop/type')) {
+        $cdb->set_prop('webtop','ActiveSync', 'disabled', type => 'configuration');
+        system ('/usr/sbin/e-smith/signal-event nethserver-webtop5-update');
+}
