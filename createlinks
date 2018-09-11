@@ -104,23 +104,14 @@ event_actions('pre-backup-data', qw(
     nethserver-sogo-backup-users 80
 ));
 
-
 #
-# nethserver-samba-* events
+# nethserver-sssd-save event
 #
-foreach (qw(
-   nethserver-samba-save
-   nethserver-samba-update
-   nethserver-sssd-save
-)) {
-
-    event_services($_, qw(
-        sogod restart
-        memcached restart
-    ));
-
-    event_templates($_, qw(
+event_templates('nethserver-sssd-save',qw(
       /etc/sogo/sogo.conf
 ));
 
-}
+event_services('nethserver-sssd-save', qw(
+        sogod restart
+        memcached restart
+));
