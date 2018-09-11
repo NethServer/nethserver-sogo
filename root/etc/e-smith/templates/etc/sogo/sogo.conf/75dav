@@ -1,5 +1,5 @@
 {
-    my $dav = (($sogod{'Dav'} || "enabled") eq "enabled") ? "YES" : "NO";
+    my $dav = (($sogod{'Dav'} || "disabled") eq "enabled") ? "YES" : "NO";
     $OUT .= qq(
   /* 75 enable cal- and carddav */
     SOGoAddressBookDAVAccessEnabled = $dav;
