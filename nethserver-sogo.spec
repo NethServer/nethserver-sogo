@@ -1,6 +1,6 @@
 Summary: NethServer SOGo configuration
 Name: nethserver-sogo
-Version: 1.7.6
+Version: 1.7.7
 Release: 1%{?dist}
 License: GPL
 URL: %{url_prefix}/%{name} 
@@ -51,6 +51,9 @@ echo "%doc README.rst" >> %{name}-%{version}-filelist
 %dir %{_nseventsdir}/%{name}-update
 
 %changelog
+* Wed Sep 12 2018 Stephane de Labrusse <stephdl@de-labrusse.fr> - 1.7.7-1
+- SOGo  cleanup prop/event and disable dav - NethServer/dev#5579
+
 * Thu Sep 06 2018 Stephane de Labrusse <stephdl@de-labrusse.fr> - 1.7.6-1
 - Make a panel to SOGo - NethServer/dev#5575
 
