@@ -25,6 +25,9 @@ use strict;
 my $event = shift;
 my $account = shift;;
 
+# preserve the data of deleted User
+my $KeepUserData = $sysconfig{'KeepUserData'} || 'disabled';
+exit 0 if ($KeepUserData eq 'enabled');
 
 # In the SOGo configuration UIDFieldName is set to the short_username (Ldap:uid, AD:sAMAccountName)
 # strip domain from account
