@@ -6,7 +6,7 @@
     SOGoJunkFolderName = "{$dovecot{SpamFolder} || "Junk"}";
     SOGoIMAPServer = "localhost";
     SOGoSieveServer = "sieve://localhost:4190";
-    SOGoSMTPServer = "127.0.0.1:5870";
+    SOGoSMTPServer = "127.0.0.1:10587";
     SOGoMailDomain = "{$DomainName || 'localdomain'}";
     SOGoSMTPAuthenticationType = "PLAIN";
     SOGoMailingMechanism = "smtp";
