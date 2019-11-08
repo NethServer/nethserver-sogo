@@ -90,7 +90,7 @@ EOF
                 $CustomEmailField
             );
         hostname = $ldapURI;
-        filter = "(objectClass='user')";
+        filter = "(objectClass='user') AND (sAMAccountType=805306368)";
         MailFieldNames = ("$CustomEmailField");
         scope = SUB;
         displayName = "$DomainName users";
