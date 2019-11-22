@@ -1,6 +1,6 @@
 Summary: NethServer SOGo configuration
 Name: nethserver-sogo
-Version: 1.7.7
+Version: 1.7.8
 Release: 1%{?dist}
 License: GPL
 URL: %{url_prefix}/%{name} 
@@ -51,6 +51,10 @@ echo "%doc README.rst" >> %{name}-%{version}-filelist
 %dir %{_nseventsdir}/%{name}-update
 
 %changelog
+* Fri Nov 22 2019 Stephane de Labrusse <stephdl@de-labrusse.fr> - 1.7.8-1
+- SOGo: groups do not appear - Bug NethServer/dev#5953
+- SMTP sender/login validation - NethServer/dev#5672
+
 * Wed Sep 12 2018 Stephane de Labrusse <stephdl@de-labrusse.fr> - 1.7.7-1
 - SOGo  cleanup prop/event and disable dav - NethServer/dev#5579
 
