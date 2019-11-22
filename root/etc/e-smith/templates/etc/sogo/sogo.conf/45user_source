@@ -40,7 +40,7 @@
         MailFieldNames = ("mail");
         displayName = "$SystemName groups";
         hostname = $ldapURI;
-        isAddressBook = NO;
+        isAddressBook = YES;
      \},
      \{   
         id = users;
@@ -90,7 +90,7 @@ EOF
                 $CustomEmailField
             );
         hostname = $ldapURI;
-        filter = "(objectClass='user')";
+        filter = "(objectClass='user') AND (sAMAccountType=805306368)";
         MailFieldNames = ("$CustomEmailField");
         scope = SUB;
         displayName = "$DomainName users";
@@ -108,7 +108,7 @@ EOF
         baseDN = "$groupDN";
         hostname = $ldapURI;
         filter = "(objectClass='group') AND (sAMAccountType=268435456)";
-        MailFieldNames = ("$CustomEmailField");
+        MailFieldNames = ("mail");
         scope = SUB;
         displayName = "$DomainName groups";
         isAddressBook = YES;
