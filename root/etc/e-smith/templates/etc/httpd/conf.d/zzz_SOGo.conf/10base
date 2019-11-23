@@ -7,7 +7,7 @@
 	}
 	my $end_config = ' ';
     if (! (($sogod{'status'} || '') eq 'enabled')) {
-	$OUT .= "SOGo is disabaled\n";
+	$OUT .= "#SOGo is disabled\n";
     }
     else{
         if ($sogo_host ne 'Default'){
