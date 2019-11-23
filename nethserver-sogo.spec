@@ -1,6 +1,6 @@
 Summary: NethServer SOGo configuration
 Name: nethserver-sogo
-Version: 1.7.8
+Version: 1.7.9
 Release: 1%{?dist}
 License: GPL
 URL: %{url_prefix}/%{name} 
@@ -51,6 +51,9 @@ echo "%doc README.rst" >> %{name}-%{version}-filelist
 %dir %{_nseventsdir}/%{name}-update
 
 %changelog
+* Sat Nov 23 2019 Stephane de Labrusse <stephdl@de-labrusse.fr> - 1.7.9-1
+- SOGo: status props error in Nethgui - Bug NethServer/dev#5954
+
 * Fri Nov 22 2019 Stephane de Labrusse <stephdl@de-labrusse.fr> - 1.7.8-1
 - SOGo: groups do not appear - Bug NethServer/dev#5953
 - SMTP sender/login validation - NethServer/dev#5672
