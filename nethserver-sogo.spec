@@ -5,6 +5,8 @@ Release: 1%{?dist}
 License: GPL
 URL: %{url_prefix}/%{name} 
 Source0: %{name}-%{version}.tar.gz
+# Execute prep-sources to create Source1
+Source1:        %{name}.tar.gz
 BuildArch: noarch
 
 # nethserver-base requires postfix MTA:
@@ -36,6 +38,17 @@ perl createlinks
 %install
 rm -rf %{buildroot}
 (cd root; find . -depth -print | cpio -dump %{buildroot})
+
+mkdir -p %{buildroot}/usr/share/cockpit/%{name}/
+mkdir -p %{buildroot}/usr/share/cockpit/nethserver/applications/
+mkdir -p %{buildroot}/usr/libexec/nethserver/api/%{name}/
+
+tar xvf %{SOURCE1} -C %{buildroot}/usr/share/cockpit/%{name}/
+
+cp -a %{name}.json %{buildroot}/usr/share/cockpit/nethserver/applications/
+cp -a api/* %{buildroot}/usr/libexec/nethserver/api/%{name}/
+chmod +x %{buildroot}/usr/libexec/nethserver/api/%{name}/*
+
 %{genfilelist} %{buildroot} \
   --file /usr/bin/sogo-restore-user 'attr(0750,root,root)'\
 > %{name}-%{version}-filelist
