@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h2>{{$t('settings.title')}}</h2>
+    <h2>{{$t('settings.configuration')}}</h2>
     <doc-info
       :placement="'top'"
       :title="$t('docs.sogo')"
@@ -11,7 +11,6 @@
     ></doc-info>
     <div v-if="!view.isLoaded" class="spinner spinner-lg"></div>
     <div v-if="view.isLoaded">
-      <h3>{{$t('settings.configuration')}}</h3>
       <form class="form-horizontal" v-on:submit.prevent="saveSettings('status')">
         <div :class="['form-group', errors.status.hasError ? 'has-error' : '']">
               <label
@@ -98,7 +97,7 @@
             </span>
           </div>
         </div>
-        <div class="form-group">
+        <div v-if="configuration.status" class="form-group">
           <legend class=" col-sm-2 control-label fields-section-header-pf" aria-expanded="true">
             <span
               :class="['fa fa-angle-right field-section-toggle-pf', advanced ? 'fa-angle-down' : '']"
@@ -292,6 +291,7 @@ methods: {
   },
   toggleStatus() {
     this.configuration.status = !this.configuration.status;
+    this.$forceUpdate();
   },
   saveSettings(type) {
     var context = this;
