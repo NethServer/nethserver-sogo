@@ -1,9 +1,21 @@
 {
     "settings": {
-        "title": "Settings"
-    },
-    "jails":{
-        "title": "Jails"
+        "title": "Settings",
+        "configuration":"Configuration",
+        "status":"Enable SOGo",
+        "ActiveSync":"Enable Microsoft ActiveSync",
+        "Dav":"Enable CalDAV and CardDAV",
+        "MailAuxiliaryUserAccountsEnabled":"Allow Users to add other IMAP accounts",
+        "AdminUsers":"Administrators",
+        "advanced_mode":"Advanced settings",
+        "Notifications":"Notifications",
+        "ACLs":"Send email to involved users of a calendar/address book",
+        "Folders":"Send email on the creation of a calendar/address book",
+        "Appointment":"Send email to meeting participants",
+        "Email":"send email-based alarm on events and tasks",
+        "VirtualHost":"Make SOGo reachable only from this domain (FQDN)",
+        "WOWorkersCount":"Number of workers (one per activesync client connected)",
+        "SOGoInternalSyncInterval":"maximum time in second before to checks after changes"
     },
     "about": {
         "title": "About",
@@ -17,5 +29,9 @@
     },
     "dashboard":{
         "title": "Dashboard"
+    },
+    "docs":{
+      "more_info_about":"More informations about",
+      "sogo": "SOGo"
     }
 }
