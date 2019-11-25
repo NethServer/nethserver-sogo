@@ -1,0 +1,8 @@
+#!/bin/bash
+
+if [[ ! -f /etc/rsyslog.d/ignore-systemd-session-slice-sogo.conf ]]; then
+    /usr/bin/echo 'if $programname == "systemd" and ($msg contains "Starting Session" or $msg contains "Started Session" or $msg contains "Created slice" or $msg contains "Starting User" or $msg contains "Removed slice User" or $msg contains "Stopping User") then stop' > /etc/rsyslog.d/ignore-systemd-session-slice-sogo.conf
+    /usr/bin/systemctl restart rsyslog
+else
+    exit 0
+fi
