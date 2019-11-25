@@ -99,20 +99,15 @@
           </div>
         </div>
         <div class="form-group">
-         <label
-           class="col-sm-2 control-label"
-         >{{$t('settings.advanced')}}</label>
-         <div class="col-sm-5">
-             <toggle-button
-               class="min-toggle"
-               :width="40"
-               :height="20"
-               :color="{checked: '#0088ce', unchecked: '#bbbbbb'}"
-               :value="advanced"
-               :sync="true"
-               @change="toggleAdvancedMode()"
-             />
-         </div>
+          <legend class=" col-sm-2 control-label fields-section-header-pf" aria-expanded="true">
+            <span
+              :class="['fa fa-angle-right field-section-toggle-pf', advanced ? 'fa-angle-down' : '']"
+            ></span>
+            <a
+              class="field-section-toggle-pf"
+              @click="toggleAdvancedMode()"
+            >{{$t('settings.advanced_mode')}}</a>
+          </legend>
         </div>
         <div v-if="advanced">
           <div 
