@@ -93,7 +93,7 @@
             <textarea v-model="configuration.AdminUsers" class="form-control"></textarea>
             <span v-if="errors.AdminUsers.hasError" class="help-block">
               {{$t('validation.validation_failed')}}:
-              {{$t('validation.'+errors.AdminUsers.message)}}
+              {{$t('validation.'+errors.AdminUsers.message)}}: {{errors.AdminUsers.value}}
             </span>
           </div>
         </div>
@@ -351,6 +351,7 @@ methods: {
             var attr = errorData.attributes[e];
             context.errors[attr.parameter].hasError = true;
             context.errors[attr.parameter].message = attr.error;
+            context.errors[attr.parameter].value = attr.value;
           }
         } catch (e) {
           console.error(e);
