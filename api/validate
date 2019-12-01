@@ -39,7 +39,7 @@ if ($data['action'] == 'configuration') {
     $v->declareParameter('VirtualHost', $vhostValidator);
     $v->declareParameter('WOWorkersCount', Validate::POSITIVE_INTEGER);
     $v->declareParameter('SOGoInternalSyncInterval', Validate::POSITIVE_INTEGER);
-    $notifications = array('ACLs','Folders','Appointment','EMail');
+    $notifications = array('ACLs','Folders','Appointment','EMail','');
     foreach (explode(',',$data['Notifications']) as $n) {
         if (! in_array($n,$notifications)) {
             $v->addValidationError('Notifications','Bad_Notification_Element', $n);
