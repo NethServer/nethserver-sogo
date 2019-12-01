@@ -1,6 +1,14 @@
 NethServer SOGo
 ===============
 
+See [official documentation](https://nethserver.github.io/nethserver-cockpit/tutorial/)
+
+
+In Short to build the rpm
+
+  ./prep-sources
+  make-rpms *.spec
+
 `SOGo <http://www.sogo.nu/english/about/overview.html>`__ configuration
 for NethServer.
 

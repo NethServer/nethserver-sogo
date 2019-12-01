@@ -48,6 +48,7 @@ event_actions('nethserver-sogo-update', qw(
       nethserver-sogo-MigrationV3.2.10ToV4.0.0 30
       nethserver-sogo-create-selfHost 40
       nethserver-sogo-disable-webtop-activesync 50
+      nethserver-sogo-remove-slice-messages 60
   ));
 
 event_services('nethserver-sogo-update', qw(

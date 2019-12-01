@@ -1,0 +1,23 @@
+{
+    "id": "nethserver-sogo",
+    "name": "SOGo",
+    "summary": "Nethserver integration of SOGo",
+    "description": "Nethserver integration of SOGo",
+    "url": "",
+    "homepage": "https://github.com/NethServer/nethserver-sogo",
+    "provides": ["nethserver-sogo"],
+    "release": {
+        "version": "_RELEASE_"
+    },
+    "tags": ["tag1", "tag2", "tag3"],
+    "license": "GPL-3.0",
+    "bugs": {
+        "url": "https://github.com/NethServer/dev/issues"
+    },
+    "author": {
+        "name": "Stephane de Labrusse",
+        "url": "https://github.com/NethServer/nethserver-sogo",
+        "email": "stephdl@de-labrusse.fr"
+    },
+    "icon": "logo.png"
+}

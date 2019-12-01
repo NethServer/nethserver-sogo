@@ -1,0 +1,45 @@
+{
+    "settings": {
+        "title": "Settings",
+        "configuration":"Configuration",
+        "status":"Enable SOGo",
+        "ActiveSync":"Enable Microsoft ActiveSync",
+        "Dav":"Enable CalDAV and CardDAV",
+        "MailAuxiliaryUserAccountsEnabled":"Allow Users to add other IMAP accounts",
+        "AdminUsers":"Administrators",
+        "advanced_mode":"Advanced settings",
+        "Notifications":"Notifications",
+        "ACLs":"Send email to involved users of a calendar/address book",
+        "Folders":"Send email on the creation of a calendar/address book",
+        "Appointment":"Send email to meeting participants",
+        "Email":"send email-based alarm on events and tasks",
+        "VirtualHost":"Make SOGo reachable only from this domain (FQDN)",
+        "WOWorkersCount":"Number of workers (one per activesync client connected)",
+        "SOGoInternalSyncInterval":"maximum time in second before to checks after changes",
+        "settings_updated_ok": "The settings have been well updated",
+        "settings_updated_error": "The settings have not well updated"
+    },
+    "about": {
+        "title": "About",
+        "website": "Web site",
+        "bug_tracker": "Bug tracker"
+    },
+    "logs": {
+    "title": "Logs",
+    "follow": "Follow",
+    "stop_follow": "Stop"
+    },
+    "dashboard":{
+        "title": "Dashboard"
+    },
+    "docs":{
+      "more_info_about":"More informations about",
+      "sogo": "SOGo"
+    },
+    "validation":{
+      "validation_failed": "The validation has failed",
+      "not_valid_username": "This is not a valid username",
+      "valid_hostname_fqdn_1_9223372036854775807": "This is not a valid FQDN(something like domain.org)",
+      "Bad_Notification_Element": "This is not a good notification setting"
+    }
+}

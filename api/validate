@@ -1,0 +1,55 @@
+#!/usr/bin/php
+<?php
+/*
+ * This script is part of NethServer.
+ *
+ * NethServer is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License,
+ * or any later version.
+ *
+ * NethServer is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with NethServer.  If not, see COPYING.
+*/
+require_once("/usr/libexec/nethserver/api/lib/Helpers.php");
+$data = readInput();
+$v = new LegacyValidator($data);
+$cmd = $data['action'];
+$cdb = new EsmithDatabase('configuration');
+
+if ($data['action'] == 'configuration') {
+    // settings validator
+    $v->declareParameter('status',Validate::SERVICESTATUS);
+    $v->declareParameter('ActiveSync', Validate::SERVICESTATUS);
+    $v->declareParameter('Dav', Validate::SERVICESTATUS);
+
+    $users = $v->createValidator(Validate::USERNAME);
+    foreach (explode(',',$data['AdminUsers']) as $u) {
+        if (!$users->evaluate($u)) {
+            $v->addValidationError('AdminUsers', 'not_valid_username', $u);
+        }
+    }
+    $vhostValidator = $v->createValidator()->orValidator($v->createValidator(Validate::HOSTNAME_FQDN), 
+        $v->createValidator(Validate::EMPTYSTRING));
+    $v->declareParameter('VirtualHost', $vhostValidator);
+    $v->declareParameter('WOWorkersCount', Validate::POSITIVE_INTEGER);
+    $v->declareParameter('SOGoInternalSyncInterval', Validate::POSITIVE_INTEGER);
+    $notifications = array('ACLs','Folders','Appointment','EMail');
+    foreach (explode(',',$data['Notifications']) as $n) {
+        if (! in_array($n,$notifications)) {
+            $v->addValidationError('Notifications','Bad_Notification_Element', $n);
+        }
+    }
+    $v->declareParameter('MailAuxiliaryUserAccountsEnabled', $v->createValidator()->memberOf('YES','NO'));
+}
+# Validate the input
+if ($v->validate()) {
+    success();
+} else {
+    error($v);
+}
