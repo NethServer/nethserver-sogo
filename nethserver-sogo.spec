@@ -52,6 +52,7 @@ chmod +x %{buildroot}/usr/libexec/nethserver/api/%{name}/*
 
 %{genfilelist} %{buildroot} \
   --file /usr/bin/sogo-restore-user 'attr(0750,root,root)'\
+  --file /etc/sudoers.d/50_nsapi_nethserver_sogo 'attr(0440,root,root)' \
 > %{name}-%{version}-filelist
 echo "%doc COPYING" >> %{name}-%{version}-filelist
 echo "%doc README.rst" >> %{name}-%{version}-filelist
