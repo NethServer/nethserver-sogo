@@ -1,6 +1,6 @@
 Summary: NethServer SOGo configuration
 Name: nethserver-sogo
-Version: 1.7.9
+Version: 1.8.0
 Release: 1%{?dist}
 License: GPL
 URL: %{url_prefix}/%{name} 
@@ -66,6 +66,9 @@ echo "%doc README.rst" >> %{name}-%{version}-filelist
 %dir %{_nseventsdir}/%{name}-update
 
 %changelog
+* Sun Dec 08 2019 Stephane de Labrusse <stephdl@de-labrusse.fr> - 1.8.0-1
+- SOGo Cockpit Application - NethServer/dev#5920
+
 * Sat Nov 23 2019 Stephane de Labrusse <stephdl@de-labrusse.fr> - 1.7.9-1
 - SOGo: status props error in Nethgui - Bug NethServer/dev#5954
 
