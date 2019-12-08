@@ -1,0 +1,11 @@
+#
+# API delegation for nethserver-sogo
+#
+
+Cmnd_Alias NSAPI_NETHSERVER_SOGO = \
+    /usr/libexec/nethserver/api/nethserver-sogo/read, \
+    /usr/libexec/nethserver/api/nethserver-sogo/update, \
+    /usr/libexec/nethserver/api/nethserver-sogo/validate 
+
+# server-manager does not require a tty
+Defaults!NSAPI_NETHSERVER_SOGO !requiretty
