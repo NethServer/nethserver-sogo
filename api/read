@@ -28,11 +28,27 @@ use NethServer::ApiTools;
 
 my $input = NethServer::ApiTools::readInput();
 my $cmd = $input->{'action'};
+my $db = esmith::ConfigDB->open_ro();
 
 my $ret = {};
 
-if ($cmd eq 'configuration') {
-    my $db = esmith::ConfigDB->open_ro();
+if ( $cmd eq "app-info") {
+    my $status = $db->get_prop('sogod','status')|| 'disabled';
+    if ($status eq "enabled") {
+        my $vhost=$db->get_prop('sogod','VirtualHost')||'';
+        if ($vhost ne '') {
+            $ret = {'url' => "https://$vhost/SOGo/"};
+        }
+        else {
+            my $host = $input->{'location'}->{'hostname'} || '';
+            $ret = {
+                'url' => "https://$host/SOGo"
+            };
+        }
+    }
+}
+
+elsif ($cmd eq 'configuration') {
     my %sogod = (
         ActiveSync => $db->get_prop('sogod','ActiveSync'),
         AdminUsers => $db->get_prop('sogod','AdminUsers'),
