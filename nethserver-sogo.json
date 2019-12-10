@@ -19,5 +19,8 @@
         "url": "https://github.com/NethServer/nethserver-sogo",
         "email": "stephdl@de-labrusse.fr"
     },
-    "icon": "logo.png"
+    "icon": "logo.png",
+    "infoapi": {
+        "path": "nethserver-sogo/read"
+    }
 }
