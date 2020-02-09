@@ -1,6 +1,6 @@
 Summary: NethServer SOGo configuration
 Name: nethserver-sogo
-Version: 1.8.1
+Version: 1.8.2
 Release: 1%{?dist}
 License: GPL
 URL: %{url_prefix}/%{name} 
@@ -66,6 +66,9 @@ echo "%doc README.rst" >> %{name}-%{version}-filelist
 %dir %{_nseventsdir}/%{name}-update
 
 %changelog
+* Sun Feb 09 2020 Stephane de Labrusse <stephdl@de-labrusse.fr> - 1.8.2-1
+- Sogo: Logs with regex - NethServer/dev#6056
+
 * Tue Dec 10 2019 Stephane de Labrusse <stephdl@de-labrusse.fr> - 1.8.1-1
 - SOGo: URL of webmail in the application cockpit list - NethServer/dev#5982
 
