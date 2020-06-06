@@ -46,6 +46,7 @@
  SSLEngine on
  SSLCertificateFile "/etc/pki/tls/certs/$sogo_cert.crt"
  SSLCertificateKeyFile "/etc/pki/tls/private/$sogo_cert.key"
+</VirtualHost>
  $chain_file 
 EOF
         }
