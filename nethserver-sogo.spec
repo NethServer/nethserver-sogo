@@ -61,6 +61,11 @@ echo "%doc README.rst" >> %{name}-%{version}-filelist
 
 %preun
 
+%postun
+/usr/bin/rm -f /etc/httpd/conf.d/SOGo.conf
+/usr/bin/rm -f /etc/httpd/conf.d/zzz_SOGo.conf
+/usr/bin/systemctl reload httpd
+
 %files -f %{name}-%{version}-filelist
 %defattr(-,root,root)
 %dir %{_nseventsdir}/%{name}-update
