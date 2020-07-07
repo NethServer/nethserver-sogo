@@ -1,6 +1,6 @@
 Summary: NethServer SOGo configuration
 Name: nethserver-sogo
-Version: 1.8.3
+Version: 1.8.4
 Release: 1%{?dist}
 License: GPL
 URL: %{url_prefix}/%{name} 
@@ -66,6 +66,10 @@ echo "%doc README.rst" >> %{name}-%{version}-filelist
 %dir %{_nseventsdir}/%{name}-update
 
 %changelog
+* Tue Jul 07 2020 Stephane de Labrusse <stephdl@de-labrusse.fr> - 1.8.4-1
+- Merge pull request #46 from NethServer/revert-45-httpdConfRemoval
+- Revert "Remove httpd template after rpm removal"
+
 * Sun Jul 05 2020 Stephane de Labrusse <stephdl@de-labrusse.fr> - 1.8.3-1
   - Merge pull request #45 from stephdl/httpdConfRemoval
   - Remove httpd template after rpm removal
