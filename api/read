@@ -53,6 +53,7 @@ elsif ($cmd eq 'configuration') {
         ActiveSync => $db->get_prop('sogod','ActiveSync'),
         AdminUsers => $db->get_prop('sogod','AdminUsers'),
         Dav => $db->get_prop('sogod','Dav'),
+        webAccess => $db->get_prop('sogod','webAccess'),
         MailAuxiliaryUserAccountsEnabled => $db->get_prop('sogod','MailAuxiliaryUserAccountsEnabled'),
         Notifications => $db->get_prop('sogod','Notifications'),
         VirtualHost => $db->get_prop('sogod','VirtualHost'),
