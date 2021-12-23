@@ -14,6 +14,7 @@
         "Appointment":"Send email to meeting participants",
         "Email":"send email-based alarm on events and tasks",
         "VirtualHost":"Make SOGo reachable only from this domain (FQDN)",
+        "webAccess":"SOGo is available from public network",
         "WOWorkersCount":"Number of workers (one per activesync client connected)",
         "SOGoInternalSyncInterval":"maximum time in second before to checks after changes",
         "settings_updated_ok": "The settings have been well updated",
