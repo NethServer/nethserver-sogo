@@ -1,6 +1,8 @@
 {
     my $sogo_host = ($sogod{'VirtualHost'} || 'Default');
     my $sogo_cert = ($sogod{'Certificate'} || '');
+    my $access = ($sogod{webAccess} eq "public" ) ? "all granted" : "ip $localAccess" ; 
+
     my $lib = 'lib64';
 	if (! -e '/usr/lib64/GNUstep/SOGo/') {
 	    $lib = 'lib';
@@ -97,7 +99,7 @@ SetEnvIf Host (.*) REQUEST_HOST=\$1
    ## adjust the following line:
    #  RequestHeader set "x-webobjects-remote-user" "%{REMOTE_USER}e"
    AddDefaultCharset UTF-8
-   Require all granted
+   Require $access
 </Proxy>
 
 Alias /SOGo.woa/WebServerResources/ /usr/$lib/GNUstep/SOGo/WebServerResources/
@@ -105,7 +107,7 @@ Alias /SOGo/WebServerResources/ /usr/$lib/GNUstep/SOGo/WebServerResources/
 
 <Directory /usr/$lib/GNUstep/SOGo/>
     AllowOverride None
-    Require all granted
+    Require $access
     <IfModule expires_module>
       ExpiresActive On
       ExpiresDefault "access plus 1 year"
