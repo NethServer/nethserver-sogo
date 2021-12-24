@@ -27,6 +27,7 @@ if ($data['action'] == 'configuration') {
     $v->declareParameter('status',Validate::SERVICESTATUS);
     $v->declareParameter('ActiveSync', Validate::SERVICESTATUS);
     $v->declareParameter('Dav', Validate::SERVICESTATUS);
+    $v->declareParameter('webAccess', $v->createValidator()->memberOf('public','private'));
 
     $users = $v->createValidator(Validate::USERNAME);
     foreach (explode(',',$data['AdminUsers']) as $u) {

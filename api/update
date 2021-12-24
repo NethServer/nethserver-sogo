@@ -38,6 +38,7 @@ if ($cmd eq 'configuration') {
     foreach  (qw(
           ActiveSync
           Dav
+          webAccess
           AdminUsers
           VirtualHost
           WOWorkersCount

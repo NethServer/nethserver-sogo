@@ -148,6 +148,22 @@
               </span>
             </div>
           </div>
+          <div
+          v-if="configuration.status"
+          :class="['form-group', errors.webAccess.hasError ? 'has-error' : '']"
+          >
+            <label
+              class="col-sm-2 control-label"
+              for="textInput-modal-markup"
+            >{{$t('settings.webAccess')}}</label>
+            <div class="col-sm-5">
+              <input type="checkbox"   true-value="public" false-value="private" v-model="configuration.webAccess" class="form-control">
+              <span
+                v-if="errors.webAccess.hasError"
+                class="help-block"
+              >{{errors.webAccess.message}}</span>
+            </div>
+          </div>
           <div 
             v-if="configuration.status"
             :class="['form-group', errors.WOWorkersCount.hasError ? 'has-error' : '']">
@@ -242,6 +258,10 @@ methods: {
           haserror: false,
           message:""
       },
+      webAccess: {
+          haserror: false,
+          message:""
+      },
       WOWorkersCount: {
           haserror: false,
           message:""
@@ -279,6 +299,7 @@ methods: {
         }
         context.configuration = success.configuration;
         context.configuration.status = success.configuration.status == "enabled";
+        context.configuration.webAccess = success.configuration.webAccess;
         context.configuration.AdminUsers = context.configuration.AdminUsers.split(",").join("\n");
         context.configuration.Notifications = context.configuration.Notifications.split(",");
         context.view.isLoaded = true;
@@ -302,6 +323,7 @@ methods: {
         : "disabled",
         ActiveSync: context.configuration.ActiveSync,
         Dav: context.configuration.Dav,
+        webAccess: context.configuration.webAccess,
         AdminUsers: context.configuration.AdminUsers.split("\n").join(","),
         VirtualHost: context.configuration.VirtualHost,
         WOWorkersCount: context.configuration.WOWorkersCount,
