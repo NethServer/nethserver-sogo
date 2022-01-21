@@ -1,0 +1,25 @@
+on:
+  push:
+    branches:
+      - master
+
+name: "Translations Sync"
+
+jobs:
+  push-strings-to-transifex:
+    name: push-strings-to-transifex
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: "Checkout"
+        uses: actions/checkout@master
+
+      - name: "Run action"
+        with: # Or as an environment variable
+            git_flow: false
+            tx_token: ${{ secrets.TX_TOKEN }}
+            push_sources: true
+            push_translations: true
+            disable_override: false
+        uses: docker://sergioisidoro/github-transifex-action:v0.2.0
