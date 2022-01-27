@@ -18,13 +18,7 @@ fi
 
 echo "We push the translations to transifex"
 
-# set python3 and upgrade pip (default pip 10.0)
-pyenv global 3.7.1
-pip3 install --upgrade pip
-
-pip install virtualenv
-virtualenv ~/env
-source ~/env/bin/activate
-pip install transifex-client
+python3 -mvenv ./venv --upgrade
+./venv/bin/pip3 install transifex-client
 echo $'[https://www.transifex.com]\nhostname = https://www.transifex.com\nusername = '"api"$'\npassword = '"$TRANSIFEX_API_TOKEN"$'\n' > ~/.transifexrc
-tx push -s
+./venv/bin/tx push -s
