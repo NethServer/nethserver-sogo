@@ -1,0 +1,24 @@
+#!/bin/bash
+
+set -e
+
+# Migration script from 5.3.0 to 5.6.0
+# https://www.sogo.nu/files/docs/SOGoInstallationGuide.html#_upgrading
+# The session table (OCSSessionsFolderURL) must be dropped prior to restart sogod. 
+# This will allow users to use larger passwords (up to 2048 characters).
+
+if [[ ! -f /var/lib/mysql/sogo/sogo_folder_info.frm ]]; then
+    # First start, the database exists but blank
+    exit 0
+fi
+
+username=sogo
+hostname=127.0.0.1
+database=sogo
+password=$(cat /var/lib/nethserver/secrets/sogo) || exit 1
+
+# stop the service before to drop the session table
+systemctl stop  sogod
+
+sqlscript='drop table if exists sogo_sessions_folder;'
+echo "$sqlscript" | mysql -p -f -s -u $username -p$password -h $hostname $database
