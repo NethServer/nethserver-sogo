@@ -1,6 +1,6 @@
 Summary: NethServer SOGo configuration
 Name: nethserver-sogo
-Version: 1.8.5
+Version: 1.8.6
 Release: 1%{?dist}
 License: GPL
 URL: %{url_prefix}/%{name} 
@@ -66,6 +66,9 @@ echo "%doc README.rst" >> %{name}-%{version}-filelist
 %dir %{_nseventsdir}/%{name}-update
 
 %changelog
+* Mon Jun 06 2022 Stephane de Labrusse <stephdl@de-labrusse.fr> - 1.8.6-1
+- SOGo migration to 5.6.0 - Bug NethServer/dev#6670
+
 * Mon Jan 10 2022 Stephane de Labrusse <stephdl@de-labrusse.fr> - 1.8.5-1
 - SOGo: Available from public or trusted network - NethServer/dev#6617
 
