@@ -46,6 +46,7 @@ event_actions('nethserver-sogo-update', qw(
       nethserver-sogo-mysqlsetup   10
       nethserver-sogo-gnustepsetup 20
       nethserver-sogo-MigrationV3.2.10ToV4.0.0 30
+      nethserver-sogo-MigrationV5.3.0ToV5.6.0 31
       nethserver-sogo-create-selfHost 40
       nethserver-sogo-disable-webtop-activesync 50
       nethserver-sogo-remove-slice-messages 60
