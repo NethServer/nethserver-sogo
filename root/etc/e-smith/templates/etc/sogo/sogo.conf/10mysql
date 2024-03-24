@@ -15,5 +15,6 @@
     OCSFolderInfoURL = "$connString/sogo_folder_info";
     OCSSessionsFolderURL = "$connString/sogo_sessions_folder"; 
     OCSEMailAlarmsFolderURL = "$connString/sogo_alarms_folder";
+    OCSAdminURL = "$connString/sogo_admin";
 EOF
 }

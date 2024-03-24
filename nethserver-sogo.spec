@@ -1,6 +1,6 @@
 Summary: NethServer SOGo configuration
 Name: nethserver-sogo
-Version: 1.8.6
+Version: 1.8.7
 Release: 1%{?dist}
 License: GPL
 URL: %{url_prefix}/%{name} 
@@ -66,6 +66,9 @@ echo "%doc README.rst" >> %{name}-%{version}-filelist
 %dir %{_nseventsdir}/%{name}-update
 
 %changelog
+* Sun Mar 24 2024 Stephane de Labrusse <stephdl@de-labrusse.fr> - 1.8.7-1
+- set OCSAdminURL mysql source table for sogo 5.10.0
+
 * Mon Jun 06 2022 Stephane de Labrusse <stephdl@de-labrusse.fr> - 1.8.6-1
 - SOGo migration to 5.6.0 - Bug NethServer/dev#6670
 
